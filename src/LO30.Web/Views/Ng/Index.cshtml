@@ -2,33 +2,59 @@
     ViewData["Title"] = "Ng";
 }
 
-<div>
+<div ng-app="lo30NgApp">
   <h1>Hello World</h1>
-</div>
-<div>
-  <!-- JAVASCRIPT FILES -->
-  <script type="text/javascript" src="~/Content/Template/plugins/jquery-2.0.3.min.js"></script>
-  <script type="text/javascript" src="~/Scripts/angular.min.js"></script>
+  <div ng-view></div>
 
-  <!-- Ng App -->
-  <script src="~/App_Scripts/Lo30App.js"></script>
+  <div>
 
-  <!-- Controllers -->
-  <script src="~/App_Scripts/Controllers/Admin/Test/BoxScoreController.js"></script>
+    <!-- JAVASCRIPT FILES -->
+    <environment names="Development">
+      <script src="~/lib/jquery/dist/jquery.js"></script>
+      @*<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>*@
+      <script src="~/lib/angular/angular.js"></script>
+    </environment>
+    <environment names="Production">
+      <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"
+              asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+              asp-fallback-test="window.jQuery">
+      </script>
+      @*<script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/bootstrap.min.js"
+          asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+          asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+      </script>*@
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"
+              asp-fallback-src="~/lib/angular/angular.min.js"
+              asp-fallback-test="window.angular">
+      </script>
+    </environment>
 
-  <!-- Directives -->
-  <script src="~/App_Scripts/Directives/CriteriaSelector/CriteriaSelector.js"></script>
-  <script src="~/App_Scripts/Directives/CriteriaSelector/CriteriaSelectorController.js"></script>
+    <!-- FOLLOWING WILL NEED TO BE MIN'd -->
+    <script src="~/lib/angular-animate/angular-animate.js"></script>
+    <script src="~/lib/angular-route/angular-route.js"></script>
+    <script src="~/lib/underscore/underscore.js"></script>
+    <script src="~/lib/simple-js-validator/lib/simple.js.validator.js"></script>
+    <script src="~/lib/moment/moment.js"></script>
+    <script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
-  <!-- Filters -->
-  <script src="~/App_Scripts/Filters/FilterizeFilter.js"></script>
-  <script src="~/App_Scripts/Filters/PercentageFilter.js"></script>
+    <!-- Ng App -->
+    <script src="~/js/lo30App.js"></script>
 
-  <!-- Services -->
-  <script src="~/App_Scripts/Services/AdminDataProcessingService.js"></script>
+    <!-- Controllers -->
+    <script src="~/js/controllers/statsPlayersController.js"></script>
 
-  <!-- External Libraries -->
-  <script type="text/javascript" src="~/Scripts/underscore.js"></script>
-  <script type="text/javascript" src="~/Scripts/simple.js.validator.min.js"></script>
+    <!-- Directives -->
+    <script src="~/js/directives/clickStopPropagation/clickStopPropagation.js"></script>
+    <script src="~/js/directives/criteriaSelector/criteriaSelector.js"></script>
+    <script src="~/js/directives/criteriaSelector/criteriaSelectorController.js"></script>
 
+    <!-- Filters -->
+    @*<script src="~/js/filters/percentageFilter.js"></script>*@
+
+    <!-- Services -->
+    <script src="~/js/services/apiBaseService.js"></script>
+    <script src="~/js/services/apiService.js"></script>
+    <script src="~/js/services/externalLibService.js"></script>
+
+  </div>
 </div>

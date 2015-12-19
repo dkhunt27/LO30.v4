@@ -11,7 +11,7 @@ using LO30.Web.Models;
 using LO30.Web.Services;
 using LO30.Web.ViewModels.Manage;
 
-namespace LO30.Web.Controllers
+namespace LO30.Web.Controllers.Web
 {
     [Authorize]
     public class ManageController : Controller

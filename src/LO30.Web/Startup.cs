@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using LO30.Web.Models;
 using LO30.Web.Services;
 using LO30.Web.Models.Context;
+using Newtonsoft.Json.Serialization;
 
 namespace LO30.Web
 {
@@ -45,13 +46,17 @@ namespace LO30.Web
       // Add framework services.
       services.AddEntityFramework()
           .AddSqlServer()
-          .AddDbContext<LO30DbContext>(options => options.UseSqlServer(lo30ReportingConnString));
+          .AddDbContext<LO30DbContext>(opt => opt.UseSqlServer(lo30ReportingConnString));
 
       services.AddIdentity<ApplicationUser, IdentityRole>()
           .AddEntityFrameworkStores<LO30DbContext>()
           .AddDefaultTokenProviders();
 
-      services.AddMvc();
+      services.AddMvc()
+        .AddJsonOptions(opt =>
+        {
+          opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        });
 
       // Add application services.
       services.AddTransient<IEmailSender, AuthMessageSender>();

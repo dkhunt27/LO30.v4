@@ -1,0 +1,77 @@
+﻿<div>
+  <div class="row">
+    {{ local.selectedSeason.seasonName }}
+    {{ local.selectedGame.gameId}}
+  </div>
+
+  <div class="row">
+    {{ local.games.length }}
+    {{ local.games[0].gameId }}
+    {{ local.games[local.games.length-1].gameId}}
+  </div>
+
+  <div class="row">
+    {{ local.lastProcessedGameId}}
+
+  </div>
+  <div class="row">
+    {{ local.gamesToDisplayMax }}
+    {{ local.gamesToDisplayIndex}}
+  </div>
+
+  <div class="row">
+    <ul class="list-group-horizontal">
+      <li class="list-group-item">
+        <div>
+          <span>Season:</span>
+        </div>
+      </li>
+      <li class="list-group-item active" style="cursor: pointer;">
+        <div uib-dropdown>
+          <span uib-dropdown-toggle>
+            {{local.selectedSeason.seasonName}}
+            <span class="caret"></span>
+          </span>
+          <ul class="uib-dropdown-menu" aria-labelledby="simple-dropdown">
+            <li ng-class='{"active": local.selectedSeason.seasonId === season.seasonId }' ng-repeat="season in local.seasons">
+              <a ng-click="selectSeason(season.seasonId)">
+                {{season.seasonName}}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div>
+          <span>Game:</span>
+        </div>
+      </li>
+      <li 
+          class="list-group-item" 
+          style="cursor: pointer;"
+          ng-click="displayPreviousGames()">
+        <div>
+          <span class="fa fa-chevron-left" />
+        </div>
+      </li>
+      <li 
+          class="list-group-item" 
+          style="cursor: pointer;" 
+          ng-class='{"active": local.selectedGame.gameId === game.gameId, "active": local.lastProcessedGameId === game.gameId }' 
+          ng-click="selectGame(game.gameId)"
+          ng-repeat="game in local.gamesToDisplay">
+        <div>
+          <span>{{game.gameId}}</span>
+        </div>
+      </li>
+      <li
+           class="list-group-item" 
+          style="cursor: pointer;"
+          ng-click="displayFutureGames()">
+        <div>
+          <span class="fa fa-chevron-right" />
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

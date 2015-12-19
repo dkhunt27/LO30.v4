@@ -2,7 +2,7 @@
 
 /* jshint -W117 */ //(remove the undefined warning)
 lo30NgApp.controller('statsPlayersController',
-  function ($scope, $timeout, $routeParams, alertService, dataApiService) {
+  function ($log, $scope, $timeout, $routeParams, apiService) {
 
     $scope.getPlayerStatsForSeasonId = function (seasonId) {
       var retrievedType = "PlayerStats";
@@ -32,7 +32,7 @@ lo30NgApp.controller('statsPlayersController',
       $scope.playerTeamStats = [];
       $scope.playerTeamStatsFetching = false;
 
-      $scope.getPlayerStatsForSeasonId($scope.selectedSeason.seasonId);
+      //$scope.getPlayerStatsForSeasonId($scope.selectedSeason.seasonId);
     };
 
     $scope.activate();

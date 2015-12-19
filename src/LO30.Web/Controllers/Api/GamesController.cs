@@ -9,26 +9,26 @@ using Microsoft.Data.Entity;
 
 namespace LO30.Web.Controllers.Api
 {
-  [Route("api/seasons")]
-  public class SeasonsController : Controller
+  [Route("api/games")]
+  public class GamesController : Controller
   {
     private LO30DbContext _context;
 
-    public SeasonsController(LO30DbContext context)
+    public GamesController(LO30DbContext context)
     {
       _context = context;
     }
 
-    [HttpGet("")]
-    public JsonResult ListSeasons()
+    [HttpGet("seasons/{seasonId:int}")]
+    public JsonResult ListGamesForSeasonId(int seasonId)
     {
-      List<Season> results;
+      List<Game> results;
       using (_context)
       {
-        results = _context.Seasons.ToList();
+        results = _context.Games.Where(x=>x.SeasonId == seasonId).ToList();
       }
 
-      return Json(results.OrderBy(x=>x.SeasonId));
+      return Json(results.OrderBy(x=>x.GameId));
     }
   }
 }

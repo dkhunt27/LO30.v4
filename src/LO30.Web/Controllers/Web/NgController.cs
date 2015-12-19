@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using LO30.Web.Models.Context;
 
-namespace LO30.Web.Controllers
+namespace LO30.Web.Controllers.Web
 {
   public class NgController : Controller
   {

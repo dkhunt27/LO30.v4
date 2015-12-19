@@ -46,6 +46,20 @@ namespace LO30.Web.Models.Objects
     public virtual List<GoalieStatGame> GoalieStatGames { get; set; }
 
     public virtual List<PlayerStatGame> PlayerStatGames { get; set; }
+
+    public virtual List<ScoreSheetEntryGoal> ScoreSheetEntryGoals { get; set; }
+
+    public virtual List<ScoreSheetEntryPenalty> ScoreSheetEntryPenalties { get; set; }
+
+    public virtual List<ScoreSheetEntryProcessedGame> ScoreSheetEntryProcessedGames { get; set; }
+
+    public virtual List<ScoreSheetEntryProcessedGoal> ScoreSheetEntryProcessedGoals { get; set; }
+
+    public virtual List<ScoreSheetEntryProcessedPenalty> ScoreSheetEntryProcessedPenalties { get; set; }
+
+    public virtual List<ScoreSheetEntryProcessedSub> ScoreSheetEntryProcessedSubs { get; set; }
+
+    public virtual List<ScoreSheetEntrySub> ScoreSheetEntrySubs { get; set; }
     #endregion
   }
 }

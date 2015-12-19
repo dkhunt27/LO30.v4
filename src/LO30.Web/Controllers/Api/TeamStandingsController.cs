@@ -19,16 +19,18 @@ namespace LO30.Web.Controllers.Api
       _context = context;
     }
 
-    //[HttpGet("seasons/{seasonId:int}/playoffs/{playoffs:bool}")]
-    //public JsonResult ListTeamStandingsForSeasonIdPlayoffs(int seasonId, bool playoffs)
-    //{
-    //  List<Season> results;
-    //  using (_context)
-    //  {
-    //    results = _context.TeamStandings.ToList();
-    //  }
+    [HttpGet("seasons/{seasonId:int}/playoffs/{playoffs:bool}")]
+    public JsonResult ListTeamStandingsForSeasonIdPlayoffs(int seasonId, bool playoffs)
+    {
+      List<TeamStanding> results;
+      using (_context)
+      {
+        results = _context.TeamStandings
+                          .Where(x=>x.SeasonId == seasonId && x.Playoffs == playoffs)
+                          .ToList();
+      }
 
-    //  return Json(results.OrderBy(x => x.SeasonId));
-    //}
+      return Json(results.OrderBy(x => x.SeasonId));
+    }
   }
 }

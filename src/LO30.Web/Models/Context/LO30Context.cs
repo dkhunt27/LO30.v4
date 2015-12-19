@@ -236,12 +236,56 @@ namespace LO30.Web.Models.Context
       });
       #endregion
 
+      #region Penalty (PK, PK2)
+      modelBuilder.Entity<Penalty>(entity =>
+      {
+        entity.ToTable("Penalties");
+
+        entity.HasKey(x => new { x.PenaltyId });
+
+        entity.HasIndex(x => new { x.PenaltyCode }).HasName("PK2").IsUnique();
+
+        entity.HasIndex(x => new { x.PenaltyName }).HasName("PK3").IsUnique();
+
+      });
+      #endregion
+
       #region Player (PK)
       modelBuilder.Entity<Player>(entity =>
       {
         entity.ToTable("Players");
 
         entity.HasKey(x => new { x.PlayerId });
+      });
+      #endregion
+
+      #region PlayerDraft (PK, FK[1-N])
+      modelBuilder.Entity<PlayerDraft>(entity =>
+      {
+        entity.ToTable("PlayerDrafts");
+
+        entity.HasKey(x => new { x.SeasonId, x.PlayerId });
+
+        entity.HasOne(d => d.Season).WithMany(p => p.PlayerDrafts).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.SeasonId);
+
+        entity.HasOne(d => d.Player).WithMany(p => p.PlayerDrafts).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.PlayerId);
+      });
+      #endregion
+
+      #region PlayerRating (PK, FK[1-N])
+      modelBuilder.Entity<PlayerRating>(entity =>
+      {
+        entity.ToTable("PlayerRatings");
+
+        entity.HasKey(x => new { x.SeasonId, x.PlayerId, x.EndYYYYMMDD, x.Position });
+
+        entity.HasOne(d => d.Season).WithMany(p => p.PlayerRatings).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.SeasonId);
+
+        entity.HasOne(d => d.Player).WithMany(p => p.PlayerRatings).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.PlayerId);
       });
       #endregion
 
@@ -364,6 +408,140 @@ namespace LO30.Web.Models.Context
       });
       #endregion
 
+      #region ScoreSheetEntryGoal (PK, FK[1-N])
+      modelBuilder.Entity<ScoreSheetEntryGoal>(entity =>
+      {
+        entity.ToTable("ScoreSheetEntryGoals");
+
+        entity.HasKey(x => new { x.ScoreSheetEntryGoalId });
+
+        entity.HasOne(d => d.Game).WithMany(p => p.ScoreSheetEntryGoals).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.GameId);
+      });
+      #endregion
+
+      #region ScoreSheetEntryPenalty (PK, FK[1-N])
+      modelBuilder.Entity<ScoreSheetEntryPenalty>(entity =>
+      {
+        entity.ToTable("ScoreSheetEntryPenalties");
+
+        entity.HasKey(x => new { x.ScoreSheetEntryPenaltyId });
+
+        entity.HasOne(d => d.Game).WithMany(p => p.ScoreSheetEntryPenalties).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.GameId);
+      });
+      #endregion
+
+      #region ScoreSheetEntryProcessedGame (PK, FK[1-N], column type)
+      modelBuilder.Entity<ScoreSheetEntryProcessedGame>(entity =>
+      {
+        entity.ToTable("ScoreSheetEntryProcessedGames");
+
+        entity.Property(e => e.UpdatedOn).HasColumnType("smalldatetime").HasDefaultValueSql("getdate()");
+
+        entity.HasKey(x => new { x.GameId });
+
+        entity.HasOne(d => d.Game).WithMany(p => p.ScoreSheetEntryProcessedGames).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.GameId);
+      });
+      #endregion
+
+      #region ScoreSheetEntryProcessedGoal (PK, FK[1-N], column type)
+      modelBuilder.Entity<ScoreSheetEntryProcessedGoal>(entity =>
+      {
+        entity.ToTable("ScoreSheetEntryProcessedGoals");
+
+        entity.Property(e => e.UpdatedOn).HasColumnType("smalldatetime").HasDefaultValueSql("getdate()");
+
+        entity.HasKey(x => new { x.ScoreSheetEntryGoalId });
+
+        entity.HasOne(d => d.Season).WithMany(p => p.ScoreSheetEntryProcessedGoals).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.SeasonId);
+
+        entity.HasOne(d => d.Team).WithMany(p => p.ScoreSheetEntryProcessedGoals).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.TeamId);
+
+        entity.HasOne(d => d.Game).WithMany(p => p.ScoreSheetEntryProcessedGoals).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.GameId);
+
+        entity.HasOne(d => d.GoalPlayer).WithMany(p => p.ScoreSheetEntryProcessedGoalGoals).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.GoalPlayerId);
+
+        entity.HasOne(d => d.Assist1Player).WithMany(p => p.ScoreSheetEntryProcessedGoalAssist1).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.Assist1PlayerId);
+
+        entity.HasOne(d => d.Assist2Player).WithMany(p => p.ScoreSheetEntryProcessedGoalAssist2).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.Assist2PlayerId);
+
+        entity.HasOne(d => d.Assist3Player).WithMany(p => p.ScoreSheetEntryProcessedGoalAssist3).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.Assist3PlayerId);
+      });
+      #endregion
+
+      #region ScoreSheetEntryProcessedPenalty (PK, FK[1-N], column type)
+      modelBuilder.Entity<ScoreSheetEntryProcessedPenalty>(entity =>
+      {
+        entity.ToTable("ScoreSheetEntryProcessedPenalties");
+
+        entity.Property(e => e.UpdatedOn).HasColumnType("smalldatetime").HasDefaultValueSql("getdate()");
+
+        entity.HasKey(x => new { x.ScoreSheetEntryPenaltyId });
+
+        entity.HasOne(d => d.Season).WithMany(p => p.ScoreSheetEntryProcessedPenalties).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.SeasonId);
+
+        entity.HasOne(d => d.Team).WithMany(p => p.ScoreSheetEntryProcessedPenalties).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.TeamId);
+
+        entity.HasOne(d => d.Game).WithMany(p => p.ScoreSheetEntryProcessedPenalties).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.GameId);
+
+        entity.HasOne(d => d.Player).WithMany(p => p.ScoreSheetEntryProcessedPenalties).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.PlayerId);
+
+        entity.HasOne(d => d.Penalty).WithMany(p => p.ScoreSheetEntryProcessedPenalties).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.PenaltyId);
+      });
+      #endregion
+
+      #region ScoreSheetEntryProcessedSub (PK, FK[1-N], column type)
+      modelBuilder.Entity<ScoreSheetEntryProcessedSub>(entity =>
+      {
+        entity.ToTable("ScoreSheetEntryProcessedSubs");
+
+        entity.Property(e => e.UpdatedOn).HasColumnType("smalldatetime").HasDefaultValueSql("getdate()");
+
+        entity.HasKey(x => new { x.ScoreSheetEntrySubId });
+
+        entity.HasOne(d => d.Season).WithMany(p => p.ScoreSheetEntryProcessedSubs).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.SeasonId);
+
+        entity.HasOne(d => d.Team).WithMany(p => p.ScoreSheetEntryProcessedSubs).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.TeamId);
+
+        entity.HasOne(d => d.Game).WithMany(p => p.ScoreSheetEntryProcessedSubs).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.GameId);
+
+        entity.HasOne(d => d.SubPlayer).WithMany(p => p.ScoreSheetEntryProcessedSubPlayersSubbedFor).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.SubPlayerId);
+
+        entity.HasOne(d => d.SubbingForPlayer).WithMany(p => p.ScoreSheetEntryProcessedSubPlayersSubbedForMe).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.SubbingForPlayerId);
+      });
+      #endregion
+
+      #region ScoreSheetEntrySub (PK, FK[1-N])
+      modelBuilder.Entity<ScoreSheetEntrySub>(entity =>
+      {
+        entity.ToTable("ScoreSheetEntrySubs");
+
+        entity.HasKey(x => new { x.ScoreSheetEntrySubId });
+
+        entity.HasOne(d => d.Game).WithMany(p => p.ScoreSheetEntrySubs).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.GameId);
+      });
+      #endregion
+
       #region Season (PK, PK2)
       modelBuilder.Entity<Season>(entity =>
       {
@@ -381,11 +559,23 @@ namespace LO30.Web.Models.Context
       });
       #endregion
 
+      #region Setting (PK, PK2)
+      modelBuilder.Entity<Setting>(entity =>
+      {
+        entity.ToTable("Settings");
+
+        entity.HasKey(x => new { x.SettingId });
+
+        entity.HasIndex(x => new { x.SettingName }).HasName("PK2").IsUnique();
+
+      });
+      #endregion
+
       #region Team (PK, PK2, FK[1-N])
       modelBuilder.Entity<Team>(entity =>
       {
         entity.ToTable("Teams");
-        
+
         entity.HasKey(x => new { x.TeamId });
 
         entity.HasIndex(x => new { x.SeasonId, x.TeamCode }).HasName("PK2").IsUnique();
@@ -395,28 +585,51 @@ namespace LO30.Web.Models.Context
         entity.HasOne(d => d.Season).WithMany(p => p.Teams).OnDelete(DeleteBehavior.Restrict);
         entity.HasIndex(x => x.SeasonId);
 
-        entity.HasOne(d => d.Coach).WithMany(p => p.CoachedTeams).OnDelete(DeleteBehavior.Restrict);
+        entity.HasOne(d => d.Coach).WithMany(p => p.TeamsCoached).OnDelete(DeleteBehavior.Restrict);
         entity.HasIndex(x => x.CoachId);
 
-        entity.HasOne(d => d.Sponsor).WithMany(p => p.SponsoredTeams).OnDelete(DeleteBehavior.Restrict);
+        entity.HasOne(d => d.Sponsor).WithMany(p => p.TeamsSponsored).OnDelete(DeleteBehavior.Restrict);
         entity.HasIndex(x => x.SponsorId);
 
-        entity.HasOne(d => d.Division).WithMany(p => p.DivisionalTeams).OnDelete(DeleteBehavior.Restrict);
+        entity.HasOne(d => d.Division).WithMany(p => p.Teams).OnDelete(DeleteBehavior.Restrict);
         entity.HasIndex(x => x.DivisionId);
       });
       #endregion
 
-      #region ScoreSheetEntryProcessedSub
-      /*
-      builder.Entity<ScoreSheetEntryProcessedSub>().HasKey(x => new { x.ScoreSheetEntrySubId });
-      builder.Entity<ScoreSheetEntryProcessedSub>().HasIndex(x => new { x.SeasonId, x.TeamId, x.GameId, x.SubPlayerId, x.SubbingForPlayerId }).HasName("PK2").IsUnique();
+      #region TeamRoster (PK, FK[1-N])
+      modelBuilder.Entity<TeamRoster>(entity =>
+      {
+        entity.ToTable("TeamRosters");
 
-      builder.Entity<ScoreSheetEntryProcessedSub>().HasAlternateKey(x => x.SeasonId);
-      builder.Entity<ScoreSheetEntryProcessedSub>().HasAlternateKey(x => x.TeamId);
-      builder.Entity<ScoreSheetEntryProcessedSub>().HasAlternateKey(x => x.GameId);    
-      builder.Entity<ScoreSheetEntryProcessedSub>().HasAlternateKey(x => x.SubPlayerId);
-      builder.Entity<ScoreSheetEntryProcessedSub>().HasAlternateKey(x => x.SubbingForPlayerId);
-      */
+        entity.HasKey(x => new { x.TeamId, x.PlayerId, x.EndYYYYMMDD });
+
+        entity.HasOne(d => d.Season).WithMany(p => p.TeamRosters).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.SeasonId);
+
+        entity.HasOne(d => d.Team).WithMany(p => p.TeamRosters).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.TeamId);
+
+        entity.HasOne(d => d.Player).WithMany(p => p.TeamRosters).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.PlayerId);
+      });
+      #endregion
+
+      #region TeamStanding (PK, FK[1-N])
+      modelBuilder.Entity<TeamStanding>(entity =>
+      {
+        entity.ToTable("TeamStandings");
+
+        entity.HasKey(x => new { x.TeamId, x.Playoffs });
+
+        entity.HasOne(d => d.Season).WithMany(p => p.TeamStandings).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.SeasonId);
+
+        entity.HasOne(d => d.Team).WithMany(p => p.TeamStandings).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.TeamId);
+
+        entity.HasOne(d => d.Division).WithMany(p => p.TeamStandings).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(x => x.DivisionId);
+      });
       #endregion
     }
 
@@ -427,14 +640,31 @@ namespace LO30.Web.Models.Context
     public DbSet<GameRoster> GameRosters { get; set; }
     public DbSet<GameScore> GameScores { get; set; }
     public DbSet<GameTeam> GameTeams { get; set; }
+    public DbSet<GoalieStatCareer> GoalieStatCareers { get; set; }
+    public DbSet<GoalieStatGame> GoalieStatGames { get; set; }
+    public DbSet<GoalieStatSeason> GoalieStatSeason { get; set; }
+    public DbSet<GoalieStatTeam> GoalieStatTeams { get; set; }
+    public DbSet<Penalty> Penalties { get; set; }
     public DbSet<Player> Players { get; set; }
+    public DbSet<PlayerDraft> PlayerDrafts { get; set; }
+    public DbSet<PlayerRating> PlayerRatings { get; set; }
     public DbSet<PlayerStatCareer> PlayerStatCareers { get; set; }
     public DbSet<PlayerStatGame> PlayerStatGames { get; set; }
     public DbSet<PlayerStatSeason> PlayerStatSeason { get; set; }
     public DbSet<PlayerStatTeam> PlayerStatTeams { get; set; }
     public DbSet<PlayerStatus> PlayerStatuses { get; set; }
     public DbSet<PlayerStatusType> PlayerStatusTypes { get; set; }
+    public DbSet<ScoreSheetEntryGoal> ScoreSheetEntryGoal { get; set; }
+    public DbSet<ScoreSheetEntryPenalty> ScoreSheetEntryPenalties { get; set; }
+    public DbSet<ScoreSheetEntryProcessedGame> ScoreSheetEntryProcessedGames { get; set; }
+    public DbSet<ScoreSheetEntryProcessedGoal> ScoreSheetEntryProcessedGoals { get; set; }
+    public DbSet<ScoreSheetEntryProcessedPenalty> ScoreSheetEntryProcessedPenalties { get; set; }
+    public DbSet<ScoreSheetEntryProcessedSub> ScoreSheetEntryProcessedSubs { get; set; }
+    public DbSet<ScoreSheetEntrySub> ScoreSheetEntrySub { get; set; }
     public DbSet<Season> Seasons { get; set; }
+    public DbSet<Setting> Settings { get; set; }
     public DbSet<Team> Teams { get; set; }
+    public DbSet<TeamRoster> TeamRosters { get; set; }
+    public DbSet<TeamStanding> TeamStandings { get; set; }
   }
 }

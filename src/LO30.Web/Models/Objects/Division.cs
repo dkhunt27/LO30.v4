@@ -17,7 +17,9 @@ namespace LO30.Web.Models.Objects
     #region foreign keys referenced in another class
     // items in this class must exist before items in the classes below
 
-    public virtual List<Team> DivisionalTeams { get; set; }
+    public virtual List<Team> Teams { get; set; }
+
+    public virtual List<TeamStanding> TeamStandings { get; set; }
     #endregion
   }
 }

@@ -45,6 +45,10 @@ namespace LO30.Web.Models.Objects
 
     public virtual List<GoalieStatGame> GoalieStatGames { get; set; }
 
+    public virtual List<PlayerDraft> PlayerDrafts { get; set; }
+
+    public virtual List<PlayerRating> PlayerRatings { get; set; }
+
     public virtual PlayerStatCareer PlayerStatCareer { get; set; }
 
     public virtual List<PlayerStatSeason> PlayerStatSeasons { get; set; }
@@ -55,9 +59,25 @@ namespace LO30.Web.Models.Objects
 
     public virtual List<PlayerStatus> PlayerStatuses { get; set; }
 
-    public virtual List<Team> CoachedTeams { get; set; }
+    public virtual List<ScoreSheetEntryProcessedGoal> ScoreSheetEntryProcessedGoalGoals { get; set; }
 
-    public virtual List<Team> SponsoredTeams { get; set; }
+    public virtual List<ScoreSheetEntryProcessedGoal> ScoreSheetEntryProcessedGoalAssist1 { get; set; }
+
+    public virtual List<ScoreSheetEntryProcessedGoal> ScoreSheetEntryProcessedGoalAssist2 { get; set; }
+
+    public virtual List<ScoreSheetEntryProcessedGoal> ScoreSheetEntryProcessedGoalAssist3 { get; set; }
+
+    public virtual List<ScoreSheetEntryProcessedPenalty> ScoreSheetEntryProcessedPenalties { get; set; }
+
+    public virtual List<ScoreSheetEntryProcessedSub> ScoreSheetEntryProcessedSubPlayersSubbedForMe { get; set; }
+
+    public virtual List<ScoreSheetEntryProcessedSub> ScoreSheetEntryProcessedSubPlayersSubbedFor { get; set; }
+
+    public virtual List<Team> TeamsCoached { get; set; }
+
+    public virtual List<Team> TeamsSponsored { get; set; }
+
+    public virtual List<TeamRoster> TeamRosters { get; set; }
     #endregion
   }
 }

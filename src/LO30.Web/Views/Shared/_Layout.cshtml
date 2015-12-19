@@ -7,7 +7,7 @@
 
   <environment names="Development">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/lib/bootswatch/cerulean/bootstrap.css"  />
+    <link rel="stylesheet" href="~/lib/bootswatch/cerulean/bootstrap.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="~/css/site.css" />
   </environment>
@@ -37,7 +37,7 @@
         <ul class="nav navbar-nav">
           <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/stats/players">Stats</a></li>
         </ul>
-        @*@await Html.PartialAsync("_LoginPartial")*@
+        @await Html.PartialAsync("_LoginPartial")
       </div>
     </div>
   </nav>
@@ -45,7 +45,19 @@
     @RenderBody()
     <hr />
     <footer>
-      <p>&copy; 2015 Livonia Over 30 Hockey Association</p>
+      <nav class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="navbar-header col-xs-12">
+              <ul class="nav navbar-nav col-xs-12">
+                <li class="col-xs-12">
+                  <a class="navbar-footer col-xs-12">&copy; 2015 Livonia Over 30 Hockey Association</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
     </footer>
   </div>
 

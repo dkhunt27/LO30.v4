@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-var lo30NgApp = angular.module("lo30NgApp", ['ngRoute', 'ngAnimate', 'ui.bootstrap']);
+var lo30NgApp = angular.module("lo30NgApp", ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'ui.select', 'ngSanitize']);
 
 lo30NgApp.constant("constApisUrl", "/api");
 

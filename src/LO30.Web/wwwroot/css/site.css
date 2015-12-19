@@ -1,6 +1,6 @@
 ﻿body {
     padding-top: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 70px;
 }
 
 /* Wrapping element */
@@ -33,6 +33,12 @@ textarea {
     }
 }
 
+.criteria-selector {
+  background-color: #2fa4e7 !important;
+  border-color: #1995dc;
+  color: #ffffff;
+}
+
 
 .list-group-horizontal .list-group-item {
 	display: inline-block;
@@ -47,4 +53,12 @@ textarea {
 .list-group-horizontal .list-group-item:last-child {
 	border-top-right-radius:4px;
 	border-bottom-left-radius:0;
+}
+
+.navbar-footer {
+  text-align: center;
+  height: 50px;
+  padding: 15px 15px;
+  font-size: 18px;
+  line-height: 20px;
 }

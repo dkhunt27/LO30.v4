@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LO30.Web.Models.Objects
 {
-  public class PlayerStatCareer
+  public class GoalieStatCareer
   {
     [Required]
     public int PlayerId { get; set; }
-    
+
     [Required]
     public int Seasons { get; set; }
 
@@ -15,25 +15,22 @@ namespace LO30.Web.Models.Objects
     public int Games { get; set; }
 
     [Required]
-    public int Goals { get; set; }
+    public double GoalsAgainstAverage
+    {
+      get
+      {
+        return (double)GoalsAgainst / (double)Games;
+      }
+    }
 
     [Required]
-    public int Assists { get; set; }
+    public int GoalsAgainst { get; set; }
 
     [Required]
-    public int Points { get; set; }
+    public int Shutouts { get; set; }
 
     [Required]
-    public int PenaltyMinutes { get; set; }
-
-    [Required]
-    public int PowerPlayGoals { get; set; }
-
-    [Required]
-    public int ShortHandedGoals { get; set; }
-
-    [Required]
-    public int GameWinningGoals { get; set; }
+    public int Wins { get; set; }
 
     [Required]
     public DateTime UpdatedOn { get; set; }

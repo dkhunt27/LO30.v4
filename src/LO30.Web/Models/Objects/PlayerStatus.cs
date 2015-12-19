@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LO30.Web.Models.Objects
 {
@@ -17,8 +16,12 @@ namespace LO30.Web.Models.Objects
     [Required]
     public bool CurrentStatus { get; set; }
 
-    // virtual, foreign keys dependent
+    #region foreign keys
+    // items in the classes below must exist before an item in this class
+
     public virtual Player Player { get; set; }
+
     public virtual PlayerStatusType PlayerStatusType { get; set; }
+    #endregion
   }
 }

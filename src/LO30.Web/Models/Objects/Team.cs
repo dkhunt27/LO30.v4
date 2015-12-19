@@ -1,7 +1,5 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LO30.Web.Models.Objects
 {
@@ -29,14 +27,42 @@ namespace LO30.Web.Models.Objects
 
     public int? SponsorId { get; set; }
 
-    // virtual, foreign keys dependent
-    public virtual Season Season { get; set; }
-    public virtual Player Coach { get; set; }
-    public virtual Player Sponsor { get; set; }
-    public virtual Division Division { get; set; }
+    #region foreign keys
+    // items in the classes below must exist before an item in this class
 
-    // virtual, foreign key principal
+    public virtual Season Season { get; set; }
+
+    public virtual Player Coach { get; set; }
+
+    public virtual Player Sponsor { get; set; }
+
+    public virtual Division Division { get; set; }
+    #endregion
+
+    #region foreign keys referenced in another class
+    // items in this class must exist before items in the classes below
+
+    public virtual List<GameOutcome> GameOutcomes { get; set; }
+
+    public virtual List<GameOutcome> GameOutcomesOpponent { get; set; }
+
+    public virtual List<GameOutcomeOverride> GameOutcomeOverrides { get; set; }
+
+    public virtual List<GameRoster> GameRosters { get; set; }
+
+    public virtual List<GameScore> GameScores { get; set; }
+
+    public virtual List<GameTeam> GameTeams { get; set; }
+
+    public virtual List<GameTeam> GameTeamOpponents { get; set; }
+
+    public virtual List<GoalieStatTeam> GoalieStatTeams { get; set; }
+
+    public virtual List<GoalieStatGame> GoalieStatGames { get; set; }
+
     public virtual List<PlayerStatTeam> PlayerStatTeams { get; set; }
+
     public virtual List<PlayerStatGame> PlayerStatGames { get; set; }
+    #endregion
   }
 }

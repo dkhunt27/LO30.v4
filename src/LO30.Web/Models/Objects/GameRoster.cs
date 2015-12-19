@@ -3,10 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LO30.Web.Models.Objects
 {
-  public class PlayerStatGame
+  public class GameRoster
   {
+    private const int _gridDefault = 0;
+
     [Required]
-    public int PlayerId { get; set; }
+    public int GameRosterId { get; set; }
 
     [Required]
     public int GameId { get; set; }
@@ -15,43 +17,33 @@ namespace LO30.Web.Models.Objects
     public int TeamId { get; set; }
 
     [Required]
-    public bool Playoffs { get; set; }
+    public string PlayerNumber { get; set; }
 
     [Required]
-    public int SeasonId { get; set; }
-
-    [Required]
-    public bool Sub { get; set; }
-
-    [Required]
-    public int Line { get; set; }
+    public int PlayerId { get; set; }
 
     [Required, MaxLength(1)]
     public string Position { get; set; }
 
     [Required]
-    public int Goals { get; set; }
+    public int RatingPrimary { get; set; }
 
     [Required]
-    public int Assists { get; set; }
+    public int RatingSecondary { get; set; }
 
     [Required]
-    public int Points { get; set; }
+    public int Line { get; set; }
 
     [Required]
-    public int PenaltyMinutes { get; set; }
+    public bool Goalie { get; set; }
 
     [Required]
-    public int PowerPlayGoals { get; set; }
+    public bool Sub { get; set; }
+
+    public int? SubbingForPlayerId { get; set; }
 
     [Required]
-    public int ShortHandedGoals { get; set; }
-
-    [Required]
-    public int GameWinningGoals { get; set; }
-
-    [Required]
-    public DateTime UpdatedOn { get; set; }
+    public int SeasonId { get; set; }
 
     #region foreign keys
     // items in the classes below must exist before an item in this class
@@ -63,6 +55,8 @@ namespace LO30.Web.Models.Objects
     public virtual Game Game { get; set; }
 
     public virtual Player Player { get; set; }
+
+    public virtual Player SubbingForPlayer { get; set; }
     #endregion
   }
 }

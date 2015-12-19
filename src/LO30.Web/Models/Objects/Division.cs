@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LO30.Web.Models.Objects
 {
@@ -15,7 +14,10 @@ namespace LO30.Web.Models.Objects
     [Required, MaxLength(15)]
     public string DivisionShortName { get; set; }
 
-    // virtual, foreign key principal
+    #region foreign keys referenced in another class
+    // items in this class must exist before items in the classes below
+
     public virtual List<Team> DivisionalTeams { get; set; }
+    #endregion
   }
 }

@@ -3,13 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LO30.Web.Models.Objects
 {
-  public class PlayerStatGame
+  public class GoalieStatTeam
   {
     [Required]
     public int PlayerId { get; set; }
-
-    [Required]
-    public int GameId { get; set; }
 
     [Required]
     public int TeamId { get; set; }
@@ -18,37 +15,31 @@ namespace LO30.Web.Models.Objects
     public bool Playoffs { get; set; }
 
     [Required]
-    public int SeasonId { get; set; }
-
-    [Required]
     public bool Sub { get; set; }
 
     [Required]
-    public int Line { get; set; }
-
-    [Required, MaxLength(1)]
-    public string Position { get; set; }
+    public int SeasonId { get; set; }
 
     [Required]
-    public int Goals { get; set; }
+    public int Games { get; set; }
 
     [Required]
-    public int Assists { get; set; }
+    public int GoalsAgainst { get; set; }
 
     [Required]
-    public int Points { get; set; }
+    public double GoalsAgainstAverage
+    { 
+      get
+      {
+        return (double)GoalsAgainst / (double)Games;
+      }
+    }
 
     [Required]
-    public int PenaltyMinutes { get; set; }
+    public int Shutouts { get; set; }
 
     [Required]
-    public int PowerPlayGoals { get; set; }
-
-    [Required]
-    public int ShortHandedGoals { get; set; }
-
-    [Required]
-    public int GameWinningGoals { get; set; }
+    public int Wins { get; set; }
 
     [Required]
     public DateTime UpdatedOn { get; set; }
@@ -59,8 +50,6 @@ namespace LO30.Web.Models.Objects
     public virtual Season Season { get; set; }
 
     public virtual Team Team { get; set; }
-
-    public virtual Game Game { get; set; }
 
     public virtual Player Player { get; set; }
     #endregion

@@ -20,6 +20,10 @@
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
   </environment>
+
+
+  <!-- FOLLOWING WILL NEED TO BE MIN'd -->
+  <link rel="stylesheet" href="~/lib/footable3/compiled/footable.bootstrap.css" />
 </head>
 <body>
   <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -35,6 +39,7 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
+          <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/standings">Standings</a></li>
           <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/stats/players">Stats</a></li>
         </ul>
         @await Html.PartialAsync("_LoginPartial")
@@ -77,6 +82,9 @@
     </script>
     @*<script src="~/js/site.min.js" asp-append-version="true"></script>*@
   </environment>
+
+  <!-- FOLLOWING WILL NEED TO BE MIN'd -->
+  <script src="~/lib/footable3/compiled/footable.js"></script>
 
   @RenderSection("scripts", required: false)
 </body>

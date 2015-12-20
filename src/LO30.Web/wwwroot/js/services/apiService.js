@@ -9,7 +9,8 @@ lo30NgApp.factory("apiService",
       var service = {
         dataProcessing: {},
         games: {},
-        seasons: {}
+        seasons: {},
+        teamStandings: {}
       };
 
       service.dataProcessing.getLastGameProcessedForSeasonId = function (seasonId) {
@@ -56,6 +57,15 @@ lo30NgApp.factory("apiService",
         });
       }
 
+      service.teamStandings.listForSeasonIdPlayoffs = function (seasonId, playoffs) {
+        var inputs = {
+          apiDataType: "teamStandings.listForSeasonIdPlayoffs",
+          urlPartial: "teamstandings/seasons/" + seasonId + "/playoffs/" + playoffs,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
 
 
       return service;

@@ -1,0 +1,66 @@
+﻿<div id="standings">
+
+  <div class="row">
+    <div id="breadcrumb" class="col-xs-12">
+      <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Standings</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="pageHeader" class="col-xs-12">
+        <h3>Standings</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="pageSubHeader" class="col-xs-12">
+      <lo30-criteria-selector />
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="pageContents" class="col-xs-12">
+      <table class="table table-condensed table-bordered table-striped table-dk-blue footable" data-filtering="true" data-sorting="true">
+        <thead>
+          <tr>
+            <th data-sorted="true" data-direction="ASC" data-type="number">Rank</th>
+            <th>Team</th>
+            <th data-breakpoints="xs" data-type="number">GP</th>
+            <th data-breakpoints="xs" data-type="number">W</th>
+            <th data-breakpoints="xs" data-type="number">L</th>
+            <th data-breakpoints="xs" data-type="number">T</th>
+            <th data-type="number">PTS</th>
+            <th data-breakpoints="xs sm" data-type="number">GF</th>
+            <th data-breakpoints="xs sm" data-type="number">GA</th>
+            <th data-breakpoints="xs sm" data-type="number">PIM</th>
+            <th data-breakpoints="xs sm" data-type="number">W%</th>
+            <th data-breakpoints="xs sm" data-type="number">Subs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in local.teamStandings | orderBy:sortOn:sortDirection" lo30-footable>
+            <td>{{item.ranking}}</td>
+            <td><a ng-href="/Ng/#/Games/Results/{{item.sid}}/false/{{item.tid}}">{{item.teamNameToDisplay}}</a></td>
+            <td class="text-right">{{item.games}}</td>
+            <td class="text-right">{{item.wins}}</td>
+            <td class="text-right">{{item.losses}}</td>
+            <td class="text-right">{{item.ties}}</td>
+            <td class="text-right">{{item.points}}</td>
+            <td class="text-right">{{item.goalsFor}}</td>
+            <td class="text-right">{{item.goalsAgainst}}</td>
+            <td class="text-right">{{item.penaltyMinutes}}</td>
+            <td class="text-right">{{item.wins / item.games | percentage:0}}</td>
+            <td class="text-right">{{item.subs}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h6>
+        Tie Breaker:&nbsp;&nbsp;1) Most Points&nbsp;&nbsp;2) Most Wins&nbsp;&nbsp;3) Greatest Goals For/Goals Against difference&nbsp;&nbsp;4) Most Goals For&nbsp;&nbsp;5) Least Penalty Minutes
+      </h6>
+    </div>
+  </div>
+</div>

@@ -6,6 +6,8 @@ using Microsoft.AspNet.Mvc;
 using LO30.Web.Models.Context;
 using LO30.Web.Models.Objects;
 using Microsoft.Data.Entity;
+using AutoMapper;
+using LO30.Web.ViewModels.Api;
 
 namespace LO30.Web.Controllers.Api
 {
@@ -26,11 +28,13 @@ namespace LO30.Web.Controllers.Api
       using (_context)
       {
         results = _context.TeamStandings
+                          .Include(x=>x.Team)
+                          .ThenInclude(x=>x.Division)
                           .Where(x=>x.SeasonId == seasonId && x.Playoffs == playoffs)
                           .ToList();
       }
 
-      return Json(results.OrderBy(x => x.SeasonId));
+      return Json(Mapper.Map<IEnumerable<TeamStandingViewModel>>(results.OrderBy(s => s.SeasonId)));
     }
   }
 }

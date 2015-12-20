@@ -20,14 +20,14 @@ namespace LO30.Web.Models.Objects
     [Required]
     public int Games { get; set; }
 
-    [Required]
-    public double GoalsAgainstAverage
-    {
-      get
-      {
-        return (double)GoalsAgainst / (double)Games;
-      }
-    }
+    //[Required]
+    //public double GoalsAgainstAverage
+    //{
+    //  get
+    //  {
+    //    return (double)GoalsAgainst / (double)Games;
+    //  }
+    //}
 
     [Required]
     public int GoalsAgainst { get; set; }

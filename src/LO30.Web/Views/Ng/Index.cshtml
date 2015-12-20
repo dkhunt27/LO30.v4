@@ -14,6 +14,7 @@
 @section Scripts {
   <link rel="stylesheet" href="~/lib/angular-ui-select/dist/select.css" />
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+  <link rel="stylesheet" href="~/lib/footable3/compiled/footable.bootstrap.css" />
 
   <!-- JAVASCRIPT FILES -->
   <environment names="Development">
@@ -45,24 +46,21 @@
   <script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="~/lib/angular-ui-select/dist/select.js"></script>
   <script src="~/lib/angular-sanitize/angular-sanitize.js"></script>
+  <script src="~/lib/footable3/compiled/footable.js"></script>
+  <script src="~/lib/angular-media-queries/match-media.js"></script>
 
   <!-- Ng App -->
   <script src="~/js/lo30App.js"></script>
-
-  <!-- Controllers -->
+  <script src="~/js/controllers/standingsController.js"></script>
   <script src="~/js/controllers/statsPlayersController.js"></script>
-
-  <!-- Directives -->
-  <script src="~/js/directives/clickStopPropagation/clickStopPropagation.js"></script>
   <script src="~/js/directives/criteriaSelector/criteriaSelector.js"></script>
   <script src="~/js/directives/criteriaSelector/criteriaSelectorController.js"></script>
-
-  <!-- Filters -->
-  @*<script src="~/js/filters/percentageFilter.js"></script>*@
-
-  <!-- Services -->
+  <script src="~/js/directives/footable/footable.js"></script>
+  <script src="~/js/filters/percentageFilter.js"></script>
   <script src="~/js/services/apiBaseService.js"></script>
   <script src="~/js/services/apiService.js"></script>
+  <script src="~/js/services/broadcastService.js"></script>
+  <script src="~/js/services/criteriaService.js"></script>
   <script src="~/js/services/externalLibService.js"></script>
 }
 

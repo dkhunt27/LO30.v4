@@ -13,6 +13,9 @@ using LO30.Web.Models;
 using LO30.Web.Services;
 using LO30.Web.Models.Context;
 using Newtonsoft.Json.Serialization;
+using AutoMapper;
+using LO30.Web.Models.Objects;
+using LO30.Web.ViewModels.Api;
 
 namespace LO30.Web
 {
@@ -97,6 +100,17 @@ namespace LO30.Web
       app.UseStaticFiles();
 
       app.UseIdentity();
+
+      Mapper.Initialize(config =>
+      {
+        config.CreateMap<TeamStanding, TeamStandingViewModel>()
+              .ForMember(vm => vm.DivisionLongName, opt => opt.MapFrom(m => m.Division.DivisionLongName))
+              .ForMember(vm => vm.DivisionShortName, opt => opt.MapFrom(m => m.Division.DivisionShortName))
+              .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
+              .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
+              .ReverseMap();
+      });
 
       // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
 

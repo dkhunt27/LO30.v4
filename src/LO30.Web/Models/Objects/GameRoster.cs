@@ -16,7 +16,7 @@ namespace LO30.Web.Models.Objects
     [Required]
     public int TeamId { get; set; }
 
-    [Required]
+    [Required, MaxLength(3)]
     public string PlayerNumber { get; set; }
 
     [Required]

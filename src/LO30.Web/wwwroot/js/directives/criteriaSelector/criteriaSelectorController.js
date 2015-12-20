@@ -7,7 +7,8 @@ lo30NgApp.controller('lo30CriteriaSelectorController',
     '$scope',
     'externalLibService',
     'apiService',
-    function ($log, $scope, externalLibService, apiService) {
+    'criteriaService',
+    function ($log, $scope, externalLibService, apiService, criteriaService) {
 
       var _ = externalLibService._;
       var sjv = externalLibService.sjv;
@@ -16,73 +17,14 @@ lo30NgApp.controller('lo30CriteriaSelectorController',
 
         $scope.local = {
           seasons: [],
-          selectedSeason: {},
           games: [],
-          selectedGame: {},
           gamesToDisplay: [],
           gamesToDisplayMax: 10,
           gamesToDisplayIndex: 0,
-          lastProcessedGameId: -1,
-
-          fetchSeasonsCompleted: false,
-          fetchGamesCompleted: false
+          lastProcessedGameId: -1
         };
       };
 
-      $scope.fetchSeasons = function () {
-
-        $scope.local.fetchSeasonsCompleted = false;
-        $scope.local.seasons = [];
-
-        apiService.seasons.listForSeasonsWithGameSelection().then(function (fulfilled) {
-          $scope.local.seasons = fulfilled.reverse();
-
-          if (!$scope.local.selectedSeason || !$scope.local.selectedSeason.seasonName) {
-            // default selected season to the current season
-            $scope.local.selectedSeason = _.find($scope.local.seasons, function (season) { return season.isCurrentSeason === true; });
-          }
-        }).finally(function () {
-          $scope.local.fetchSeasonsCompleted = true;
-        });
-      };
-
-      $scope.fetchGames = function (seasonId) {
-
-        $scope.local.fetchGamesCompleted = false;
-        $scope.local.games = [];
-
-        apiService.games.listForSeasonId(seasonId).then(function (fulfilled) {
-
-          $scope.local.games = fulfilled;
-
-          // TODO, some how determine what game to "select"...last game processed...closes game to today?
-
-          var displayIndex = $scope.local.games.length - $scope.local.gamesToDisplayMax;
-
-          $scope.updateGamesToDisplay(displayIndex, $scope.local.gamesToDisplayMax);
-
-        }).finally(function () {
-
-          $scope.local.fetchGamesCompleted = true;
-
-        });
-      };
-
-      $scope.fetchLastProcessedGameId = function (seasonId) {
-
-        $scope.local.fetchLastProcessedGameIdCompleted = false;
-        $scope.local.lastProcessedGameId = -1;
-
-        apiService.dataProcessing.getLastGameProcessedForSeasonId(seasonId).then(function (fulfilled) {
-
-          $scope.local.lastProcessedGameId = fulfilled.gameId;
-
-        }).finally(function () {
-
-          $scope.local.fetchLastProcessedGameIdCompleted = true;
-
-        });
-      };
 
       $scope.updateGamesToDisplay = function (index, displayMax) {
 
@@ -108,9 +50,10 @@ lo30NgApp.controller('lo30CriteriaSelectorController',
 
       };
 
+
       $scope.selectSeason = function (seasonId) {
 
-        $scope.local.selectedSeason = _.find($scope.local.seasons, function (season) { return season.seasonId === seasonId; });
+        $scope.local.selectedSeason = _.find($scope.seasons(), function (season) { return season.seasonId === seasonId; });
 
       };
 
@@ -139,7 +82,8 @@ lo30NgApp.controller('lo30CriteriaSelectorController',
 
         $scope.setWatches();
 
-        $scope.fetchSeasons();
+        $scope.local.seasons = criteriaService.season.data().reverse();
+        $scope.local.selectedSeason = criteriaService.season.get();
 
       };
 

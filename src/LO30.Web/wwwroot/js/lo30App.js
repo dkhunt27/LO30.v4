@@ -1,10 +1,25 @@
 ﻿"use strict";
 
-var lo30NgApp = angular.module("lo30NgApp", ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'ui.select', 'ngSanitize']);
+var lo30NgApp = angular.module("lo30NgApp", ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'ui.select', 'ngSanitize', 'matchMedia']);
 
 lo30NgApp.constant("constApisUrl", "/api");
 
 lo30NgApp.config(function ($routeProvider) {
+
+  $routeProvider.when("/standings", {
+    controller: "standingsController",
+    templateUrl: "/views/standings.html",
+    resolve: {
+      criteriaServiceResolved: [
+        'criteriaService',
+        function (criteriaService) {
+          return criteriaService.initialize().then(function(fulfilled) {
+            return criteriaService;
+          });
+        }
+      ]
+    }
+  });
 
   $routeProvider.when("/stats/players", {
     controller: "statsPlayersController",

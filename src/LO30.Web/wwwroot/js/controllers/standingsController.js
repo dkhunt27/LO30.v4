@@ -2,7 +2,7 @@
 
 /* jshint -W117 */ //(remove the undefined warning)
 lo30NgApp.controller('standingsController',
-  function ($log, $scope, $timeout, $routeParams, apiService, criteriaServiceResolved, screenSize, externalLibService) {
+  function ($log, $rootScope, $scope, $timeout, $routeParams, apiService, criteriaService, screenSize, externalLibService, broadcastService) {
 
     var _ = externalLibService._;
 
@@ -66,6 +66,13 @@ lo30NgApp.controller('standingsController',
 
       //  }
       //});
+
+      $scope.$on(broadcastService.events().seasonSet, function () {
+
+        var criteriaSeason = criteriaService.season.get();
+
+        $scope.fetchTeamStandings(criteriaSeason.seasonId, false);
+      });
     };
 
     $scope.activate = function () {
@@ -74,9 +81,6 @@ lo30NgApp.controller('standingsController',
 
       $scope.setWatches();
 
-      var criteriaSeason = criteriaServiceResolved.season.get();
-
-      $scope.fetchTeamStandings(criteriaSeason.seasonId, false);
     };
 
     $scope.activate();

@@ -5,10 +5,11 @@ lo30NgApp.controller('lo30CriteriaSelectorController',
   [
     '$log',
     '$scope',
+    'broadcastService',
     'externalLibService',
     'apiService',
     'criteriaService',
-    function ($log, $scope, externalLibService, apiService, criteriaService) {
+    function ($log, $scope, broadcastService, externalLibService, apiService, criteriaService) {
 
       var _ = externalLibService._;
       var sjv = externalLibService.sjv;
@@ -26,42 +27,42 @@ lo30NgApp.controller('lo30CriteriaSelectorController',
       };
 
 
-      $scope.updateGamesToDisplay = function (index, displayMax) {
+      //$scope.updateGamesToDisplay = function (index, displayMax) {
 
-        // TODO, update to take into account media query / screen size
-        $scope.local.gamesToDisplay = $scope.local.games.slice(index, index+displayMax);
+      //  // TODO, update to take into account media query / screen size
+      //  $scope.local.gamesToDisplay = $scope.local.games.slice(index, index+displayMax);
 
-        $scope.local.gamesToDisplayIndex = index;
-      }
+      //  $scope.local.gamesToDisplayIndex = index;
+      //}
 
-      $scope.displayPreviousGames = function () {
+      //$scope.displayPreviousGames = function () {
 
-        var displayIndex = $scope.local.gamesToDisplayIndex - $scope.local.gamesToDisplayMax;
+      //  var displayIndex = $scope.local.gamesToDisplayIndex - $scope.local.gamesToDisplayMax;
 
-        $scope.updateGamesToDisplay(displayIndex, $scope.local.gamesToDisplayMax);
+      //  $scope.updateGamesToDisplay(displayIndex, $scope.local.gamesToDisplayMax);
 
-      };
+      //};
 
-      $scope.displayFutureGames = function () {
+      //$scope.displayFutureGames = function () {
 
-        var displayIndex = $scope.local.gamesToDisplayIndex + $scope.local.gamesToDisplayMax;
+      //  var displayIndex = $scope.local.gamesToDisplayIndex + $scope.local.gamesToDisplayMax;
 
-        $scope.updateGamesToDisplay(displayIndex, $scope.local.gamesToDisplayMax);
+      //  $scope.updateGamesToDisplay(displayIndex, $scope.local.gamesToDisplayMax);
 
-      };
+      //};
 
 
-      $scope.selectSeason = function (seasonId) {
+      //$scope.selectSeason = function (seasonId) {
 
-        $scope.local.selectedSeason = _.find($scope.seasons(), function (season) { return season.seasonId === seasonId; });
+      //  $scope.local.selectedSeason = _.find($scope.seasons(), function (season) { return season.seasonId === seasonId; });
 
-      };
+      //};
 
-      $scope.selectGame = function (gameId) {
+      //$scope.selectGame = function (gameId) {
 
-        $scope.local.selectedGame = _.find($scope.local.games, function (game) { return game.gameId === gameId; });
+      //  $scope.local.selectedGame = _.find($scope.local.games, function (game) { return game.gameId === gameId; });
 
-      };
+      //};
 
       $scope.setWatches = function () {
 
@@ -69,10 +70,32 @@ lo30NgApp.controller('lo30CriteriaSelectorController',
 
           if (sjv.isNotEmpty(newVal) && newVal !== oldVal) {
 
-            $scope.fetchGames($scope.local.selectedSeason.seasonId);
-            $scope.fetchLastProcessedGameId($scope.local.selectedSeason.seasonId);
+            criteriaService.season.set($scope.local.selectedSeason);
 
           }
+        });
+
+        $scope.$watch('local.selectedGame', function (newVal, oldVal) {
+
+          if (sjv.isNotEmpty(newVal) && newVal !== oldVal) {
+
+            criteriaService.game.set($scope.local.selectedGame);
+
+          }
+        });
+
+        $scope.$on(broadcastService.events().seasonSet, function () {
+
+          $scope.local.seasons = criteriaService.season.data().reverse();
+
+          $scope.local.selectedSeason = criteriaService.season.get();
+        });
+
+        $scope.$on(broadcastService.events().gameSet, function () {
+
+          $scope.local.games = criteriaService.game.data().reverse();
+
+          $scope.local.selectedGame = criteriaService.game.get();
         });
       };
 
@@ -82,8 +105,7 @@ lo30NgApp.controller('lo30CriteriaSelectorController',
 
         $scope.setWatches();
 
-        $scope.local.seasons = criteriaService.season.data().reverse();
-        $scope.local.selectedSeason = criteriaService.season.get();
+        criteriaService.initialize();
 
       };
 

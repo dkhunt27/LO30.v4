@@ -10,14 +10,14 @@ lo30NgApp.config(function ($routeProvider) {
     controller: "standingsController",
     templateUrl: "/views/standings.html",
     resolve: {
-      criteriaServiceResolved: [
-        'criteriaService',
-        function (criteriaService) {
-          return criteriaService.initialize().then(function(fulfilled) {
-            return criteriaService;
-          });
-        }
-      ]
+      //criteriaServiceResolved: [
+      //  'criteriaService',
+      //  function (criteriaService) {
+      //    return criteriaService.initialize().then(function(fulfilled) {
+      //      return criteriaService;
+      //    });
+      //  }
+      //]
     }
   });
 

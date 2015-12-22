@@ -2,9 +2,15 @@
 
 /* jshint -W117 */ //(remove the undefined warning)
 lo30NgApp.factory("criteriaService",
-  function ($log, $q, apiService, externalLibService) {
+  function ($log, $q, apiService, externalLibService, broadcastService) {
 
     var _ = externalLibService._;
+
+    var service = {
+      season: {},
+      playoffs: {},
+      game: {}
+    };
 
     var seasons, playoffs, games, lastProcessedGameId;
 
@@ -12,12 +18,6 @@ lo30NgApp.factory("criteriaService",
       season: "not set",
       playoffs: "not set",
       game: "not set"
-    };
-
-    var service = {
-      season: {},
-      playoffs: {},
-      game: {}
     };
 
     var fetchSeasons = function () {
@@ -36,7 +36,7 @@ lo30NgApp.factory("criteriaService",
           service.season.set(currentSeason);
 
         }
-
+        
         return seasons;
       });
     };
@@ -49,22 +49,13 @@ lo30NgApp.factory("criteriaService",
 
         games = fulfilled;
 
-        // TODO, some how determine what game to "select"...last game processed...closes game to today?
+        return apiService.dataProcessing.getLastGameProcessedForSeasonId(seasonId)
 
-      });
-    };
+      }).then(function (fulfilled) {
 
-    var fetchLastProcessedGameId = function (seasonId) {
+        var lastProcessedGame = _.find(games, function (game) { return game.gameId === fulfilled.gameId; });
 
-      lastProcessedGameId = -1;
-
-      return apiService.dataProcessing.getLastGameProcessedForSeasonId(seasonId).then(function (fulfilled) {
-
-        lastProcessedGameId = fulfilled.gameId;
-
-        if (service.game.isNotSet()) {
-          service.game.set(lastProcessedGameId);
-        }
+        service.game.set(lastProcessedGame);
 
       });
     };
@@ -77,6 +68,10 @@ lo30NgApp.factory("criteriaService",
         if (service.season.isNotSet()) {
 
           promises.push(fetchSeasons());
+
+        } else {
+
+          $log.debug("criteriaService.initialize() season already set");
 
         }
 
@@ -115,7 +110,13 @@ lo30NgApp.factory("criteriaService",
       },
       set: function (season) {
 
-        criteria.season = season;
+        if (criteria.season !== season) {
+          criteria.season = season;
+
+          fetchGames(season.seasonId);
+
+          broadcastService.emitEvent(broadcastService.events().seasonSet);
+        }
 
       },
       data: function () {
@@ -173,6 +174,12 @@ lo30NgApp.factory("criteriaService",
       set: function (game) {
 
         criteria.game = game;
+
+        broadcastService.emitEvent(broadcastService.events().gameSet);
+      },
+      data: function () {
+
+        return games;
 
       }
     }

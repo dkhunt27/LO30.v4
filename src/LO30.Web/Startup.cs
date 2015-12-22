@@ -110,6 +110,22 @@ namespace LO30.Web
               .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
               .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
               .ReverseMap();
+
+        config.CreateMap<PlayerStatCareer, PlayerStatCareerViewModel>()
+              .ForMember(vm => vm.FirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.Suffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ReverseMap();
+
+        config.CreateMap<PlayerStatTeam, PlayerStatTeamViewModel>()
+              .ForMember(vm => vm.FirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.Suffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
+              .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
+              .ReverseMap();
+
       });
 
       // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715

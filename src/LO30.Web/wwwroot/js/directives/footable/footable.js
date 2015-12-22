@@ -19,6 +19,10 @@ lo30NgApp.directive('lo30Footable',
             footableTable.footable();
           }
 
+          //footableTable.trigger('footable_initialized');
+          //footableTable.trigger('footable_resize');
+          //footableTable.data('footable').redraw();
+
           footableTable.data('__FooTable__').draw();
 
         });

@@ -1,21 +1,50 @@
 'use strict';
 
 /* jshint -W117 */ //(remove the undefined warning)
-lo30NgApp.controller('statsPlayersController',
-    function ($scope, apiService, criteriaService, screenSize, broadcastService, externalLibService) {
+lo30NgApp.controller('playersController',
+    function ($scope, $routeParams, apiService, criteriaService, screenSize, broadcastService, externalLibService) {
 
       var _ = externalLibService._;
 
       $scope.initializeScopeVariables = function () {
 
         $scope.local = {
+          selectedPlayerId: 593,
+          playerStatGames: [],
           playerStatTeams: [],
+          playerStatSeasons: [],
+          playerStatCareer: {},
+          playerStatGamesToDisplay: [],
           playerStatTeamsToDisplay: [],
-          fetchPlayerStatTeamsCompleted: false
+          playerStatSeasonsToDisplay: [],
+          playerStatCareerToDisplay: [],
+          fetchplayerStatGamesCompleted: false,
+          fetchPlayerStatTeamsCompleted: false,
+          fetchplayerStatSeasonsCompleted: false,
+          fetchplayerStatCareerCompleted: false
         };
       };
 
-      $scope.fetchPlayerStatTeams = function (seasonId, playoffs) {
+      $scope.fetchPlayerStatCareer = function (playerId) {
+
+        $scope.local.fetchplayerStatCareerCompleted = false;
+
+        $scope.local.playerStatCareer = {};
+
+        apiService.playerStatCareers.getForPlayerId(playerId).then(function (fulfilled) {
+
+          $scope.local.playerStatCareer = fulfilled;
+
+          $scope.buildPlayerStatCareerToDisplay();
+
+        }).finally(function () {
+
+          $scope.local.fetchplayerStatCareerCompleted = true;
+
+        });
+      };
+
+      $scope.fetchPlayerStatTeams = function (playerId, seasonId) {
 
         $scope.local.fetchPlayerStatTeamsCompleted = false;
 
@@ -34,8 +63,41 @@ lo30NgApp.controller('statsPlayersController',
         });
       };
 
-      $scope.buildPlayerStatTeamsToDisplay = function () {
+      $scope.buildPlayerStatCareerToDisplay = function () {
 
+        $scope.local.playerStatCareerToDisplay = $scope.local.playerStatCareer;
+
+        var item = $scope.local.playerStatCareerToDisplay;
+
+        if (screenSize.is('xs, sm')) {
+
+          item.playerNameToDisplay = item.firstName + '<br/>' + item.lastName;
+
+          if (item.suffix) {
+            item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
+          }
+
+        } else if (screenSize.is('md')) {
+
+          item.playerNameToDisplay = item.firstName + '<br/>' + item.lastName;
+
+          if (item.suffix) {
+            item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
+          }
+
+        } else {
+
+          item.playerNameToDisplay = item.firstName + ' ' + item.lastName;
+
+          if (item.suffix) {
+            item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
+          }
+
+
+        }
+      };
+
+      $scope.buildPlayerStatTeamsToDisplay = function () {
 
         $scope.local.playerStatTeamsToDisplay = $scope.local.playerStatTeams.map(function (item, index) {
 
@@ -104,6 +166,11 @@ lo30NgApp.controller('statsPlayersController',
 
         $scope.setWatches();
 
+        if ($routeParams.playerId) {
+          $scope.local.selectedPlayerId = $routeParams.playerId;
+        }
+
+        $scope.fetchPlayerStatCareer($scope.local.selectedPlayerId);
       };
 
       $scope.activate();

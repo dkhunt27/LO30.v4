@@ -9,6 +9,8 @@ lo30NgApp.factory("apiService",
       var service = {
         dataProcessing: {},
         games: {},
+        playerStatCareers: {},
+        playerStatTeams: {},
         seasons: {},
         teamStandings: {}
       };
@@ -27,6 +29,26 @@ lo30NgApp.factory("apiService",
         var inputs = {
           apiDataType: "games.listForSeasonId",
           urlPartial: "games/seasons/" + seasonId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.playerStatCareers.getForPlayerId = function (playerId) {
+        var inputs = {
+          apiDataType: "playerStatCareers.getForPlayerId",
+          urlPartial: "playerstatcareers/players/" + playerId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.playerStatTeams.listForSeasonIdPlayoffs = function (seasonId, playoffs) {
+        var inputs = {
+          apiDataType: "playerStatTeams.listForSeasonIdPlayoffs",
+          urlPartial: "playerstatteams/seasons/" + seasonId + "/playoffs/" + playoffs,
           method: "GET",
           params: null
         }

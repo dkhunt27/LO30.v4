@@ -1,5 +1,5 @@
 ﻿<div class="row">
-  <div class="col-sm-6">
+  <div class="col-sm-4">
     <div class="form-group">
       <label class="col-sm-4 control-label">Season</label>
       <div class="col-sm-8">
@@ -14,7 +14,22 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-6">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="col-sm-4 control-label">Season Type</label>
+      <div class="col-sm-8">
+        <ui-select theme="select2" ng-model="local.selectedSeasonType">
+          <ui-select-match>
+            <span ng-bind="$select.selected"></span>
+          </ui-select-match>
+          <ui-select-choices repeat="seasonType in (local.seasonTypes | filter: $select.search) track by seasonType">
+            <span ng-bind="seasonType"></span>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
     <div class="form-group">
       <label class="col-sm-4 control-label">Game</label>
       <div class="col-sm-8">

@@ -19,6 +19,7 @@ lo30NgApp.controller('lo30CriteriaSelectorController',
         $scope.local = {
           seasons: [],
           games: [],
+          seasonTypes: [ 'Regular Season', false],
           gamesToDisplay: [],
           gamesToDisplayMax: 10,
           gamesToDisplayIndex: 0,
@@ -68,16 +69,25 @@ lo30NgApp.controller('lo30CriteriaSelectorController',
 
         $scope.$watch('local.selectedSeason', function (newVal, oldVal) {
 
-          if (sjv.isNotEmpty(newVal) && newVal !== oldVal) {
+          if (sjv.isNotEmpty(newVal) && sjv.isNotEmpty(oldVal) && newVal !== oldVal) {
 
             criteriaService.season.set($scope.local.selectedSeason);
 
           }
         });
 
+        $scope.$watch('local.selectedSeasonType', function (newVal, oldVal) {
+
+          if (sjv.isNotEmpty(newVal) && sjv.isNotEmpty(oldVal) && newVal !== oldVal) {
+
+            criteriaService.seasonType.set($scope.local.selectedSeasonType);
+
+          }
+        });
+
         $scope.$watch('local.selectedGame', function (newVal, oldVal) {
 
-          if (sjv.isNotEmpty(newVal) && newVal !== oldVal) {
+          if (sjv.isNotEmpty(newVal) && sjv.isNotEmpty(oldVal) && newVal !== oldVal) {
 
             criteriaService.game.set($scope.local.selectedGame);
 
@@ -86,14 +96,21 @@ lo30NgApp.controller('lo30CriteriaSelectorController',
 
         $scope.$on(broadcastService.events().seasonSet, function () {
 
-          $scope.local.seasons = criteriaService.season.data().reverse();
+          $scope.local.seasons = criteriaService.season.data();
 
           $scope.local.selectedSeason = criteriaService.season.get();
         });
 
+        $scope.$on(broadcastService.events().seasonTypeSet, function () {
+
+          $scope.local.seasonTypes = criteriaService.seasonType.data();
+
+          $scope.local.selectedSeasonType = criteriaService.seasonType.get();
+        });
+
         $scope.$on(broadcastService.events().gameSet, function () {
 
-          $scope.local.games = criteriaService.game.data().reverse();
+          $scope.local.games = criteriaService.game.data();
 
           $scope.local.selectedGame = criteriaService.game.get();
         });

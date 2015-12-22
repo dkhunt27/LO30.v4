@@ -2,14 +2,13 @@
 
 /* jshint -W117 */ //(remove the undefined warning)
 lo30NgApp.controller('standingsController',
-  function ($log, $rootScope, $scope, $timeout, $routeParams, apiService, criteriaService, screenSize, externalLibService, broadcastService) {
-
-    var _ = externalLibService._;
+  function ($scope, apiService, criteriaService, screenSize, broadcastService) {
 
     $scope.initializeScopeVariables = function () {
 
       $scope.local = {
         teamStandings: [],
+        teamStandingsToDisplay: [],
         fetchTeamStandingsCompleted: false
       };
     };
@@ -57,21 +56,25 @@ lo30NgApp.controller('standingsController',
 
     $scope.setWatches = function () {
 
-      //$scope.$watch('criteriaService.season', function (newVal, oldVal) {
-
-      //  if (sjv.isNotEmpty(newVal) && newVal !== oldVal) {
-
-      //    $scope.fetchGames($scope.local.selectedSeason.seasonId);
-      //    $scope.fetchLastProcessedGameId($scope.local.selectedSeason.seasonId);
-
-      //  }
-      //});
-
-      $scope.$on(broadcastService.events().seasonSet, function () {
+      $scope.$on(broadcastService.events().seasonTypeSet, function () {
 
         var criteriaSeason = criteriaService.season.get();
 
-        $scope.fetchTeamStandings(criteriaSeason.seasonId, false);
+        var criteriaSeasonType = criteriaService.seasonType.get();
+
+        var criteriaSeasonTypeBool;
+
+        if (criteriaSeasonType === "Playoffs") {
+
+          criteriaSeasonTypeBool = true;
+
+        } else {
+
+          criteriaSeasonTypeBool = false;
+
+        }
+
+        $scope.fetchTeamStandings(criteriaSeason.seasonId, criteriaSeasonTypeBool);
       });
     };
 

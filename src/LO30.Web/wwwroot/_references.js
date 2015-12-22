@@ -1,10 +1,11 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="../gulpfile.js" />
-/// <reference path="js/controllers/statsplayerscontroller - copy.js" />
+/// <reference path="js/controllers/playercontroller.js" />
+/// <reference path="js/controllers/standingsController.js" />
 /// <reference path="js/controllers/statsplayerscontroller.js" />
 /// <reference path="js/directives/criteriaselector/criteriaselector.js" />
 /// <reference path="js/directives/criteriaselector/criteriaselectorcontroller.js" />
-/// <reference path="js/directives/footable/criteriaselector.js" />
+/// <reference path="js/directives/footable/footable.js" />
 /// <reference path="js/filters/percentagefilter.js" />
 /// <reference path="js/lo30app.js" />
 /// <reference path="js/old/controllers/Admin/DataProcessingController.js" />
@@ -93,7 +94,7 @@
 /// <reference path="js/old/services/NewsService.js" />
 /// <reference path="js/services/apibaseservice.js" />
 /// <reference path="js/services/apiService.js" />
-/// <reference path="js/services/criteriaservice - copy.js" />
+/// <reference path="js/services/broadcastService.js" />
 /// <reference path="js/services/criteriaservice.js" />
 /// <reference path="js/services/externallibservice.js" />
 /// <reference path="lib/angular/angular.js" />

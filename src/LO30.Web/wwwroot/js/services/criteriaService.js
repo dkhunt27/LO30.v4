@@ -8,15 +8,15 @@ lo30NgApp.factory("criteriaService",
 
     var service = {
       season: {},
-      playoffs: {},
+      seasonType: {},
       game: {}
     };
 
-    var seasons, playoffs, games, lastProcessedGameId;
+    var seasons, games, seasonTypes;
 
     var criteria = {
       season: "not set",
-      playoffs: "not set",
+      seasonType: "not set",
       game: "not set"
     };
 
@@ -41,6 +41,25 @@ lo30NgApp.factory("criteriaService",
       });
     };
 
+    var fetchSeasonTypes = function (gamePlayoffs) {
+      return $q(function (fulfill) {
+
+        seasonTypes = ["Regular Season", "Playoffs"];
+
+        if (gamePlayoffs) {
+
+          service.seasonType.set("Playoffs");
+
+        } else {
+
+          service.seasonType.set("Regular Season");
+
+        }
+
+        return fulfill(seasonTypes);
+      });
+    };
+
     var fetchGames = function (seasonId) {
 
       games = [];
@@ -56,6 +75,8 @@ lo30NgApp.factory("criteriaService",
         var lastProcessedGame = _.find(games, function (game) { return game.gameId === fulfilled.gameId; });
 
         service.game.set(lastProcessedGame);
+
+        return games;
 
       });
     };
@@ -111,26 +132,27 @@ lo30NgApp.factory("criteriaService",
       set: function (season) {
 
         if (criteria.season !== season) {
+
           criteria.season = season;
 
-          fetchGames(season.seasonId);
-
           broadcastService.emitEvent(broadcastService.events().seasonSet);
+
+          fetchGames(season.seasonId);
         }
 
       },
       data: function () {
 
-        return seasons;
+        return seasons.reverse();
 
       }
     }
 
-    service.playoffs = {
+    service.seasonType = {
 
       isNotSet: function () {
 
-        if (criteria.playoffs === "not set") {
+        if (criteria.seasonType === "not set") {
 
           return true;
 
@@ -142,12 +164,23 @@ lo30NgApp.factory("criteriaService",
       },
       get: function () {
 
-        return criteria.playoffs;
+        return criteria.seasonType;
 
       },
-      set: function (playoffs) {
+      set: function (seasonType) {
 
-        criteria.playoffs = playoffs;
+        if (criteria.seasonType !== seasonType) {
+
+          criteria.seasonType = seasonType;
+
+          broadcastService.emitEvent(broadcastService.events().seasonTypeSet);
+
+        }
+
+      },
+      data: function () {
+
+        return seasonTypes;
 
       }
     }
@@ -176,10 +209,12 @@ lo30NgApp.factory("criteriaService",
         criteria.game = game;
 
         broadcastService.emitEvent(broadcastService.events().gameSet);
+
+        fetchSeasonTypes(game.playoffs);
       },
       data: function () {
 
-        return games;
+        return games.reverse();
 
       }
     }

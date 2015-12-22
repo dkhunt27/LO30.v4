@@ -12,13 +12,13 @@ lo30NgApp.factory(/* jshint +W117 */
 
       var eventList = {
         seasonSet: "seasonSet",
-        playoffsSet: "playoffsSet",
+        seasonTypeSet: "seasonTypeSet",
         gameSet: "gameSet"
       };
 
       var eventListEmitCount = {
         seasonSet: 0,
-        playoffsSet: 0,
+        seasonTypeSet: 0,
         gameSet: 0
       };
 

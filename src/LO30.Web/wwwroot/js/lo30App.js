@@ -26,7 +26,12 @@ lo30NgApp.config(function ($routeProvider) {
     templateUrl: "/views/statsPlayers.html"
   });
 
-  $routeProvider.otherwise({ redirectTo: "/stats/players" });
+  $routeProvider.when("/players/:playerId", {
+    controller: "playersController",
+    templateUrl: "/views/players.html"
+  });
+
+  $routeProvider.otherwise({ redirectTo: "/standings" });
 });
 
 

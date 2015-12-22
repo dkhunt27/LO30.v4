@@ -11,30 +11,30 @@ using LO30.Web.ViewModels.Api;
 
 namespace LO30.Web.Controllers.Api
 {
-  [Route("api/teamstandings")]
-  public class TeamStandingsController : Controller
+  [Route("api/playerstatteams")]
+  public class PlayerStatTeamController : Controller
   {
     private LO30DbContext _context;
 
-    public TeamStandingsController(LO30DbContext context)
+    public PlayerStatTeamController(LO30DbContext context)
     {
       _context = context;
     }
 
     [HttpGet("seasons/{seasonId:int}/playoffs/{playoffs:bool}")]
-    public JsonResult ListTeamStandingsForSeasonIdPlayoffs(int seasonId, bool playoffs)
+    public JsonResult ListPlayerStatTeamsForSeasonIdPlayoffs(int seasonId, bool playoffs)
     {
-      List<TeamStanding> results;
+      List<PlayerStatTeam> results;
       using (_context)
       {
-        results = _context.TeamStandings
+        results = _context.PlayerStatTeams
                           .Include(x=>x.Team)
-                          .ThenInclude(x=>x.Division)
+                          .Include(x=>x.Player)
                           .Where(x=>x.SeasonId == seasonId && x.Playoffs == playoffs)
                           .ToList();
       }
 
-      return Json(Mapper.Map<IEnumerable<TeamStandingViewModel>>(results.OrderBy(s => s.SeasonId)));
+      return Json(Mapper.Map<IEnumerable<PlayerStatTeamViewModel>>(results));
     }
   }
 }

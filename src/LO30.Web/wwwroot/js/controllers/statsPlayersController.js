@@ -2,7 +2,7 @@
 
 /* jshint -W117 */ //(remove the undefined warning)
 lo30NgApp.controller('statsPlayersController',
-    function ($scope, apiService, criteriaService, screenSize, broadcastService, externalLibService) {
+    function ($scope, apiService, criteriaService, screenSize, broadcastService, externalLibService, DTOptionsBuilder, DTColumnBuilder) {
 
       var _ = externalLibService._;
 
@@ -11,7 +11,54 @@ lo30NgApp.controller('statsPlayersController',
         $scope.local = {
           playerStatTeams: [],
           playerStatTeamsToDisplay: [],
-          fetchPlayerStatTeamsCompleted: false
+          fetchPlayerStatTeamsCompleted: false,
+
+          dt: {
+            options: DTOptionsBuilder.newOptions()
+                        //.withOption('paging', false)
+                        //.withOption('searching', false)
+                        //.withDOM('<"wrapper"flipt>')
+                        .withOption('order', [5, 'desc'])
+                        .withOption('fnRowCallback', function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                          var index = iDisplayIndex + 1;
+                          $('td:eq(0)', nRow).html(index);
+                          return nRow;
+                        })
+                        //.withOption('scrollY', '300px')
+                        //.withOption('scrollX', '100%')
+                        //.withOption('scrollCollapse', true)
+                        //.withFixedColumns({
+                        //  leftColumns: 2
+                        //})
+                        .withLightColumnFilter({
+                          1: { "type": "text", "cssClass": "input-non-auto" },
+                          2: { "type": "text", "cssClass": "input-non-auto" },
+                          3: { "type": "text", "cssClass": "input-non-auto" },
+                          4: { "type": "text", "cssClass": "input-non-auto" },
+                          5: { "type": "text", "cssClass": "input-non-auto" },
+                          6: { "type": "text", "cssClass": "input-non-auto" },
+                          7: { "type": "text", "cssClass": "input-non-auto" },
+                          8: { "type": "text", "cssClass": "input-non-auto" },
+                          9: { "type": "text", "cssClass": "input-non-auto" },
+                          10: { "type": "text", "cssClass": "input-non-auto" },
+                          11: { "type": "text", "cssClass": "input-non-auto" },
+                          12: { "type": "text", "cssClass": "input-non-auto" },
+                          13: { "type": "text", "cssClass": "input-non-auto" }
+                        })
+                        .withButtons([
+                          'copy',
+                          'print',
+                          'excel',
+                          {
+                            text: '<span><span class="fa fa-filter"></span>Filter</span>',
+                            key: '1',
+                            action: function (e, dt, node, config) {
+                              var el = $("#datatables-filter-row").toggle();
+                            }
+                          }
+                        ])
+                        .withBootstrap()
+          }
         };
       };
 
@@ -43,8 +90,8 @@ lo30NgApp.controller('statsPlayersController',
 
           if (screenSize.is('xs, sm')) {
 
-            item.teamNameToDisplay = item.teamNameCode;
-            item.playerNameToDisplay = item.firstName + '<br/>' + item.lastName;
+            item.teamNameToDisplay = item.teamCode;
+            item.playerNameToDisplay = item.firstName + ' ' + item.lastName;
 
             if (item.suffix) {
               item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
@@ -53,7 +100,7 @@ lo30NgApp.controller('statsPlayersController',
           } else if (screenSize.is('md')) {
 
             item.teamNameToDisplay = item.teamNameShort;
-            item.playerNameToDisplay = item.firstName + '<br/>' + item.lastName;
+            item.playerNameToDisplay = item.firstName + ' ' + item.lastName;
 
             if (item.suffix) {
               item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
@@ -74,27 +121,38 @@ lo30NgApp.controller('statsPlayersController',
         });
       };
 
+      $scope.fetchData = function () {
+        var criteriaSeason = criteriaService.season.get();
+
+        var criteriaSeasonType = criteriaService.seasonType.get();
+
+        var criteriaSeasonTypeBool;
+
+        if (criteriaSeasonType === "Playoffs") {
+
+          criteriaSeasonTypeBool = true;
+
+        } else {
+
+          criteriaSeasonTypeBool = false;
+
+        }
+
+        $scope.fetchPlayerStatTeams(criteriaSeason.seasonId, criteriaSeasonTypeBool);
+      };
+
       $scope.setWatches = function () {
+
+        $scope.$on(broadcastService.events().seasonSet, function () {
+
+          $scope.fetchData();
+
+        });
 
         $scope.$on(broadcastService.events().seasonTypeSet, function () {
 
-          var criteriaSeason = criteriaService.season.get();
+          $scope.fetchData();
 
-          var criteriaSeasonType = criteriaService.seasonType.get();
-
-          var criteriaSeasonTypeBool;
-
-          if (criteriaSeasonType === "Playoffs") {
-
-            criteriaSeasonTypeBool = true;
-
-          } else {
-
-            criteriaSeasonTypeBool = false;
-
-          }
-
-          $scope.fetchPlayerStatTeams(criteriaSeason.seasonId, criteriaSeasonTypeBool);
         });
       };
 
@@ -103,6 +161,8 @@ lo30NgApp.controller('statsPlayersController',
         $scope.initializeScopeVariables();
 
         $scope.setWatches();
+
+        $scope.fetchData();
 
       };
 

@@ -2,7 +2,7 @@
 
 /* jshint -W117 */ //(remove the undefined warning)
 lo30NgApp.controller('playersController',
-    function ($scope, $routeParams, apiService, criteriaService, screenSize, broadcastService, externalLibService) {
+    function ($scope, $routeParams, $timeout, apiService, criteriaServiceResolved, screenSize, broadcastService, externalLibService) {
 
       var _ = externalLibService._;
 
@@ -10,6 +10,7 @@ lo30NgApp.controller('playersController',
 
         $scope.local = {
           selectedPlayerId: 593,
+          selectedSeasonId: 56,
           playerStatGames: [],
           playerStatTeams: [],
           playerStatSeasons: [],
@@ -21,7 +22,13 @@ lo30NgApp.controller('playersController',
           fetchplayerStatGamesCompleted: false,
           fetchPlayerStatTeamsCompleted: false,
           fetchplayerStatSeasonsCompleted: false,
-          fetchplayerStatCareerCompleted: false
+          fetchplayerStatCareerCompleted: false,
+
+          tabStates: {
+            season: false,
+            career: false,
+            profile: false
+          }
         };
       };
 
@@ -44,21 +51,59 @@ lo30NgApp.controller('playersController',
         });
       };
 
+      $scope.fetchPlayerStatSeasons = function (playerId) {
+
+        $scope.local.fetchPlayerStatSeasonsCompleted = false;
+
+        $scope.local.playerStatSeasons = [];
+
+        apiService.playerStatSeasons.listForPlayerId(playerId).then(function (fulfilled) {
+
+          $scope.local.playerStatSeasons = _.sortBy(fulfilled, function (item) { return item.seasonName; });
+
+          $scope.buildPlayerStatSeasonsToDisplay();
+
+        }).finally(function () {
+
+          $scope.local.fetchPlayerStatSeasonsCompleted = true;
+
+        });
+      };
+
       $scope.fetchPlayerStatTeams = function (playerId, seasonId) {
 
         $scope.local.fetchPlayerStatTeamsCompleted = false;
 
         $scope.local.playerStatTeams = [];
 
-        apiService.playerStatTeams.listForSeasonIdPlayoffs(seasonId, playoffs).then(function (fulfilled) {
+        apiService.playerStatTeams.listForPlayerIdSeasonId(playerId, seasonId).then(function (fulfilled) {
 
-          $scope.local.playerStatTeams = _.sortBy(fulfilled, function(item) { return item.points * -1; });
+          $scope.local.playerStatTeams = _.sortBy(fulfilled, function(item) { return item.sub; });
 
           $scope.buildPlayerStatTeamsToDisplay();
 
         }).finally(function () {
 
           $scope.local.fetchPlayerStatTeamsCompleted = true;
+
+        });
+      };
+
+      $scope.fetchPlayerStatGames = function (playerId, seasonId) {
+
+        $scope.local.fetchPlayerStatGamesCompleted = false;
+
+        $scope.local.playerStatGames = [];
+
+        apiService.playerStatGames.listForPlayerIdSeasonId(playerId, seasonId).then(function (fulfilled) {
+
+          $scope.local.playerStatGames = _.sortBy(fulfilled, function (item) { return item.gameId * -1; });
+
+          $scope.buildPlayerStatGamesToDisplay();
+
+        }).finally(function () {
+
+          $scope.local.fetchPlayerStatGamesCompleted = true;
 
         });
       };
@@ -95,6 +140,43 @@ lo30NgApp.controller('playersController',
 
 
         }
+      };
+
+      $scope.buildPlayerStatSeasonsToDisplay = function () {
+
+        $scope.local.playerStatSeasonsToDisplay = $scope.local.playerStatSeasons.map(function (item, index) {
+
+          item.rank = index + 1;
+
+          if (screenSize.is('xs, sm')) {
+
+            item.playerNameToDisplay = item.firstName + '/n' + item.lastName;
+
+            if (item.suffix) {
+              item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
+            }
+
+          } else if (screenSize.is('md')) {
+
+            item.playerNameToDisplay = item.firstName + '/n' + item.lastName;
+
+            if (item.suffix) {
+              item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
+            }
+
+          } else {
+
+            item.playerNameToDisplay = item.firstName + ' ' + item.lastName;
+
+            if (item.suffix) {
+              item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
+            }
+
+          }
+
+          return item;
+        });
+
       };
 
       $scope.buildPlayerStatTeamsToDisplay = function () {
@@ -136,27 +218,53 @@ lo30NgApp.controller('playersController',
         });
       };
 
-      $scope.setWatches = function () {
+      $scope.buildPlayerStatGamesToDisplay = function () {
 
-        $scope.$on(broadcastService.events().seasonTypeSet, function () {
+        $scope.local.playerStatGamesToDisplay = $scope.local.playerStatGames.map(function (item, index) {
 
-          var criteriaSeason = criteriaService.season.get();
+          item.rank = index + 1;
 
-          var criteriaSeasonType = criteriaService.seasonType.get();
+          if (screenSize.is('xs, sm')) {
 
-          var criteriaSeasonTypeBool;
+            item.teamNameToDisplay = item.teamNameCode;
 
-          if (criteriaSeasonType === "Playoffs") {
+          } else if (screenSize.is('md')) {
 
-            criteriaSeasonTypeBool = true;
+            item.teamNameToDisplay = item.teamNameShort;
 
           } else {
 
-            criteriaSeasonTypeBool = false;
+            item.teamNameToDisplay = item.teamNameShort;
 
           }
 
-          $scope.fetchPlayerStatTeams(criteriaSeason.seasonId, criteriaSeasonTypeBool);
+          return item;
+        });
+      };
+
+      $scope.setWatches = function () {
+
+        $scope.$watch('local.tabStates.season', function (newVal, oldVal) {
+
+          if (newVal !== oldVal && newVal) {
+
+            // default is season
+            $scope.fetchPlayerStatTeams($scope.local.selectedPlayerId, $scope.local.selectedSeasonId);
+
+            $scope.fetchPlayerStatGames($scope.local.selectedPlayerId, $scope.local.selectedSeasonId);
+
+          }
+
+        });
+
+        $scope.$watch('local.tabStates.career', function (newVal, oldVal) {
+
+          if (newVal !== oldVal && newVal) {
+
+            $scope.fetchPlayerStatCareer($scope.local.selectedPlayerId);
+
+            $scope.fetchPlayerStatSeasons($scope.local.selectedPlayerId);
+          }
         });
       };
 
@@ -167,10 +275,35 @@ lo30NgApp.controller('playersController',
         $scope.setWatches();
 
         if ($routeParams.playerId) {
-          $scope.local.selectedPlayerId = $routeParams.playerId;
+
+          $scope.local.selectedPlayerId = parseInt($routeParams.playerId, 10);
+
         }
 
-        $scope.fetchPlayerStatCareer($scope.local.selectedPlayerId);
+        if ($routeParams.seasonId) {
+
+          $scope.local.selectedSeasonId = parseInt($routeParams.seasonId, 10);
+
+          criteriaServiceResolved.season.setById($scope.local.selectedSeasonId);
+        }
+
+        if ($routeParams.tab) {
+
+          // use timeout to let the uib-tab initial the active states
+          $timeout(function () {
+            $scope.local.tabStates[$routeParams.tab] = true;
+          }, 100);
+
+        } else {
+
+          // set default tab, after watches so correct data events fire
+          // use timeout to let the uib-tab initial the active states
+          $timeout(function () {
+            $scope.local.tabStates.season = true;
+          }, 100);
+
+        }
+
       };
 
       $scope.activate();

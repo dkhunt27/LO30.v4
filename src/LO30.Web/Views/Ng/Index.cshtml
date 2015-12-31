@@ -12,29 +12,50 @@
 
 
 @section Scripts {
-  <link rel="stylesheet" href="~/lib/angular-ui-select/dist/select.css" />
-  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
-  <link rel="stylesheet" href="~/lib/footable3/compiled/footable.bootstrap.css" />
+
 
   <!-- JAVASCRIPT FILES -->
   <environment names="Development">
     <script src="~/lib/jquery/dist/jquery.js"></script>
-    @*<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>*@
+
+    <script src="~/lib/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="~/lib/datatables.net-bs/js/dataTables.bootstrap.js"></script>
     <script src="~/lib/angular/angular.js"></script>
+    <script src="~/lib/angular-datatables/dist/angular-datatables.js"></script>
+    <script src="~/lib/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js"></script>
+
+
+    <script src="~/lib/datatables.net-fixedcolumns/js/dataTables.fixedColumns.js"></script>
+    <script src="~/lib/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.js"></script>
+
+
+    <script src="~/lib/datatables-light-columnfilter-lo30/dist/dataTables.lightColumnFilter.js"></script>
+    <script src="~/lib/datatables-light-columnfilter-lo30/dist/dataTables.lcf.bootstrap3.js"></script>
+    <script src="~/lib/angular-datatables/dist/plugins/light-columnfilter/angular-datatables.light-columnfilter.js"></script>
+
+
+    <script src="~/lib/datatables.net-buttons/js/dataTables.buttons.js"></script>
+    <script src="~/lib/datatables.net-buttons/js/buttons.colVis.js"></script>
+    <script src="~/lib/datatables.net-buttons/js/buttons.print.js"></script>
+    <script src="~/lib/datatables.net-buttons/js/buttons.flash.js"></script>
+    <script src="~/lib/datatables.net-buttons/js/buttons.html5.js"></script>
+    <script src="~/lib/datatables.net-buttons-bs/js/buttons.bootstrap.js"></script>
+    <script src="~/lib/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.js"></script>
+
   </environment>
   <environment names="Production">
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"
-            asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-            asp-fallback-test="window.jQuery">
-    </script>
-    @*<script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/bootstrap.min.js"
-          asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-          asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
-      </script>*@
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"
-            asp-fallback-src="~/lib/angular/angular.min.js"
-            asp-fallback-test="window.angular">
-    </script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js" asp-fallback-src="~/lib/jquery/dist/jquery.min.js" asp-fallback-test="window.jQuery"></script>
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/lib/datatables.net-fixedcolumns/js/dataTables.fixedColumns.min.js"></script>
+    <script src="~/lib/datatables-light-columnfilter/dist/dataTables.lightColumnFilter.min.js"></script>
+    <script src="~/lib/datatables-light-columnfilter/dist/dataTables.lcf.bootstrap3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js" asp-fallback-src="~/lib/angular/angular.min.js" asp-fallback-test="window.angular"></script>
+    <script src="~/lib/angular-datatables/dist/angular-datatables.min.js"></script>
+    <script src="~/lib/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
+    @*<script src="~/lib/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.min.js"></script>*@
+    <script src="~/lib/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.min.js"></script>
+    <script src="~/lib/angular-datatables/dist/plugins/light-columnfilter/angular-datatables.light-columnfilter.js"></script>
   </environment>
 
   <!-- FOLLOWING WILL NEED TO BE MIN'd -->
@@ -46,18 +67,29 @@
   <script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="~/lib/angular-ui-select/dist/select.js"></script>
   <script src="~/lib/angular-sanitize/angular-sanitize.js"></script>
-  @*<script src="~/lib/footable/dist/footable.all.min.js"></script>*@
-  <script src="~/lib/footable3/compiled/footable.js"></script>
   <script src="~/lib/angular-media-queries/match-media.js"></script>
+
+
+
+  @*<script src="~/lib/footable3/compiled/footable.js"></script>*@
 
   <!-- Ng App -->
   <script src="~/js/lo30App.js"></script>
+  <script src="~/js/controllers/gameBoxScoreController.js"></script>
   <script src="~/js/controllers/playersController.js"></script>
   <script src="~/js/controllers/standingsController.js"></script>
   <script src="~/js/controllers/statsPlayersController.js"></script>
   <script src="~/js/directives/criteriaSelector/criteriaSelector.js"></script>
   <script src="~/js/directives/criteriaSelector/criteriaSelectorController.js"></script>
-  <script src="~/js/directives/footable/footable.js"></script>
+  <script src="~/js/directives/datatablesFilterRowHider/datatablesFilterRowHider.js"></script>
+  @*<script src="~/js/directives/footable/footable.js"></script>*@
+  <script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetail.js"></script>
+  <script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetailController.js"></script>
+  <script src="~/js/directives/gameScoreByPeriodDetailGoalies/gameScoreByPeriodDetailGoalies.js"></script>
+  <script src="~/js/directives/gameScoreByPeriodDetailPenalties/gameScoreByPeriodDetailPenalties.js"></script>
+  <script src="~/js/directives/gameScoreByPeriodDetailScoring/gameScoreByPeriodDetailScoring.js"></script>
+  <script src="~/js/directives/gameScoreByPeriodSummary/gameScoreByPeriodSummary.js"></script>
+  <script src="~/js/directives/gameScoreByPeriodSummary/gameScoreByPeriodSummaryController.js"></script>
   <script src="~/js/filters/percentageFilter.js"></script>
   <script src="~/js/services/apiBaseService.js"></script>
   <script src="~/js/services/apiService.js"></script>

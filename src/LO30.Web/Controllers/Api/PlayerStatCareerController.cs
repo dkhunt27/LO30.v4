@@ -22,7 +22,7 @@ namespace LO30.Web.Controllers.Api
     }
 
     [HttpGet("players/{playerId:int}")]
-    public JsonResult GetPlayerStatCareerForPlayerId(int playerId)
+    public JsonResult GetForPlayerId(int playerId)
     {
       PlayerStatCareer results;
       using (_context)

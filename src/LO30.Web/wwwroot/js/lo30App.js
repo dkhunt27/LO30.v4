@@ -1,6 +1,18 @@
 ﻿"use strict";
 
-var lo30NgApp = angular.module("lo30NgApp", ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'ui.select', 'ngSanitize', 'matchMedia']);
+var lo30NgApp = angular.module("lo30NgApp", [
+  'ngRoute', 
+  'ngAnimate',
+  'ui.bootstrap',
+  'ui.select',
+  'ngSanitize',
+  'matchMedia',
+  'datatables',
+  'datatables.bootstrap',
+  'datatables.buttons',
+  'datatables.light-columnfilter',
+  'datatables.fixedcolumns'
+]);
 
 lo30NgApp.constant("constApisUrl", "/api");
 
@@ -10,25 +22,75 @@ lo30NgApp.config(function ($routeProvider) {
     controller: "standingsController",
     templateUrl: "/views/standings.html",
     resolve: {
-      //criteriaServiceResolved: [
-      //  'criteriaService',
-      //  function (criteriaService) {
-      //    return criteriaService.initialize().then(function(fulfilled) {
-      //      return criteriaService;
-      //    });
-      //  }
-      //]
+      criteriaServiceResolved: [
+        'criteriaService',
+        function (criteriaService) {
+          return criteriaService.initialize().then(function(fulfilled) {
+            return criteriaService;
+          });
+        }
+      ]
     }
   });
 
   $routeProvider.when("/stats/players", {
     controller: "statsPlayersController",
-    templateUrl: "/views/statsPlayers.html"
+    templateUrl: "/views/statsPlayers.html",
+    resolve: {
+      criteriaServiceResolved: [
+        'criteriaService',
+        function (criteriaService) {
+          return criteriaService.initialize().then(function (fulfilled) {
+            return criteriaService;
+          });
+        }
+      ]
+    }
   });
 
   $routeProvider.when("/players/:playerId", {
     controller: "playersController",
-    templateUrl: "/views/players.html"
+    templateUrl: "/views/players.html",
+    resolve: {
+      criteriaServiceResolved: [
+        'criteriaService',
+        function (criteriaService) {
+          return criteriaService.initialize().then(function (fulfilled) {
+            return criteriaService;
+          });
+        }
+      ]
+    }
+  });
+
+  $routeProvider.when("/players/:playerId/seasons/:seasonId", {
+    controller: "playersController",
+    templateUrl: "/views/players.html",
+    resolve: {
+      criteriaServiceResolved: [
+        'criteriaService',
+        function (criteriaService) {
+          return criteriaService.initialize().then(function (fulfilled) {
+            return criteriaService;
+          });
+        }
+      ]
+    }
+  });
+
+  $routeProvider.when("/boxscores/games/:gameId/seasons/:seasonId", {
+    controller: "gameBoxScoreController",
+    templateUrl: "/views/gameBoxScore.html",
+    resolve: {
+      criteriaServiceResolved: [
+        'criteriaService',
+        function (criteriaService) {
+          return criteriaService.initialize().then(function (fulfilled) {
+            return criteriaService;
+          });
+        }
+      ]
+    }
   });
 
   $routeProvider.otherwise({ redirectTo: "/standings" });

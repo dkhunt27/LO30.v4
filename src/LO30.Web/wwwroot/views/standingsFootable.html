@@ -23,25 +23,25 @@
 
   <div class="row">
     <div id="pageContents" class="col-xs-12">
-      <table class="table table-condensed table-bordered table-striped" datatable="ng" dt-options="local.dt.options">
+      <table class="table table-condensed table-bordered table-striped table-dk-blue footable" data-filtering="true" data-sorting="true">
         <thead>
           <tr>
-            <th>Rank</th>
+            <th data-sorted="true" data-direction="ASC" data-type="number">Rank</th>
             <th>Team</th>
-            <th style="padding-right:0px;">GP</th>
-            <th>W</th>
-            <th>L</th>
-            <th>T</th>
-            <th>PTS</th>
-            <th>GF</th>
-            <th>GA</th>
-            <th>PIM</th>
-            <th>W%</th>
-            <th>Subs</th>
+            <th data-breakpoints="xs" data-type="number">GP</th>
+            <th data-breakpoints="xs" data-type="number">W</th>
+            <th data-breakpoints="xs" data-type="number">L</th>
+            <th data-breakpoints="xs" data-type="number">T</th>
+            <th data-type="number">PTS</th>
+            <th data-breakpoints="xs sm" data-type="number">GF</th>
+            <th data-breakpoints="xs sm" data-type="number">GA</th>
+            <th data-breakpoints="xs sm" data-type="number">PIM</th>
+            <th data-breakpoints="xs sm" data-type="number">W%</th>
+            <th data-breakpoints="xs sm" data-type="number">Subs</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="item in local.teamStandingsToDisplay | orderBy:sortOn:sortDirection">
+          <tr ng-repeat="item in local.teamStandings | orderBy:sortOn:sortDirection" lo30-footable>
             <td>{{item.ranking}}</td>
             <td><a ng-href="/Ng/#/Games/Results/{{item.sid}}/false/{{item.tid}}">{{item.teamNameToDisplay}}</a></td>
             <td class="text-right">{{item.games}}</td>

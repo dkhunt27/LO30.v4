@@ -1,0 +1,23 @@
+﻿<div>
+  <div class="row">
+    <div class="col-xs-offset-1">
+      <span><strong>Penalties:</strong></span>
+    </div>
+  </div>
+  <div ng-hide="scoreSheetEntryPenalties.length > 0">
+    <div class="row">
+      <div class="col-xs-offset-1">
+        <span>None</span>
+      </div>
+    </div>
+  </div>
+  <div ng-show="scoreSheetEntryPenalties.length > 0">
+    <div ng-repeat="item in scoreSheetEntryPenalties | orderBy:'timeElapsed':local.timeElapsedSortBy">
+      <div class="row">
+        <div class="col-xs-offset-1">
+          <span>{{item.team.teamNameToDisplay}} @ {{item.timeRemaining}} - <a ng-href="/ng/#/players/{{item.playerId}}/seasons/{{item.seasonId}}">{{item.playerNameToDisplay}}</a> {{item.penaltyMinutes}} minutes for {{item.penaltyName}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+﻿<div>
+  <div class="row">
+    <div class="col-xs-offset-1">
+      <span><strong>Scoring:</strong></span>
+    </div>
+  </div>
+  <div ng-hide="scoreSheetEntryGoals.length > 0">
+    <div class="row">
+      <div class="col-xs-offset-1">
+        <span>None</span>
+      </div>
+    </div>
+  </div>
+  <div ng-show="scoreSheetEntryGoals.length > 0">
+    <div ng-repeat="item in scoreSheetEntryGoals | orderBy:'timeElapsed':local.timeElapsedSortBy">
+      <div class="row">
+        <div class="col-xs-offset-1">
+          <span ng-show="item.powerPlayGoal"><strong>PP</strong> </span>
+          <span ng-show="item.shortHandedGoal"><strong>SH</strong> </span>
+          <span>{{item.teamNameToDisplay}} @ {{item.timeRemaining}} - <a ng-href="/ng/#/players/{{item.goalPlayerId}}/seasons/{{item.seasonId}}">{{item.goalPlayerNameToDisplay}}</a></span>
+          <span ng-show="item.assist1PlayerNameToDisplay"> from <a ng-href="/ng/#/players/{{item.assist1PlayerId}}/seasons/{{item.seasonId}}">{{item.assist1PlayerNameToDisplay}}</a></span>
+          <span ng-show="item.assist2PlayerNameToDisplay"> and <a ng-href="/ng/#/players/{{item.assist2PlayerId}}/seasons/{{item.seasonId}}">{{item.assist2PlayerNameToDisplay}}</a></span>
+          <span ng-show="item.assist3PlayerNameToDisplay"> and <a ng-href="/ng/#/players/{{item.assist3PlayerId}}/seasons/{{item.seasonId}}">{{item.assist3PlayerNameToDisplay}}</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

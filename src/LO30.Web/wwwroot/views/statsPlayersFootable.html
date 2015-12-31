@@ -1,0 +1,69 @@
+﻿<div id="statsPlayers">
+
+  <div class="row">
+    <div id="breadcrumb" class="col-xs-12">
+      <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Stats</a></li>
+        <li><a href="#">Players</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="pageHeader" class="col-xs-12">
+      <h3 ng-click="console.log('{{1+1}}')">Player Statistics</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="pageSubHeader" class="col-xs-12">
+      <lo30-criteria-selector />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row">
+      <div id="pageContents" class="col-xs-12">
+        <table class="table table-condensed table-bordered table-striped table-dk-blue footable">
+          <thead>
+            <tr>
+              <th data-type="number">Rank</th>
+              <th>Team</th>
+              <th>Player</th>
+              <th data-breakpoints="xs">Position</th>
+              <th data-breakpoints="xs" data-type="number">Line</th>
+              <th data-breakpoints="xs" data-type="number">Games</th>
+              <th data-breakpoints="xs sm" data-type="number">Goals</th>
+              <th data-breakpoints="xs sm" data-type="number">Assists</th>
+              <th data-sorted="true" data-direction="DESC" data-type="number">Points</th>
+              <th data-breakpoints="xs sm" data-type="number">PIM</th>
+              <th data-breakpoints="xs sm" data-type="number">PPG</th>
+              <th data-breakpoints="xs sm" data-type="number">SHG</th>
+              <th data-breakpoints="xs sm" data-type="number">GWG</th>
+              <th data-breakpoints="xs sm">Sub</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="console.log('here')" ng-repeat="item in local.playerStatTeams | orderBy:sortOn:sortDirection" lo30-footable>
+              <td>{{item.rank}}</td>
+              <td click>{{item.teamNameToDisplay}}</td>
+              <td ng-click="console.log('{{item.playerNameToDisplay}}')"><a href="/Ng/#/players/593">{{item.playerNameToDisplay}}</a></td>
+              <td class="text-right">{{item.position}}</td>
+              <td class="text-right">{{item.line}}</td>
+              <td class="text-right">{{item.games}}</td>
+              <td class="text-right">{{item.goals}}</td>
+              <td class="text-right">{{item.assists}}</td>
+              <td class="text-right">{{item.points}}</td>
+              <td class="text-right">{{item.penaltyMinutes}}</td>
+              <td class="text-right">{{item.powerPlayGoals}}</td>
+              <td class="text-right">{{item.shortHandedGoals}}</td>
+              <td class="text-right">{{item.gameWinningGoals}}</td>
+              <td class="text-right">{{item.sub}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

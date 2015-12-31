@@ -4,21 +4,32 @@
   "dependencies": {
     "angular": "1.4.8",
     "angular-animate": "1.4.8",
-    "angular-route": "1.4.8",
     "angular-bootstrap": "0.14.3",
+    "angular-datatables": "0.5.2",
     "angular-media-queries": "0.5.0",
+    "angular-route": "1.4.8",
     "angular-sanitize": "1.4.8",
+    "angular-ui-select": "0.13.2",
     "bootstrap": "3.3.6",
     "bootswatch": "3.3.6",
+    "datatables.net": "1.10.10",
+    "datatables.net-bs": "1.10.10",
+    "datatables.net-buttons": "1.1.0",
+    "datatables.net-buttons-bs": "1.1.0",
+    "datatables.net-buttons-dt": "1.1.0",
+    "datatables.net-fixedcolumns": "3.2.0",
+    "datatables-light-columnfilter": "0.0.11",
     "font-awesome": "4.5.0",
+    "footable3": "3.0.1",
     "jquery": "2.1.4",
+    "jquery-datatables-columnfilter": "0.0.7",
     "jquery-validation": "1.14.0",
     "jquery-validation-unobtrusive": "3.2.5",
     "moment": "2.10.6",
     "simple-js-validator": "0.11.5",
-    "angular-ui-select": "0.13.2",
-    "underscore": "1.8.3",
-    "footable": "2.0.3",
-    "footable3": "3.0.1"
+    "underscore": "1.8.3"
+  },
+  "resolutions": {
+    "datatables": ">=1.10.9"
   }
 }

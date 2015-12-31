@@ -21,8 +21,9 @@ namespace LO30.Web.Controllers.Api
       _context = context;
     }
 
+    // statsPlayer
     [HttpGet("seasons/{seasonId:int}/playoffs/{playoffs:bool}")]
-    public JsonResult ListPlayerStatTeamsForSeasonIdPlayoffs(int seasonId, bool playoffs)
+    public JsonResult ListForSeasonIdPlayoffs(int seasonId, bool playoffs)
     {
       List<PlayerStatTeam> results;
       using (_context)
@@ -31,6 +32,23 @@ namespace LO30.Web.Controllers.Api
                           .Include(x=>x.Team)
                           .Include(x=>x.Player)
                           .Where(x=>x.SeasonId == seasonId && x.Playoffs == playoffs)
+                          .ToList();
+      }
+
+      return Json(Mapper.Map<IEnumerable<PlayerStatTeamViewModel>>(results));
+    }
+
+    // players (season tab)
+    [HttpGet("players/{playerId:int}/seasons/{seasonId:int}")]
+    public JsonResult ListForPlayerIdSeasonId(int playerId, int seasonId)
+    {
+      List<PlayerStatTeam> results;
+      using (_context)
+      {
+        results = _context.PlayerStatTeams
+                          .Include(x => x.Team)
+                          .Include(x => x.Player)
+                          .Where(x => x.SeasonId == seasonId && x.PlayerId == playerId)
                           .ToList();
       }
 

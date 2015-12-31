@@ -1,0 +1,23 @@
+﻿<div>
+  <div ng-show="goalieStatGameWinner.playerId !== -1">
+    <div class="row">
+      <div class="col-xs-offset-1">
+        <span>{{goalieStatGameWinner.teamNameToDisplay}}: <a ng-href="/ng/#/goalies/{{goalieStatGameWinner.playerId}}/seasons/{{goalieStatGameWinner.seasonId}}">{{goalieStatGameWinner.playerNameToDisplay}}</a> <b>Won</b></span>
+      </div>
+    </div>
+  </div>
+  <div ng-show="goalieStatGameWinner.playerId !== -1">
+    <div class="row">
+      <div class="col-xs-offset-1">
+        <span>{{goalieStatGameLoser.teamNameToDisplay}}: <a ng-href="/ng/#/goalies/{{goalieStatGameLoser.playerId}}/seasons/{{goalieStatGameLoser.seasonId}}">{{goalieStatGameLoser.playerNameToDisplay}}</a> <b>Lost</b></span>
+      </div>
+    </div>
+  </div>
+  <div ng-show="goalieStatGameWinner.playerId !== -1">
+    <div class="row" ng-repeat="item in goalieStatGames">>
+      <div class="col-xs-offset-1">
+        <span>{{item.teamNameToDisplay}}: <a ng-href="/ng/#/goalies/{{item.playerId}}/seasons/{{item.seasonId}}">{{item.playerNameToDisplay}}</a> <b>Tied</b></span>
+      </div>
+    </div>
+  </div>
+</div>

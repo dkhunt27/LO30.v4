@@ -103,12 +103,46 @@ namespace LO30.Web
 
       Mapper.Initialize(config =>
       {
-        config.CreateMap<TeamStanding, TeamStandingViewModel>()
-              .ForMember(vm => vm.DivisionLongName, opt => opt.MapFrom(m => m.Division.DivisionLongName))
-              .ForMember(vm => vm.DivisionShortName, opt => opt.MapFrom(m => m.Division.DivisionShortName))
+        config.CreateMap<Game, GameCompositeViewModel>()
+              .ForMember(vm => vm.SeasonName, opt => opt.MapFrom(m => m.Season.SeasonName))
+
+              // TODO, more research...Team isn't getting populated, but opponentteam is
+              .ForMember(vm => vm.TeamCodeAway, opt => opt.MapFrom(m => m.GameTeams.Where(y => y.HomeTeam == true).Single().OpponentTeam.TeamCode))
+              .ForMember(vm => vm.TeamNameLongAway, opt => opt.MapFrom(m => m.GameTeams.Where(y => y.HomeTeam == true).Single().OpponentTeam.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShortAway, opt => opt.MapFrom(m => m.GameTeams.Where(y => y.HomeTeam == true).Single().OpponentTeam.TeamNameShort))
+              .ForMember(vm => vm.GoalsAgainstAway, opt => opt.MapFrom(m => m.GameOutcomes.Where(x=>x.HomeTeam == false).Single().GoalsAgainst))
+              .ForMember(vm => vm.GoalsForAway, opt => opt.MapFrom(m => m.GameOutcomes.Where(x=>x.HomeTeam == false).Single().GoalsFor))
+              .ForMember(vm => vm.OutcomeAway, opt => opt.MapFrom(m => m.GameOutcomes.Where(x=>x.HomeTeam == false).Single().Outcome))
+              .ForMember(vm => vm.OverridenAway, opt => opt.MapFrom(m => m.GameOutcomes.Where(x=>x.HomeTeam == false).Single().Overriden))
+              .ForMember(vm => vm.PenaltyMinutesAway, opt => opt.MapFrom(m => m.GameOutcomes.Where(x=>x.HomeTeam == false).Single().PenaltyMinutes))
+              .ForMember(vm => vm.Period1ScoreAway, opt => opt.MapFrom(m => m.GameScores.Where(x=>x.Period == 1 && x.TeamId == (m.GameOutcomes.Where(y=>y.HomeTeam == false).Single().TeamId)).Single().Score))
+              .ForMember(vm => vm.Period2ScoreAway, opt => opt.MapFrom(m => m.GameScores.Where(x=>x.Period == 2 && x.TeamId == (m.GameOutcomes.Where(y=>y.HomeTeam == false).Single().TeamId)).Single().Score))
+              .ForMember(vm => vm.Period3ScoreAway, opt => opt.MapFrom(m => m.GameScores.Where(x=>x.Period == 3 && x.TeamId == (m.GameOutcomes.Where(y=>y.HomeTeam == false).Single().TeamId)).Single().Score))
+              .ForMember(vm => vm.Period4ScoreAway, opt => opt.MapFrom(m => m.GameScores.Where(x=>x.Period == 4 && x.TeamId == (m.GameOutcomes.Where(y=>y.HomeTeam == false).SingleOrDefault().TeamId)).SingleOrDefault().Score))
+
+              // TODO, more research...Team isn't getting populated, but opponentteam is
+              .ForMember(vm => vm.TeamCodeHome, opt => opt.MapFrom(m => m.GameTeams.Where(y => y.HomeTeam == false).Single().OpponentTeam.TeamCode))
+              .ForMember(vm => vm.TeamNameLongHome, opt => opt.MapFrom(m => m.GameTeams.Where(y => y.HomeTeam == false).Single().OpponentTeam.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShortHome, opt => opt.MapFrom(m => m.GameTeams.Where(y => y.HomeTeam == false).Single().OpponentTeam.TeamNameShort))
+              .ForMember(vm => vm.GoalsAgainstHome, opt => opt.MapFrom(m => m.GameOutcomes.Where(x=>x.HomeTeam == true).Single().GoalsAgainst))
+              .ForMember(vm => vm.GoalsForHome, opt => opt.MapFrom(m => m.GameOutcomes.Where(x => x.HomeTeam == true).Single().GoalsFor))
+              .ForMember(vm => vm.OutcomeHome, opt => opt.MapFrom(m => m.GameOutcomes.Where(x => x.HomeTeam == true).Single().Outcome))
+              .ForMember(vm => vm.OverridenHome, opt => opt.MapFrom(m => m.GameOutcomes.Where(x => x.HomeTeam == true).Single().Overriden))
+              .ForMember(vm => vm.PenaltyMinutesHome, opt => opt.MapFrom(m => m.GameOutcomes.Where(x => x.HomeTeam == true).Single().PenaltyMinutes))
+              .ForMember(vm => vm.Period1ScoreHome, opt => opt.MapFrom(m => m.GameScores.Where(x => x.Period == 1 && x.TeamId == (m.GameOutcomes.Where(y => y.HomeTeam == true).Single().TeamId)).Single().Score))
+              .ForMember(vm => vm.Period2ScoreHome, opt => opt.MapFrom(m => m.GameScores.Where(x => x.Period == 2 && x.TeamId == (m.GameOutcomes.Where(y => y.HomeTeam == true).Single().TeamId)).Single().Score))
+              .ForMember(vm => vm.Period3ScoreHome, opt => opt.MapFrom(m => m.GameScores.Where(x => x.Period == 3 && x.TeamId == (m.GameOutcomes.Where(y => y.HomeTeam == true).Single().TeamId)).Single().Score))
+              .ForMember(vm => vm.Period4ScoreHome, opt => opt.MapFrom(m => m.GameScores.Where(x => x.Period == 4 && x.TeamId == (m.GameOutcomes.Where(y => y.HomeTeam == true).SingleOrDefault().TeamId)).SingleOrDefault().Score))
+              .ReverseMap();
+
+        config.CreateMap<GoalieStatGame, GoalieStatGameViewModel>()
+              .ForMember(vm => vm.PlayerFirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.PlayerLastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.PlayerSuffix, opt => opt.MapFrom(m => m.Player.Suffix))
               .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
               .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
               .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
+              .ForMember(vm => vm.GameDateTime, opt => opt.MapFrom(m => m.Game.GameDateTime))
               .ReverseMap();
 
         config.CreateMap<PlayerStatCareer, PlayerStatCareerViewModel>()
@@ -117,10 +151,77 @@ namespace LO30.Web
               .ForMember(vm => vm.Suffix, opt => opt.MapFrom(m => m.Player.Suffix))
               .ReverseMap();
 
+        config.CreateMap<PlayerStatGame, PlayerStatGameViewModel>()
+              .ForMember(vm => vm.FirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.Suffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
+              .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
+              .ForMember(vm => vm.GameDateTime, opt => opt.MapFrom(m => m.Game.GameDateTime))
+
+              // TODO, add gameteam to playerstatgame so can get opponent team easily
+              //.ForMember(vm => vm.TeamCodeOpponent, opt => opt.MapFrom(m => m.Game.GameTeams.Where(x=>x.GameId == m.GameId && x.TeamId == m.TeamId).Single().OpponentTeam.TeamCode)
+              //.ForMember(vm => vm.TeamNameLongOpponent, opt => opt.MapFrom(m => m.Team.TeamNameLong))
+              //.ForMember(vm => vm.TeamNameShortOpponent, opt => opt.MapFrom(m => m.Team.TeamNameShort))
+
+              .ReverseMap();
+
+        config.CreateMap<PlayerStatSeason, PlayerStatSeasonViewModel>()
+              .ForMember(vm => vm.FirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.Suffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ForMember(vm => vm.SeasonName, opt => opt.MapFrom(m => m.Season.SeasonName))
+              .ReverseMap();
+
+        config.CreateMap<PlayerStatSeasonNoPlayoffs, PlayerStatSeasonNoPlayoffsViewModel>()
+              .ForMember(vm => vm.FirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.Suffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ForMember(vm => vm.SeasonName, opt => opt.MapFrom(m => m.Season.SeasonName))
+              .ReverseMap();
+
         config.CreateMap<PlayerStatTeam, PlayerStatTeamViewModel>()
               .ForMember(vm => vm.FirstName, opt => opt.MapFrom(m => m.Player.FirstName))
               .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.Player.LastName))
               .ForMember(vm => vm.Suffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
+              .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
+              .ReverseMap();
+
+        config.CreateMap<ScoreSheetEntryProcessedGoal, ScoreSheetEntryProcessedGoalViewModel>()
+              .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
+              .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
+              .ForMember(vm => vm.GoalPlayerFirstName, opt => opt.MapFrom(m => m.GoalPlayer.FirstName))
+              .ForMember(vm => vm.GoalPlayerLastName, opt => opt.MapFrom(m => m.GoalPlayer.LastName))
+              .ForMember(vm => vm.GoalPlayerSuffix, opt => opt.MapFrom(m => m.GoalPlayer.Suffix))
+              .ForMember(vm => vm.Assist1PlayerFirstName, opt => opt.MapFrom(m => m.Assist1Player.FirstName))
+              .ForMember(vm => vm.Assist1PlayerLastName, opt => opt.MapFrom(m => m.Assist1Player.LastName))
+              .ForMember(vm => vm.Assist1PlayerSuffix, opt => opt.MapFrom(m => m.Assist1Player.Suffix))
+              .ForMember(vm => vm.Assist2PlayerFirstName, opt => opt.MapFrom(m => m.Assist2Player.FirstName))
+              .ForMember(vm => vm.Assist2PlayerLastName, opt => opt.MapFrom(m => m.Assist2Player.LastName))
+              .ForMember(vm => vm.Assist2PlayerSuffix, opt => opt.MapFrom(m => m.Assist2Player.Suffix))
+              .ForMember(vm => vm.Assist3PlayerFirstName, opt => opt.MapFrom(m => m.Assist3Player.FirstName))
+              .ForMember(vm => vm.Assist3PlayerLastName, opt => opt.MapFrom(m => m.Assist3Player.LastName))
+              .ForMember(vm => vm.Assist3PlayerSuffix, opt => opt.MapFrom(m => m.Assist3Player.Suffix))
+              .ReverseMap();
+
+        config.CreateMap<ScoreSheetEntryProcessedPenalty, ScoreSheetEntryProcessedPenaltyViewModel>()
+              .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
+              .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
+              .ForMember(vm => vm.PlayerFirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.PlayerLastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.PlayerSuffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ForMember(vm => vm.PenaltyCode, opt => opt.MapFrom(m => m.Penalty.PenaltyCode))
+              .ForMember(vm => vm.PenaltyName, opt => opt.MapFrom(m => m.Penalty.PenaltyName))
+              .ReverseMap();
+
+        config.CreateMap<TeamStanding, TeamStandingViewModel>()
+              .ForMember(vm => vm.DivisionLongName, opt => opt.MapFrom(m => m.Division.DivisionLongName))
+              .ForMember(vm => vm.DivisionShortName, opt => opt.MapFrom(m => m.Division.DivisionShortName))
               .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
               .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
               .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))

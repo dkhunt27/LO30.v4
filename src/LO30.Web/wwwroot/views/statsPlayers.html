@@ -25,41 +25,39 @@
   <div class="row">
     <div class="row">
       <div id="pageContents" class="col-xs-12">
-        <table class="table table-condensed table-bordered table-striped table-dk-blue footable">
+        <table id="showcase-fixedcolumns" class="table table-condensed table-bordered table-striped" datatable="ng" dt-options="local.dt.options">
           <thead>
             <tr>
-              <th data-type="number">Rank</th>
-              <th>Team</th>
+              <th>Rank</th>
               <th>Player</th>
-              <th data-breakpoints="xs">Position</th>
-              <th data-breakpoints="xs" data-type="number">Line</th>
-              <th data-breakpoints="xs" data-type="number">Games</th>
-              <th data-breakpoints="xs sm" data-type="number">Goals</th>
-              <th data-breakpoints="xs sm" data-type="number">Assists</th>
-              <th data-sorted="true" data-direction="DESC" data-type="number">Points</th>
-              <th data-breakpoints="xs sm" data-type="number">PIM</th>
-              <th data-breakpoints="xs sm" data-type="number">PPG</th>
-              <th data-breakpoints="xs sm" data-type="number">SHG</th>
-              <th data-breakpoints="xs sm" data-type="number">GWG</th>
-              <th data-breakpoints="xs sm">Sub</th>
+              <th>Games</th>
+              <th>Points</th>
+              <th>Goals</th>
+              <th>Assists</th>
+              <th>PIM</th>
+              <th>PPG</th>
+              <th>SHG</th>
+              <th>GWG</th>
+              <th>Team</th>
+              <th>Position</th>
+              <th>Line</th>
             </tr>
           </thead>
           <tbody>
-            <tr onclick="console.log('here')" ng-repeat="item in local.playerStatTeams | orderBy:sortOn:sortDirection" lo30-footable>
-              <td>{{item.rank}}</td>
-              <td click>{{item.teamNameToDisplay}}</td>
-              <td ng-click="console.log('{{item.playerNameToDisplay}}')"><a href="/Ng/#/players/593">{{item.playerNameToDisplay}}</a></td>
-              <td class="text-right">{{item.position}}</td>
-              <td class="text-right">{{item.line}}</td>
+            <tr ng-repeat="item in local.playerStatTeams | orderBy:sortOn:sortDirection">
+              <td></td>
+              <td><a ng-href="/ng/#/players/{{item.playerId}}">{{item.playerNameToDisplay}}</a></td>
               <td class="text-right">{{item.games}}</td>
+              <td class="text-right">{{item.points}}</td>
               <td class="text-right">{{item.goals}}</td>
               <td class="text-right">{{item.assists}}</td>
-              <td class="text-right">{{item.points}}</td>
               <td class="text-right">{{item.penaltyMinutes}}</td>
               <td class="text-right">{{item.powerPlayGoals}}</td>
               <td class="text-right">{{item.shortHandedGoals}}</td>
               <td class="text-right">{{item.gameWinningGoals}}</td>
-              <td class="text-right">{{item.sub}}</td>
+              <td>{{item.teamNameToDisplay}}</td>
+              <td class="text-right">{{item.position}}</td>
+              <td class="text-right">{{item.line}}</td>
             </tr>
           </tbody>
         </table>

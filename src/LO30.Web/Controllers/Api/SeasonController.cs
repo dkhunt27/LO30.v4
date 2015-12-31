@@ -20,7 +20,7 @@ namespace LO30.Web.Controllers.Api
     }
 
     [HttpGet("")]
-    public JsonResult ListSeasons()
+    public JsonResult List()
     {
       List<Season> results;
       using (_context)

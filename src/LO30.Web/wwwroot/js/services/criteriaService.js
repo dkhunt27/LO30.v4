@@ -22,8 +22,10 @@ lo30NgApp.factory("criteriaService",
 
     var fetchSeasons = function () {
 
-      seasons = [];
+      $log.debug("criteriaService.fetchSeasons()");
 
+      seasons = [];
+      
       return apiService.seasons.listForSeasonsWithGameSelection().then(function (fulfilled) {
 
         seasons = fulfilled;
@@ -33,37 +35,38 @@ lo30NgApp.factory("criteriaService",
 
           var currentSeason = _.find(seasons, function (season) { return season.isCurrentSeason === true; });
 
-          service.season.set(currentSeason);
+          return service.season.set(currentSeason);
 
+        } else {
+
+          return service.season.get();
         }
-        
-        return seasons;
       });
     };
 
-    var fetchSeasonTypes = function (gamePlayoffs) {
-      return $q(function (fulfill) {
+    var fetchSeasonTypes = function (gamePlayoffs, seasonId) {
+
+        $log.debug("criteriaService.fetchSeasonTypes()  for seasonId:" + seasonId + " for gamePlayoffs: " + gamePlayoffs);
 
         seasonTypes = ["Regular Season", "Playoffs"];
 
         if (gamePlayoffs) {
 
-          service.seasonType.set("Playoffs");
+          return service.seasonType.set("Playoffs");
 
         } else {
 
-          service.seasonType.set("Regular Season");
+          return service.seasonType.set("Regular Season");
 
         }
-
-        return fulfill(seasonTypes);
-      });
     };
 
     var fetchGames = function (seasonId) {
 
-      games = [];
+      $log.debug("criteriaService.fetchGames() for seasonId:" + seasonId);
 
+      games = [];
+      
       return apiService.games.listForSeasonId(seasonId).then(function (fulfilled) {
 
         games = fulfilled;
@@ -74,9 +77,7 @@ lo30NgApp.factory("criteriaService",
 
         var lastProcessedGame = _.find(games, function (game) { return game.gameId === fulfilled.gameId; });
 
-        service.game.set(lastProcessedGame);
-
-        return games;
+        return service.game.set(lastProcessedGame);
 
       });
     };
@@ -93,6 +94,35 @@ lo30NgApp.factory("criteriaService",
         } else {
 
           $log.debug("criteriaService.initialize() season already set");
+
+          // rebroadcast that season is set
+          broadcastService.emitEvent(broadcastService.events().seasonSet);
+
+        }
+
+        if (service.game.isNotSet()) {
+
+          // no need to fetch...will be done when seasons are fetched
+
+        } else {
+
+          $log.debug("criteriaService.initialize() game already set");
+
+          // rebroadcast that game is set
+          broadcastService.emitEvent(broadcastService.events().gameSet);
+
+        }
+
+        if (service.seasonType.isNotSet()) {
+
+          // no need to fetch...will be done when games are fetched
+
+        } else {
+
+          $log.debug("criteriaService.initialize() seasonType already set");
+
+          // rebroadcast that seasonType is set
+          broadcastService.emitEvent(broadcastService.events().seasonTypeSet);
 
         }
 
@@ -131,19 +161,55 @@ lo30NgApp.factory("criteriaService",
       },
       set: function (season) {
 
-        if (criteria.season !== season) {
+        return $q(function (fulfill) {
 
-          criteria.season = season;
+          if (criteria.season !== season) {
 
-          broadcastService.emitEvent(broadcastService.events().seasonSet);
+            criteria.season = season;
 
-          fetchGames(season.seasonId);
-        }
+            broadcastService.emitEvent(broadcastService.events().seasonSet);
+
+            return fetchGames(season.seasonId).then(function () {
+
+              return fulfill(criteria.season);
+
+            });
+          } else {
+
+            return fulfill(criteria.season);
+
+          }
+        });
+      }, 
+      setById: function (seasonId) {
+
+        return $q(function (fulfill) {
+
+          if (criteria.season.seasonId !== seasonId) {
+
+            var season = _.find(seasons, function (season) { return season.seasonId === seasonId; });
+
+            return service.season.set(season);
+
+          } else {
+
+            return fulfill(criteria.season);
+
+          }
+        });
 
       },
       data: function () {
 
-        return seasons.reverse();
+        if (seasons) {
+
+          return seasons.reverse();
+
+        } else {
+
+          return seasons;
+
+        }
 
       }
     }
@@ -169,14 +235,19 @@ lo30NgApp.factory("criteriaService",
       },
       set: function (seasonType) {
 
-        if (criteria.seasonType !== seasonType) {
+        return $q(function (fulfill) {
 
-          criteria.seasonType = seasonType;
+          if (criteria.seasonType !== seasonType) {
 
-          broadcastService.emitEvent(broadcastService.events().seasonTypeSet);
+            criteria.seasonType = seasonType;
 
-        }
+            broadcastService.emitEvent(broadcastService.events().seasonTypeSet);
+        
+          } 
 
+          return fulfill(criteria.seasonType);
+
+        });
       },
       data: function () {
 
@@ -206,16 +277,55 @@ lo30NgApp.factory("criteriaService",
       },
       set: function (game) {
 
-        criteria.game = game;
+        return $q(function (fulfill) {
 
-        broadcastService.emitEvent(broadcastService.events().gameSet);
+          if (criteria.game !== game) {
 
-        fetchSeasonTypes(game.playoffs);
+            criteria.game = game;
+
+            broadcastService.emitEvent(broadcastService.events().gameSet);
+
+            return fetchSeasonTypes(game.playoffs, game.seasonId).then(function () {
+
+              return fulfill(criteria.game);
+
+            });
+
+          } else {
+
+            return fulfill(criteria.game);
+
+          }
+        });
+      },
+      setById: function (gameId) {
+
+        return $q(function (fulfill) {
+
+          if (criteria.game.gameId !== gameId) {
+
+            var game = _.find(games, function (season) { return season.gameId === gameId; });
+
+            return service.game.set(game);
+
+          } else {
+
+            return fulfill(criteria.game);
+
+          }
+        });
       },
       data: function () {
 
-        return games.reverse();
+        if (games) {
 
+          return games.reverse();
+
+        } else {
+
+          return games;
+
+        }
       }
     }
 

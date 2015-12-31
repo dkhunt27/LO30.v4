@@ -25,79 +25,173 @@
 
   <div class="row">
     <div id="pageContents" class="col-xs-12">
-      <table class="table table-condensed table-bordered table-striped table-dk-blue footable">
-        <thead>
-          <tr>
-            <th>Player</th>
-            <th data-breakpoints="xs" data-type="number">Seasons</th>
-            <th data-breakpoints="xs" data-type="number">Games</th>
-            <th data-breakpoints="xs sm" data-type="number">Goals</th>
-            <th data-breakpoints="xs sm" data-type="number">Assists</th>
-            <th data-sorted="true" data-direction="DESC" data-type="number">Points</th>
-            <th data-breakpoints="xs sm" data-type="number">PIM</th>
-            <th data-breakpoints="xs sm" data-type="number">PPG</th>
-            <th data-breakpoints="xs sm" data-type="number">SHG</th>
-            <th data-breakpoints="xs sm" data-type="number">GWG</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr lo30-footable>
-            <td>{{local.playerStatCareer.playerNameToDisplay}}</a></td>
-            <td class="text-right">{{local.playerStatCareer.seasons}}</td>
-            <td class="text-right">{{local.playerStatCareer.games}}</td>
-            <td class="text-right">{{local.playerStatCareer.goals}}</td>
-            <td class="text-right">{{local.playerStatCareer.assists}}</td>
-            <td class="text-right">{{local.playerStatCareer.points}}</td>
-            <td class="text-right">{{local.playerStatCareer.penaltyMinutes}}</td>
-            <td class="text-right">{{local.playerStatCareer.powerPlayGoals}}</td>
-            <td class="text-right">{{local.playerStatCareer.shortHandedGoals}}</td>
-            <td class="text-right">{{local.playerStatCareer.gameWinningGoals}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
 
-  <div class="row">
-    <div id="pageContents" class="col-xs-12">
-      <table class="table table-condensed table-bordered table-striped table-dk-blue footable" data-filtering="true" data-sorting="true">
-        <thead>
-          <tr>
-            <th data-sorted="true" data-direction="ASC" data-type="number">Rank</th>
-            <th>Team</th>
-            <th data-breakpoints="xs" data-type="number">GP</th>
-            <th data-breakpoints="xs" data-type="number">W</th>
-            <th data-breakpoints="xs" data-type="number">L</th>
-            <th data-breakpoints="xs" data-type="number">T</th>
-            <th data-type="number">PTS</th>
-            <th data-breakpoints="xs sm" data-type="number">GF</th>
-            <th data-breakpoints="xs sm" data-type="number">GA</th>
-            <th data-breakpoints="xs sm" data-type="number">PIM</th>
-            <th data-breakpoints="xs sm" data-type="number">W%</th>
-            <th data-breakpoints="xs sm" data-type="number">Subs</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="item in local.teamStandings | orderBy:sortOn:sortDirection" lo30-footable>
-            <td>{{item.ranking}}</td>
-            <td><a ng-href="/Ng/#/Games/Results/{{item.sid}}/false/{{item.tid}}">{{item.teamNameToDisplay}}</a></td>
-            <td class="text-right">{{item.games}}</td>
-            <td class="text-right">{{item.wins}}</td>
-            <td class="text-right">{{item.losses}}</td>
-            <td class="text-right">{{item.ties}}</td>
-            <td class="text-right">{{item.points}}</td>
-            <td class="text-right">{{item.goalsFor}}</td>
-            <td class="text-right">{{item.goalsAgainst}}</td>
-            <td class="text-right">{{item.penaltyMinutes}}</td>
-            <td class="text-right">{{item.wins / item.games | percentage:0}}</td>
-            <td class="text-right">{{item.subs}}</td>
-          </tr>
-        </tbody>
-      </table>
+      <uib-tabset>
 
-      <h6>
-        Tie Breaker:&nbsp;&nbsp;1) Most Points&nbsp;&nbsp;2) Most Wins&nbsp;&nbsp;3) Greatest Goals For/Goals Against difference&nbsp;&nbsp;4) Most Goals For&nbsp;&nbsp;5) Least Penalty Minutes
-      </h6>
-    </div>
+        <uib-tab heading="Career" active="local.tabStates['career']">
+          <br/>
+          <div class="row">
+            <div class="col-xs-12">
+              <table class="table table-condensed table-bordered table-striped table-dk-blue footable">
+                <thead>
+                  <tr>
+                    <th>Player</th>
+                    <th data-breakpoints="xs" data-type="number">Seasons</th>
+                    <th data-breakpoints="xs" data-type="number">Games</th>
+                    <th data-breakpoints="xs sm" data-type="number">Goals</th>
+                    <th data-breakpoints="xs sm" data-type="number">Assists</th>
+                    <th data-sorted="true" data-direction="DESC" data-type="number">Points</th>
+                    <th data-breakpoints="xs sm" data-type="number">PIM</th>
+                    <th data-breakpoints="xs sm" data-type="number">PPG</th>
+                    <th data-breakpoints="xs sm" data-type="number">SHG</th>
+                    <th data-breakpoints="xs sm" data-type="number">GWG</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr lo30-footable>
+                    <td>{{local.playerStatCareer.playerNameToDisplay}}</td>
+                    <td class="text-right">{{local.playerStatCareer.seasons}}</td>
+                    <td class="text-right">{{local.playerStatCareer.games}}</td>
+                    <td class="text-right">{{local.playerStatCareer.goals}}</td>
+                    <td class="text-right">{{local.playerStatCareer.assists}}</td>
+                    <td class="text-right">{{local.playerStatCareer.points}}</td>
+                    <td class="text-right">{{local.playerStatCareer.penaltyMinutes}}</td>
+                    <td class="text-right">{{local.playerStatCareer.powerPlayGoals}}</td>
+                    <td class="text-right">{{local.playerStatCareer.shortHandedGoals}}</td>
+                    <td class="text-right">{{local.playerStatCareer.gameWinningGoals}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <table class="table table-condensed table-bordered table-striped table-dk-blue footable" data-filtering="true" data-sorting="true">
+                <thead>
+                  <tr>
+                    <th data-sorted="true" data-direction="ASC">Season</th>
+                    <th data-breakpoints="xs" data-type="number">Games</th>
+                    <th data-breakpoints="xs sm" data-type="number">Goals</th>
+                    <th data-breakpoints="xs sm" data-type="number">Assists</th>
+                    <th data-type="number">Points</th>
+                    <th data-breakpoints="xs sm" data-type="number">PIM</th>
+                    <th data-breakpoints="xs sm" data-type="number">PPG</th>
+                    <th data-breakpoints="xs sm" data-type="number">SHG</th>
+                    <th data-breakpoints="xs sm" data-type="number">GWG</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="item in local.playerStatSeasons | orderBy:sortOn:sortDirection" lo30-footable>
+                    <td><a ng-href="/Ng/#/players/{{local.selectedPlayerId}}/seasons/{{item.seasonId}}?tab=season">{{item.seasonName}}</a></td>
+                    <td class="text-right">{{item.games}}</td>
+                    <td class="text-right">{{item.goals}}</td>
+                    <td class="text-right">{{item.assists}}</td>
+                    <td class="text-right">{{item.points}}</td>
+                    <td class="text-right">{{item.penaltyMinutes}}</td>
+                    <td class="text-right">{{item.powerPlayGoals}}</td>
+                    <td class="text-right">{{item.shortHandedGoals}}</td>
+                    <td class="text-right">{{item.gameWinningGoals}}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h6>
+                Tie Breaker:&nbsp;&nbsp;1) Most Points&nbsp;&nbsp;2) Most Wins&nbsp;&nbsp;3) Greatest Goals For/Goals Against difference&nbsp;&nbsp;4) Most Goals For&nbsp;&nbsp;5) Least Penalty Minutes
+              </h6>
+            </div>
+          </div>
+        </uib-tab>
+
+        <uib-tab heading="Season" active="local.tabStates['season']">
+          <br />
+          <div class="row">
+            <div class="col-xs-12">
+              <table class="table table-condensed table-bordered table-striped table-dk-blue footable">
+                <thead>
+                  <tr>
+                    <th>Team</th>
+                    <th data-breakpoints="xs">Playoffs</th>
+                    <th data-breakpoints="xs">Position</th>
+                    <th data-breakpoints="xs" data-type="number">Line</th>
+                    <th data-breakpoints="xs" data-type="number">Games</th>
+                    <th data-breakpoints="xs sm" data-type="number">Goals</th>
+                    <th data-breakpoints="xs sm" data-type="number">Assists</th>
+                    <th data-sorted="true" data-direction="DESC" data-type="number">Points</th>
+                    <th data-breakpoints="xs sm" data-type="number">PIM</th>
+                    <th data-breakpoints="xs sm" data-type="number">PPG</th>
+                    <th data-breakpoints="xs sm" data-type="number">SHG</th>
+                    <th data-breakpoints="xs sm" data-type="number">GWG</th>
+                    <th data-breakpoints="xs sm">Sub</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr onclick="console.log('here')" ng-repeat="item in local.playerStatTeamsToDisplay | orderBy:sortOn:sortDirection" lo30-footable>
+                    <td click>{{item.teamNameToDisplay}}</td>
+                    <td class="text-right">{{item.playoffs}}</td>
+                    <td class="text-right">{{item.position}}</td>
+                    <td class="text-right">{{item.line}}</td>
+                    <td class="text-right">{{item.games}}</td>
+                    <td class="text-right">{{item.goals}}</td>
+                    <td class="text-right">{{item.assists}}</td>
+                    <td class="text-right">{{item.points}}</td>
+                    <td class="text-right">{{item.penaltyMinutes}}</td>
+                    <td class="text-right">{{item.powerPlayGoals}}</td>
+                    <td class="text-right">{{item.shortHandedGoals}}</td>
+                    <td class="text-right">{{item.gameWinningGoals}}</td>
+                    <td class="text-right">{{item.sub}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <table class="table table-condensed table-bordered table-striped table-dk-blue footable" data-filtering="true" data-sorting="true">
+                <thead>
+                  <tr>
+                    <th data-breakpoints="xs sm">Game</th>
+                    <th data-sorted="true" data-direction="DESC">Date</th>
+                    <th data-type="number">Team</th>
+                    <th data-breakpoints="xs" data-type="number">Playoffs</th>
+                    <th data-breakpoints="xs sm" data-type="number">Line</th>
+                    <th data-breakpoints="xs sm" data-type="number">Pos</th>
+                    <th data-breakpoints="xs" data-type="number">G</th>
+                    <th data-breakpoints="xs" data-type="number">A</th>
+                    <th data-type="number">P</th>
+                    <th data-breakpoints="xs sm" data-type="number">PIM</th>
+                    <th data-breakpoints="xs sm" data-type="number">PPG</th>
+                    <th data-breakpoints="xs sm" data-type="number">SHG</th>
+                    <th data-breakpoints="xs sm" data-type="number">GWG</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="item in local.playerStatGamesToDisplay | orderBy:sortOn:sortDirection" lo30-footable>
+                    <td><a ng-href="/ng/#/boxscores/games/{{item.gameId}}/seasons/{{item.seasonId}}">{{item.gameId}}</a></td>
+                    <td>{{ item.gameDateTime }}</td>
+                    <td>{{item.teamNameShort}}{{item.sub == true ? "*" : ""}}</td>
+                    <td>{{item.playoffs}}</td>
+                    <td>{{item.line}}</td>
+                    <td>{{item.position}}</td>
+                    <td class="text-right">{{item.goals}}</td>
+                    <td class="text-right">{{item.assists}}</td>
+                    <td class="text-right">{{item.points}}</td>
+                    <td class="text-right">{{item.penaltyMinutes}}</td>
+                    <td class="text-right">{{item.powerPlayGoals}}</td>
+                    <td class="text-right">{{item.shortHandedGoals}}</td>
+                    <td class="text-right">{{item.gameWinningGoals}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </uib-tab>
+
+        <uib-tab heading="Profile" active="local.tabStates['profile']">
+        </uib-tab>
+</uib-tabset>
   </div>
+</div>
+
 </div>

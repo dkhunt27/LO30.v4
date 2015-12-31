@@ -22,7 +22,7 @@ namespace LO30.Web.Controllers.Api
     }
 
     [HttpGet("seasons/{seasonId:int}/playoffs/{playoffs:bool}")]
-    public JsonResult ListTeamStandingsForSeasonIdPlayoffs(int seasonId, bool playoffs)
+    public JsonResult ListForSeasonIdPlayoffs(int seasonId, bool playoffs)
     {
       List<TeamStanding> results;
       using (_context)

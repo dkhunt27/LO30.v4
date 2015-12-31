@@ -6,6 +6,8 @@ using Microsoft.AspNet.Mvc;
 using LO30.Web.Models.Context;
 using LO30.Web.Models.Objects;
 using Microsoft.Data.Entity;
+using AutoMapper;
+using LO30.Web.ViewModels.Api;
 
 namespace LO30.Web.Controllers.Api
 {
@@ -20,7 +22,7 @@ namespace LO30.Web.Controllers.Api
     }
 
     [HttpGet("seasons/{seasonId:int}")]
-    public JsonResult ListGamesForSeasonId(int seasonId)
+    public JsonResult ListForSeasonId(int seasonId)
     {
       List<Game> results;
       using (_context)
@@ -29,6 +31,26 @@ namespace LO30.Web.Controllers.Api
       }
 
       return Json(results.OrderBy(x=>x.GameId));
+    }
+
+    [HttpGet("{gameId:int}")]
+    public JsonResult GetForGameId(int gameId)
+    {
+      Game results;
+      using (_context)
+      {
+        // TODO, more research...Team isn't getting populated, but opponentteam is
+        results = _context.Games
+                            .Include(x => x.Season)
+                            .Include(x => x.GameOutcomes)
+                            .Include(x => x.GameScores)
+                            .Include(x => x.GameTeams).ThenInclude(y => y.Team)
+                            .Include(x => x.GameTeams).ThenInclude(y => y.OpponentTeam)
+                            .Where(x => x.GameId == gameId)
+                            .SingleOrDefault();
+      }
+
+      return Json(Mapper.Map<GameCompositeViewModel>(results));
     }
   }
 }

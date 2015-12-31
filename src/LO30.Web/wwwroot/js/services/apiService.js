@@ -9,8 +9,13 @@ lo30NgApp.factory("apiService",
       var service = {
         dataProcessing: {},
         games: {},
+        goalieStatGames: {},
         playerStatCareers: {},
+        playerStatGames: {},
+        playerStatSeasons: {},
         playerStatTeams: {},
+        scoreSheetEntryProcessedGoals: {},
+        scoreSheetEntryProcessedPenalties: {},
         seasons: {},
         teamStandings: {}
       };
@@ -19,6 +24,16 @@ lo30NgApp.factory("apiService",
         var inputs = {
           apiDataType: "dataProcessing.getLastGameProcessedForSeasonId",
           urlPartial: "dataprocessing/lastprocessedgameid/seasons/" + seasonId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.games.getForGameId = function (gameId) {
+        var inputs = {
+          apiDataType: "games.getForGameId",
+          urlPartial: "games/" + gameId,
           method: "GET",
           params: null
         }
@@ -35,6 +50,26 @@ lo30NgApp.factory("apiService",
         return apiBaseService.execute(inputs);
       }
 
+      service.goalieStatGames.listForGameId = function (gameId) {
+        var inputs = {
+          apiDataType: "goalieStatGames.listForGameId",
+          urlPartial: "goaliestatgames/games/" + gameId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.goalieStatGames.listForPlayerIdSeasonId = function (playerId, seasonId) {
+        var inputs = {
+          apiDataType: "goalieStatGames.listForSeasonIdPlayerId",
+          urlPartial: "goaliestatgames/goalies/" + playerId + "/seasons/" + seasonId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
       service.playerStatCareers.getForPlayerId = function (playerId) {
         var inputs = {
           apiDataType: "playerStatCareers.getForPlayerId",
@@ -45,10 +80,70 @@ lo30NgApp.factory("apiService",
         return apiBaseService.execute(inputs);
       }
 
+      service.playerStatGames.listForPlayerIdSeasonId = function (playerId, seasonId) {
+        var inputs = {
+          apiDataType: "playerStatGames.listForSeasonIdPlayerId",
+          urlPartial: "playerstatgames/players/" + playerId + "/seasons/" + seasonId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.playerStatSeasons.listForPlayerId = function (playerId) {
+        var inputs = {
+          apiDataType: "playerStatSeasons.listForPlayerId",
+          urlPartial: "playerstatseasons/players/" + playerId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.playerStatSeasons.listForPlayerIdSeasonId = function (playerId, seasonId) {
+        var inputs = {
+          apiDataType: "playerStatSeasons.listForPlayerId",
+          urlPartial: "playerstatseasons/players/" + playerId + "/seasons/" + seasonId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
       service.playerStatTeams.listForSeasonIdPlayoffs = function (seasonId, playoffs) {
         var inputs = {
           apiDataType: "playerStatTeams.listForSeasonIdPlayoffs",
           urlPartial: "playerstatteams/seasons/" + seasonId + "/playoffs/" + playoffs,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.playerStatTeams.listForPlayerIdSeasonId = function (playerId, seasonId) {
+        var inputs = {
+          apiDataType: "playerStatTeams.listForSeasonIdPlayerId",
+          urlPartial: "playerstatteams/players/" + playerId + "/seasons/" + seasonId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.scoreSheetEntryProcessedGoals.listForGameId = function (gameId) {
+        var inputs = {
+          apiDataType: "scoreSheetEntryProcessedGoals.listForGameId",
+          urlPartial: "scoresheetentries/processed/goals/games/" + gameId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.scoreSheetEntryProcessedPenalties.listForGameId = function (gameId) {
+        var inputs = {
+          apiDataType: "scoreSheetEntryProcessedPenalties.listForGameId",
+          urlPartial: "scoresheetentries/processed/penalties/games/" + gameId,
           method: "GET",
           params: null
         }

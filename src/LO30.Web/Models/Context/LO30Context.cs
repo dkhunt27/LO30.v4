@@ -413,6 +413,8 @@ namespace LO30.Web.Models.Context
       {
         entity.ToTable("ScoreSheetEntryGoals");
 
+        entity.Property(e => e.UpdatedOn).HasColumnType("smalldatetime").HasDefaultValueSql("getdate()");
+
         entity.HasKey(x => new { x.ScoreSheetEntryGoalId });
 
         entity.HasOne(d => d.Game).WithMany(p => p.ScoreSheetEntryGoals).OnDelete(DeleteBehavior.Restrict);
@@ -424,6 +426,8 @@ namespace LO30.Web.Models.Context
       modelBuilder.Entity<ScoreSheetEntryPenalty>(entity =>
       {
         entity.ToTable("ScoreSheetEntryPenalties");
+
+        entity.Property(e => e.UpdatedOn).HasColumnType("smalldatetime").HasDefaultValueSql("getdate()");
 
         entity.HasKey(x => new { x.ScoreSheetEntryPenaltyId });
 
@@ -534,6 +538,8 @@ namespace LO30.Web.Models.Context
       modelBuilder.Entity<ScoreSheetEntrySub>(entity =>
       {
         entity.ToTable("ScoreSheetEntrySubs");
+
+        entity.Property(e => e.UpdatedOn).HasColumnType("smalldatetime").HasDefaultValueSql("getdate()");
 
         entity.HasKey(x => new { x.ScoreSheetEntrySubId });
 
@@ -650,7 +656,7 @@ namespace LO30.Web.Models.Context
     public DbSet<PlayerRating> PlayerRatings { get; set; }
     public DbSet<PlayerStatCareer> PlayerStatCareers { get; set; }
     public DbSet<PlayerStatGame> PlayerStatGames { get; set; }
-    public DbSet<PlayerStatSeason> PlayerStatSeason { get; set; }
+    public DbSet<PlayerStatSeason> PlayerStatSeasons { get; set; }
     public DbSet<PlayerStatTeam> PlayerStatTeams { get; set; }
     public DbSet<PlayerStatus> PlayerStatuses { get; set; }
     public DbSet<PlayerStatusType> PlayerStatusTypes { get; set; }

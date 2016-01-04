@@ -2,28 +2,19 @@
 
 namespace LO30.Web.ViewModels.Api
 {
-    public class TeamStandingViewModel
-    {
+  public class TeamStandingViewModel
+  {
     [Required]
     public int TeamId { get; set; }
-
-    [Required, MaxLength(5)]
-    public string TeamCode { get; set; }
-
-    [Required, MaxLength(15)]
-    public string TeamNameShort { get; set; }
-
-    [Required, MaxLength(35)]
-    public string TeamNameLong { get; set; }
 
     [Required]
     public bool Playoffs { get; set; }
 
-    [Required, MaxLength(50)]
-    public string DivisionLongName { get; set; }
+    [Required]
+    public int SeasonId { get; set; }
 
-    [Required, MaxLength(15)]
-    public string DivisionShortName { get; set; }
+    [Required]
+    public int DivisionId { get; set; }
 
     [Required]
     public int Ranking { get; set; }
@@ -54,5 +45,20 @@ namespace LO30.Web.ViewModels.Api
 
     [Required]
     public int Subs { get; set; }
+
+    [Required, MaxLength(5)]
+    public string TeamCode { get; set; }
+
+    [Required, MaxLength(15)]
+    public string TeamNameShort { get; set; }
+
+    [Required, MaxLength(35)]
+    public string TeamNameLong { get; set; }
+
+    [Required, MaxLength(50)]
+    public string DivisionLongName { get; set; }
+
+    [Required, MaxLength(15)]
+    public string DivisionShortName { get; set; }
   }
 }

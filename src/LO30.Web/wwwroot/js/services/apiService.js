@@ -40,6 +40,16 @@ lo30NgApp.factory("apiService",
         return apiBaseService.execute(inputs);
       }
 
+      service.games.listForSeasonIdTeamId = function (seasonId, teamId) {
+        var inputs = {
+          apiDataType: "games.listForSeasonIdTeamId",
+          urlPartial: "games/seasons/" + seasonId + "/teams/" + teamId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
       service.games.listForSeasonId = function (seasonId) {
         var inputs = {
           apiDataType: "games.listForSeasonId",
@@ -178,6 +188,16 @@ lo30NgApp.factory("apiService",
         var inputs = {
           apiDataType: "teamStandings.listForSeasonIdPlayoffs",
           urlPartial: "teamstandings/seasons/" + seasonId + "/playoffs/" + playoffs,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.teamStandings.listForSeasonIdTeamId = function (seasonId, teamId) {
+        var inputs = {
+          apiDataType: "teamStandings.listForSeasonIdTeamId",
+          urlPartial: "teamstandings/seasons/" + seasonId + "/teams/" + teamId,
           method: "GET",
           params: null
         }

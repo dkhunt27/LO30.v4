@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using LO30.Web.Models;
+using LO30.Web.Models.Context;
+using LO30.Web.Models.Objects;
+using LO30.Web.Services;
+using LO30.Web.ViewModels.Api;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -9,19 +11,13 @@ using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using LO30.Web.Models;
-using LO30.Web.Services;
-using LO30.Web.Models.Context;
 using Newtonsoft.Json.Serialization;
-using AutoMapper;
-using LO30.Web.Models.Objects;
-using LO30.Web.ViewModels.Api;
+using System.Linq;
 
 namespace LO30.Web
 {
   public class Startup
   {
-
     public IConfigurationRoot Configuration { get; set; }
 
     public Startup(IHostingEnvironment env)
@@ -115,6 +111,7 @@ namespace LO30.Web
               .ForMember(vm => vm.OutcomeAway, opt => opt.MapFrom(m => m.GameOutcomes.Where(x=>x.HomeTeam == false).Single().Outcome))
               .ForMember(vm => vm.OverridenAway, opt => opt.MapFrom(m => m.GameOutcomes.Where(x=>x.HomeTeam == false).Single().Overriden))
               .ForMember(vm => vm.PenaltyMinutesAway, opt => opt.MapFrom(m => m.GameOutcomes.Where(x=>x.HomeTeam == false).Single().PenaltyMinutes))
+              .ForMember(vm => vm.SubsAway, opt => opt.MapFrom(m => m.GameOutcomes.Where(x => x.HomeTeam == false).SingleOrDefault().Subs))
               .ForMember(vm => vm.Period1ScoreAway, opt => opt.MapFrom(m => m.GameScores.Where(x=>x.Period == 1 && x.TeamId == (m.GameOutcomes.Where(y=>y.HomeTeam == false).Single().TeamId)).Single().Score))
               .ForMember(vm => vm.Period2ScoreAway, opt => opt.MapFrom(m => m.GameScores.Where(x=>x.Period == 2 && x.TeamId == (m.GameOutcomes.Where(y=>y.HomeTeam == false).Single().TeamId)).Single().Score))
               .ForMember(vm => vm.Period3ScoreAway, opt => opt.MapFrom(m => m.GameScores.Where(x=>x.Period == 3 && x.TeamId == (m.GameOutcomes.Where(y=>y.HomeTeam == false).Single().TeamId)).Single().Score))
@@ -129,10 +126,49 @@ namespace LO30.Web
               .ForMember(vm => vm.OutcomeHome, opt => opt.MapFrom(m => m.GameOutcomes.Where(x => x.HomeTeam == true).Single().Outcome))
               .ForMember(vm => vm.OverridenHome, opt => opt.MapFrom(m => m.GameOutcomes.Where(x => x.HomeTeam == true).Single().Overriden))
               .ForMember(vm => vm.PenaltyMinutesHome, opt => opt.MapFrom(m => m.GameOutcomes.Where(x => x.HomeTeam == true).Single().PenaltyMinutes))
+              .ForMember(vm => vm.SubsHome, opt => opt.MapFrom(m => m.GameOutcomes.Where(x => x.HomeTeam == true).SingleOrDefault().Subs))
               .ForMember(vm => vm.Period1ScoreHome, opt => opt.MapFrom(m => m.GameScores.Where(x => x.Period == 1 && x.TeamId == (m.GameOutcomes.Where(y => y.HomeTeam == true).Single().TeamId)).Single().Score))
               .ForMember(vm => vm.Period2ScoreHome, opt => opt.MapFrom(m => m.GameScores.Where(x => x.Period == 2 && x.TeamId == (m.GameOutcomes.Where(y => y.HomeTeam == true).Single().TeamId)).Single().Score))
               .ForMember(vm => vm.Period3ScoreHome, opt => opt.MapFrom(m => m.GameScores.Where(x => x.Period == 3 && x.TeamId == (m.GameOutcomes.Where(y => y.HomeTeam == true).Single().TeamId)).Single().Score))
               .ForMember(vm => vm.Period4ScoreHome, opt => opt.MapFrom(m => m.GameScores.Where(x => x.Period == 4 && x.TeamId == (m.GameOutcomes.Where(y => y.HomeTeam == true).SingleOrDefault().TeamId)).SingleOrDefault().Score))
+              .ReverseMap();
+
+        config.CreateMap<GameTeam, GameCompositeViewModel>()
+              .ForMember(vm => vm.GameDateTime, opt => opt.MapFrom(m => m.Game.GameDateTime))
+              .ForMember(vm => vm.GameYYYYMMDD, opt => opt.MapFrom(m => m.Game.GameYYYYMMDD))
+              .ForMember(vm => vm.Location, opt => opt.MapFrom(m => m.Game.Location))
+              .ForMember(vm => vm.Playoffs, opt => opt.MapFrom(m => m.Game.Playoffs))
+              .ForMember(vm => vm.SeasonName, opt => opt.MapFrom(m => m.Season.SeasonName))
+
+              .ForMember(vm => vm.TeamIdAway, opt => opt.MapFrom(m => m.HomeTeam ? m.OpponentTeam.TeamId : m.Team.TeamId))
+              .ForMember(vm => vm.TeamCodeAway, opt => opt.MapFrom(m => m.HomeTeam ? m.OpponentTeam.TeamCode : m.Team.TeamCode))
+              .ForMember(vm => vm.TeamNameLongAway, opt => opt.MapFrom(m => m.HomeTeam ? m.OpponentTeam.TeamNameLong : m.Team.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShortAway, opt => opt.MapFrom(m => m.HomeTeam ? m.OpponentTeam.TeamNameShort : m.Team.TeamNameShort))
+              .ForMember(vm => vm.GoalsAgainstAway, opt => opt.MapFrom(m => m.Game.GameOutcomes.Where(x => x.HomeTeam == false).SingleOrDefault().GoalsAgainst))
+              .ForMember(vm => vm.GoalsForAway, opt => opt.MapFrom(m => m.Game.GameOutcomes.Where(x => x.HomeTeam == false).SingleOrDefault().GoalsFor))
+              .ForMember(vm => vm.OutcomeAway, opt => opt.MapFrom(m => m.Game.GameOutcomes.Where(x => x.HomeTeam == false).SingleOrDefault().Outcome))
+              .ForMember(vm => vm.OverridenAway, opt => opt.MapFrom(m => m.Game.GameOutcomes.Where(x => x.HomeTeam == false).SingleOrDefault().Overriden))
+              .ForMember(vm => vm.PenaltyMinutesAway, opt => opt.MapFrom(m => m.Game.GameOutcomes.Where(x => x.HomeTeam == false).SingleOrDefault().PenaltyMinutes))
+              .ForMember(vm => vm.SubsAway, opt => opt.MapFrom(m => m.Game.GameOutcomes.Where(x => x.HomeTeam == false).SingleOrDefault().Subs))
+              .ForMember(vm => vm.Period1ScoreAway, opt => opt.MapFrom(m => m.Game.GameScores.Where(x => x.Period == 1 && x.TeamId == (m.Game.GameOutcomes.Where(y => y.HomeTeam == false).Single().TeamId)).SingleOrDefault().Score))
+              .ForMember(vm => vm.Period2ScoreAway, opt => opt.MapFrom(m => m.Game.GameScores.Where(x => x.Period == 2 && x.TeamId == (m.Game.GameOutcomes.Where(y => y.HomeTeam == false).Single().TeamId)).SingleOrDefault().Score))
+              .ForMember(vm => vm.Period3ScoreAway, opt => opt.MapFrom(m => m.Game.GameScores.Where(x => x.Period == 3 && x.TeamId == (m.Game.GameOutcomes.Where(y => y.HomeTeam == false).Single().TeamId)).SingleOrDefault().Score))
+              .ForMember(vm => vm.Period4ScoreAway, opt => opt.MapFrom(m => m.Game.GameScores.Where(x => x.Period == 4 && x.TeamId == (m.Game.GameOutcomes.Where(y => y.HomeTeam == false).SingleOrDefault().TeamId)).SingleOrDefault().Score))
+
+              .ForMember(vm => vm.TeamIdHome, opt => opt.MapFrom(m => m.HomeTeam ? m.Team.TeamId : m.OpponentTeam.TeamId))
+              .ForMember(vm => vm.TeamCodeHome, opt => opt.MapFrom(m => m.HomeTeam ? m.Team.TeamCode : m.OpponentTeam.TeamCode))
+              .ForMember(vm => vm.TeamNameLongHome, opt => opt.MapFrom(m => m.HomeTeam ? m.Team.TeamNameLong : m.OpponentTeam.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShortHome, opt => opt.MapFrom(m => m.HomeTeam ? m.Team.TeamNameShort : m.OpponentTeam.TeamNameShort))
+              .ForMember(vm => vm.GoalsAgainstHome, opt => opt.MapFrom(m => m.Game.GameOutcomes.Where(x => x.HomeTeam == true).SingleOrDefault().GoalsAgainst))
+              .ForMember(vm => vm.GoalsForHome, opt => opt.MapFrom(m => m.Game.GameOutcomes.Where(x => x.HomeTeam == true).SingleOrDefault().GoalsFor))
+              .ForMember(vm => vm.OutcomeHome, opt => opt.MapFrom(m => m.Game.GameOutcomes.Where(x => x.HomeTeam == true).SingleOrDefault().Outcome))
+              .ForMember(vm => vm.OverridenHome, opt => opt.MapFrom(m => m.Game.GameOutcomes.Where(x => x.HomeTeam == true).SingleOrDefault().Overriden))
+              .ForMember(vm => vm.PenaltyMinutesHome, opt => opt.MapFrom(m => m.Game.GameOutcomes.Where(x => x.HomeTeam == true).SingleOrDefault().PenaltyMinutes))
+              .ForMember(vm => vm.SubsHome, opt => opt.MapFrom(m => m.Game.GameOutcomes.Where(x => x.HomeTeam == true).SingleOrDefault().Subs))
+              .ForMember(vm => vm.Period1ScoreHome, opt => opt.MapFrom(m => m.Game.GameScores.Where(x => x.Period == 1 && x.TeamId == (m.Game.GameOutcomes.Where(y => y.HomeTeam == true).Single().TeamId)).SingleOrDefault().Score))
+              .ForMember(vm => vm.Period2ScoreHome, opt => opt.MapFrom(m => m.Game.GameScores.Where(x => x.Period == 2 && x.TeamId == (m.Game.GameOutcomes.Where(y => y.HomeTeam == true).Single().TeamId)).SingleOrDefault().Score))
+              .ForMember(vm => vm.Period3ScoreHome, opt => opt.MapFrom(m => m.Game.GameScores.Where(x => x.Period == 3 && x.TeamId == (m.Game.GameOutcomes.Where(y => y.HomeTeam == true).Single().TeamId)).SingleOrDefault().Score))
+              .ForMember(vm => vm.Period4ScoreHome, opt => opt.MapFrom(m => m.Game.GameScores.Where(x => x.Period == 4 && x.TeamId == (m.Game.GameOutcomes.Where(y => y.HomeTeam == true).SingleOrDefault().TeamId)).SingleOrDefault().Score))
               .ReverseMap();
 
         config.CreateMap<GoalieStatGame, GoalieStatGameViewModel>()
@@ -234,8 +270,8 @@ namespace LO30.Web
       app.UseMvc(routes =>
       {
         routes.MapRoute(
-                  name: "default",
-                  template: "{controller=Home}/{action=Index}/{id?}");
+          name: "default",
+          template: "{controller=Home}/{action=Index}/{id?}");
       });
     }
 

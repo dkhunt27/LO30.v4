@@ -36,5 +36,21 @@ namespace LO30.Web.Controllers.Api
 
       return Json(Mapper.Map<IEnumerable<TeamStandingViewModel>>(results));
     }
+
+    [HttpGet("seasons/{seasonId:int}/teams/{teamId:int}")]
+    public JsonResult ListForSeasonIdTeamId(int seasonId, int teamId)
+    {
+      List<TeamStanding> results;
+      using (_context)
+      {
+        results = _context.TeamStandings
+                          .Include(x => x.Team)
+                          .ThenInclude(x => x.Division)
+                          .Where(x => x.SeasonId == seasonId && x.TeamId == teamId)
+                          .ToList();
+      }
+
+      return Json(Mapper.Map<IEnumerable<TeamStandingViewModel>>(results));
+    }
   }
 }

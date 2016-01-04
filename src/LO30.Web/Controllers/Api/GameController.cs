@@ -52,5 +52,49 @@ namespace LO30.Web.Controllers.Api
 
       return Json(Mapper.Map<GameCompositeViewModel>(results));
     }
+
+    [HttpGet("seasons/{seasonId:int}/teams/{teamId:int}")]
+    public JsonResult ListForSeasonIdTeamId(int seasonId, int teamId)
+    {
+      List<GameTeam> results;
+
+      using (_context)
+      {
+        results = _context.GameTeams
+                          .Include(x => x.Season)
+                          .Include(x => x.Team)
+                          .Include(x => x.OpponentTeam)
+                          .Include(x => x.Game).ThenInclude(y => y.GameOutcomes)
+                          .Include(x => x.Game).ThenInclude(y => y.GameScores)
+                          .Where(x => x.TeamId == teamId && x.SeasonId == seasonId)
+                          .ToList();
+
+        // only keep games with outcomes (for some reason doesn't work if in above query)
+        //results = results
+        //          .Where(x => x.Game.GameOutcomes.Any())
+        //          .ToList();
+
+        // HACK, for some reason, the team was not getting "included"
+        results = results.Join(_context.Teams,
+                    a => a.TeamId,
+                    b => b.TeamId,
+                    (a, b) => new { a, b })
+                    .Select(m => new GameTeam
+                    {
+                      Game = m.a.Game,
+                      GameId = m.a.GameId,
+                      HomeTeam = m.a.HomeTeam,
+                      OpponentTeam = m.a.OpponentTeam,
+                      OpponentTeamId = m.a.OpponentTeamId,
+                      Season = m.a.Season,
+                      SeasonId = m.a.SeasonId,
+                      Team = m.b,
+                      TeamId = m.a.TeamId
+                    })
+                    .ToList();
+      }
+
+      return Json(Mapper.Map<IEnumerable<GameCompositeViewModel>>(results));
+    }
   }
 }

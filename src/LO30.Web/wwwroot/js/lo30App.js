@@ -78,6 +78,21 @@ lo30NgApp.config(function ($routeProvider) {
     }
   });
 
+  $routeProvider.when("/teams/:teamId/seasons/:seasonId", {
+    controller: "teamsController",
+    templateUrl: "/views/teams.html",
+    resolve: {
+      criteriaServiceResolved: [
+        'criteriaService',
+        function (criteriaService) {
+          return criteriaService.initialize().then(function (fulfilled) {
+            return criteriaService;
+          });
+        }
+      ]
+    }
+  });
+
   $routeProvider.when("/boxscores/games/:gameId/seasons/:seasonId", {
     controller: "gameBoxScoreController",
     templateUrl: "/views/gameBoxScore.html",
@@ -93,7 +108,7 @@ lo30NgApp.config(function ($routeProvider) {
     }
   });
 
-  $routeProvider.otherwise({ redirectTo: "/standings" });
+  $routeProvider.otherwise({ redirectTo: "/" });
 });
 
 

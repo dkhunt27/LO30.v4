@@ -4,7 +4,7 @@
     <div id="breadcrumb" class="col-xs-12">
       <ol class="breadcrumb">
         <li><a href="index.html">Home</a></li>
-        <li><a href="#">Standings</a></li>
+        <li class="active">Standings</li>
       </ol>
     </div>
   </div>
@@ -43,7 +43,7 @@
         <tbody>
           <tr ng-repeat="item in local.teamStandingsToDisplay | orderBy:sortOn:sortDirection">
             <td>{{item.ranking}}</td>
-            <td><a ng-href="/Ng/#/Games/Results/{{item.sid}}/false/{{item.tid}}">{{item.teamNameToDisplay}}</a></td>
+            <td><a ng-href="/ng/#/teams/{{item.teamId}}/seasons/{{item.seasonId}}">{{item.teamNameToDisplay}}</a></td>
             <td class="text-right">{{item.games}}</td>
             <td class="text-right">{{item.wins}}</td>
             <td class="text-right">{{item.losses}}</td>

@@ -2,7 +2,7 @@
 
 /* jshint -W117 */ //(remove the undefined warning)
 lo30NgApp.controller('teamsController',
-    function ($log, $scope, $routeParams, $timeout, apiService, criteriaServiceResolved, screenSize, broadcastService, externalLibService, DTOptionsBuilder, DTColumnBuilder) {
+    function ($log, $scope, $routeParams, $timeout, apiService, criteriaServiceResolved, screenSize, broadcastService, externalLibService, DTOptionsBuilder, DTColumnBuilder, constScheduleTeamFeedBaseUrl) {
 
       var _ = externalLibService._;
 
@@ -18,6 +18,7 @@ lo30NgApp.controller('teamsController',
           gamesToDisplay: [],
           gamesToDisplayCompleted: [],
           gamesToDisplayUpcoming: [],
+          teamFeed: {},
           fetchTeamStandingsCompleted: false,
           fetchGamesCompleted: false,
 
@@ -78,6 +79,8 @@ lo30NgApp.controller('teamsController',
 
           $scope.buildTeamStandingsToDisplay();
 
+          $scope.buildTeamFeed();
+
         }).finally(function () {
 
           $scope.local.fetchTeamStandingsCompleted = true;
@@ -109,6 +112,25 @@ lo30NgApp.controller('teamsController',
         });
 
         $log.debug("teamStandingsToDisplay", $scope.local.teamStandingsToDisplay)
+      };
+
+      $scope.buildTeamFeed = function () {
+
+        var team = $scope.local.teamStandings[0]; // all the team info should be the same, so just take the first one
+
+        var seasonId = team.seasonId;
+        var teamId = team.teamId;
+        var scheduleTeamName = team.teamNameLong.replace(/ /g, "").replace(/\//g, "").replace(/-/g, "").replace(/\./g, "");
+        var scheduleSeasonName = team.seasonName.replace(/ /g, "");
+
+        $scope.local.teamFeed = {
+          teamCode: team.teamCode,
+          teamNameLong: team.teamNameLong,
+          teamNameShort: team.teamNameShort,
+          teamFeedUrl: constScheduleTeamFeedBaseUrl + "/Schedule/TeamFeed/Seasons/" + seasonId + "/Teams/" + teamId + "/LO30Schedule-" + scheduleTeamName + "-" + scheduleSeasonName
+        };
+
+        $log.debug("teamFeed", $scope.local.teamFeed)
       };
 
       $scope.fetchGames = function (seasonId, teamId) {

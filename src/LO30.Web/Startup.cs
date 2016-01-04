@@ -261,6 +261,7 @@ namespace LO30.Web
               .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
               .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
               .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
+              .ForMember(vm => vm.SeasonName, opt => opt.MapFrom(m => m.Season.SeasonName))
               .ReverseMap();
 
       });

@@ -9,6 +9,7 @@ using DDay.iCal;
 using DDay.iCal.Serialization;
 using DDay.iCal.Serialization.iCalendar;
 using LO30.Web.Models.Objects;
+using LO30.Web.ViewModels.Schedule;
 
 namespace LO30.Web.Controllers.Web
 {
@@ -24,12 +25,55 @@ namespace LO30.Web.Controllers.Web
 
     public ActionResult Index()
     {
-      return View();
+      var seasonId = _context.Seasons.Where(x => x.IsCurrentSeason == true).Single().SeasonId;
+      var seasonName = _context.Seasons.Where(x => x.SeasonId == seasonId).Single().SeasonName;
+
+      var teams = _context.Teams.Where(x => x.SeasonId == seasonId).ToList();
+
+      ViewData["SeasonId"] = seasonId;
+      ViewData["SeasonName"] = seasonName;
+
+      List<TeamFeedViewModel> teamFeeds = new List<TeamFeedViewModel>();
+
+      var hostingEnvironment = Environment.GetEnvironmentVariable("Hosting:Environment");
+
+      string baseUrl;
+
+      if (hostingEnvironment == "Development")
+      {
+        baseUrl = "localhost:5000";
+      } 
+      else
+      {
+        baseUrl = "lo30.azurewebsites.net";
+      }
+
+      foreach (var team in teams)
+      {
+        var teamId = team.TeamId;
+        var scheduleTeamName = team.TeamNameLong.Replace(" ", "").Replace("/", "").Replace("-", "").Replace(".", "");
+        var scheduleSeasonName = seasonName.Replace(" ", "");
+
+        var teamFeed = new TeamFeedViewModel()
+        {
+          TeamCode = team.TeamCode,
+          TeamNameLong = team.TeamNameLong,
+          TeamNameShort = team.TeamNameShort,
+          TeamFeedUrl = baseUrl + "/Schedule/TeamFeed/Seasons/" + seasonId + "/Teams/" + teamId + "/LO30Schedule-" + scheduleTeamName + "-" + scheduleSeasonName
+        };
+
+        teamFeeds.Add(teamFeed);
+      }
+
+      return View(teamFeeds);
     }
 
     [HttpGet("TeamFeed/Seasons/{seasonId:int}/Teams/{teamId:int}/{desc}")]
     public IActionResult TeamFeed(int seasonId, int teamId, string desc)
     {
+      var seasonName = _context.Seasons.Where(x => x.SeasonId == seasonId).Single().SeasonName;
+      var teamName = _context.Teams.Where(x => x.TeamId == teamId).Single().TeamNameLong;
+
       List<GameTeam> gameTeams = _context.GameTeams
                               .Include(x => x.Season)
                               .Include(x => x.Team)
@@ -58,7 +102,10 @@ namespace LO30.Web.Controllers.Web
                   })
                   .ToList();
 
+      
+
       iCalendar ical = new iCalendar();
+      ical.Properties.Set("X-WR-CALNAME", "LO30Schedule-" + teamName.Replace(" ", "") + "-" + seasonName.Replace(" ",""));
       foreach (var gameTeam in gameTeams)
       {
         Event icalEvent = ical.Create<Event>();

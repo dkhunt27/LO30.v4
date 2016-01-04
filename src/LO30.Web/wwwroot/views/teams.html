@@ -177,14 +177,14 @@
                           <br>
 
                           <dl class="dl-horizontal">
-                            <dt>{{selectedTeamName}}</dt>
+                            <dt>{{local.teamFeed.teamNameShort}}</dt>
                             <dd>
-                              <a ng-href="webcal://lo30.azurewebsites.net/Schedule/TeamFeed/56/{{selectedTeamId}}/false">iPhone</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                              <a ng-href="http://lo30.azurewebsites.net/Schedule/TeamFeed/56/{{selectedTeamId}}/false">Non-iPhone</a><br />
-                              lo30.azurewebsites.net/Schedule/TeamFeed/56/{{selectedTeamId}}/false
+                              <a ng-href="webcal://{{local.teamFeed.teamFeedUrl}}">iPhone</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                              <a ng-href="http://{{local.teamFeed.teamFeedUrl}}">Non-iPhone</a><br />
+                              {{local.teamFeed.teamFeedUrl}}
                             </dd>
                           </dl>
-                          <div><em><small>&nbsp;&nbsp;If you find any descrepencies with the calendar feeds or if you are having trouble subscribing to a feed, pleace contact Dan Hunt and let him know</small></em></div>
+                          <div><em><small>&nbsp;&nbsp;If you find any descrepencies with the calendar feeds or if you are having trouble subscribing to a feed, please contact Dan Hunt</small></em></div>
                           <br>
                         </td>
                       </tr>

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<LO30.Web.ViewModels.Schedule.TeamFeedViewModel>
+
+@{
   ViewData["Title"] = "Schedule";
 }
 
@@ -16,7 +18,7 @@
 
   <div class="row">
     <header class="page-title">
-      <h4 class="col-md-12">2015 - 2016 Schedule</h4>
+      <h4 class="col-md-12">@ViewData["SeasonName"] Schedule</h4>
     </header>
   </div>
 
@@ -34,7 +36,6 @@
             Navigate to this page on your phone and click the Feed link next to your team's name.
           </div>
           <br />
-          <br />
           <div>
             <b>Other Applications</b>
             <br />
@@ -42,59 +43,21 @@
             <br />
             <em>Looking for an application that supports iCalendar feeds? Try <a href="http://www.google.com/calendar" target="_blank">Google Calendar</a>.</em>
           </div>
-          <br>
-
+          <br />
+          <br />
+          <br />
           <dl class="dl-horizontal">
-            <dt>Bill Brown</dt>
-            <dd>
-              <a href="webcal://localhost:5000/Schedule/TeamFeed/Seasons/56/Teams/318/BillBrownSchedule">iPhone</a>&nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="http://localhost:5000/Schedule/TeamFeed/Seasons/56/Teams/318/BillBrownSchedule">Non-iPhone</a><br />
-              lo30.azurewebsites.net/Schedule/TeamFeed/Seasons/56/Teams/318/BillBrownSchedule
-            </dd>
-            <dt>D &amp; G</dt>
-            <dd>
-              <a href="webcal://lo30.azurewebsites.net/Schedule/TeamFeed/56/319/false">iPhone</a>&nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="http://lo30.azurewebsites.net/Schedule/TeamFeed/56/319/false">Non-iPhone</a><br />
-              lo30.azurewebsites.net/Schedule/TeamFeed/56/319/false
-            </dd>
-            <dt>DPKZ</dt>
-            <dd>
-              <a href="webcal://lo30.azurewebsites.net/Schedule/TeamFeed/56/320/false">iPhone</a>&nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="http://lo30.azurewebsites.net/Schedule/TeamFeed/56/320/false">Non-iPhone</a><br />
-              lo30.azurewebsites.net/Schedule/TeamFeed/56/320/false
-            </dd>
-            <dt>Glover</dt>
-            <dd>
-              <a href="webcal://lo30.azurewebsites.net/Schedule/TeamFeed/56/321/false">iPhone</a>&nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="http://lo30.azurewebsites.net/Schedule/TeamFeed/56/321/false">Non-iPhone</a><br />
-              lo30.azurewebsites.net/Schedule/TeamFeed/56/321/false
-            </dd>
-            <dt>Hunt's Ace</dt>
-            <dd>
-              <a href="webcal://lo30.azurewebsites.net/Schedule/TeamFeed/56/322/false">iPhone</a>&nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="http://lo30.azurewebsites.net/Schedule/TeamFeed/56/322/false">Non-iPhone</a><br />
-              lo30.azurewebsites.net/Schedule/TeamFeed/56/322/false
-            </dd>
-            <dt>LAB / PSI</dt>
-            <dd>
-              <a href="webcal://lo30.azurewebsites.net/Schedule/TeamFeed/56/323/false">iPhone</a>&nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="http://lo30.azurewebsites.net/Schedule/TeamFeed/56/323/false">Non-iPhone</a><br />
-              lo30.azurewebsites.net/Schedule/TeamFeed/56/323/false
-            </dd>
-            <dt>Villanova</dt>
-            <dd>
-              <a href="webcal://lo30.azurewebsites.net/Schedule/TeamFeed/56/324/false">iPhone</a>&nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="http://lo30.azurewebsites.net/Schedule/TeamFeed/56/324/false">Non-iPhone</a><br />
-              lo30.azurewebsites.net/Schedule/TeamFeed/56/324/false
-            </dd>
-            <dt>Zas Ent</dt>
-            <dd>
-              <a href="webcal://lo30.azurewebsites.net/Schedule/TeamFeed/56/325/false">iPhone</a>&nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="http://lo30.azurewebsites.net/Schedule/TeamFeed/56/325/false">Non-iPhone</a><br />
-              lo30.azurewebsites.net/Schedule/TeamFeed/56/325/false
-            </dd>
+            @foreach (var teamFeed in Model)
+            {
+              <dt>@teamFeed.TeamNameShort</dt>
+              <dd>
+                <a href="webcal://@teamFeed.TeamFeedUrl">iPhone</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://@teamFeed.TeamFeedUrl">Non-iPhone</a><br />
+                @teamFeed.TeamFeedUrl
+              </dd>
+            }
           </dl>
-          <div><em><small>&nbsp;&nbsp;If you find any descrepencies with the calendar feeds or if you are having trouble subscribing to a feed, pleace contact Dan Hunt and let him know</small></em></div>
+          <div><em><small>&nbsp;&nbsp;If you find any descrepencies with the calendar feeds or if you are having trouble subscribing to a feed, please contact Dan Hunt</small></em></div>
           <br>
         </td>
       </tr>
@@ -104,7 +67,7 @@
           <br />
           <dl class="dl-horizontal">
             <dt>Link to PDF</dt>
-            <dd><a href="@Url.Content("~/Content/Schedules/2015-16/Lo30 Schedule 2015-16.v3.pdf")">LO30 Schedule 2015-16.pdf</a></dd>
+            <dd><a href="@Url.Content("~/files/schedules/2015-16/Lo30 Schedule 2015-16.v3.pdf")">LO30 Schedule 2015-16.pdf</a></dd>
           </dl>
         </td>
       </tr>

@@ -16,6 +16,8 @@ var lo30NgApp = angular.module("lo30NgApp", [
 
 lo30NgApp.constant("constApisUrl", "/api");
 
+lo30NgApp.constant("constScheduleTeamFeedBaseUrl", "localhost:5000");
+
 lo30NgApp.config(function ($routeProvider) {
 
   $routeProvider.when("/standings", {

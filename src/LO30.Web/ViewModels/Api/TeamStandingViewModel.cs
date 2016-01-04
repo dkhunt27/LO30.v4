@@ -60,5 +60,8 @@ namespace LO30.Web.ViewModels.Api
 
     [Required, MaxLength(15)]
     public string DivisionShortName { get; set; }
+
+    [Required, MaxLength(12)]
+    public string SeasonName { get; set; }
   }
 }

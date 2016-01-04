@@ -28,8 +28,8 @@ namespace LO30.Web.Controllers.Api
       using (_context)
       {
         results = _context.TeamStandings
-                          .Include(x=>x.Team)
-                          .ThenInclude(x=>x.Division)
+                          .Include(x => x.Season)
+                          .Include(x => x.Team).ThenInclude(x => x.Division)
                           .Where(x=>x.SeasonId == seasonId && x.Playoffs == playoffs)
                           .ToList();
       }
@@ -44,8 +44,8 @@ namespace LO30.Web.Controllers.Api
       using (_context)
       {
         results = _context.TeamStandings
-                          .Include(x => x.Team)
-                          .ThenInclude(x => x.Division)
+                          .Include(x => x.Season)
+                          .Include(x => x.Team).ThenInclude(x => x.Division)
                           .Where(x => x.SeasonId == seasonId && x.TeamId == teamId)
                           .ToList();
       }

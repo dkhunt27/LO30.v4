@@ -13,9 +13,6 @@ namespace LO30.Web.Models.Objects
 
     [Required]
     public bool Playoffs { get; set; }
-
-    [Required]
-    public bool Sub { get; set; }
     
     [Required]
     public int Games { get; set; }

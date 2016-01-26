@@ -33,6 +33,11 @@
 
   <!-- FOLLOWING WILL NEED TO BE MIN'd -->
   <link rel="stylesheet" href="~/lib/footable3/compiled/footable.bootstrap.css" />
+  <link rel="stylesheet" href="~/lib/slider-revolution/src/css/settings.css" />
+  <link rel="stylesheet" href="~/lib/owl-carousel/owl-carousel/owl.carousel.css" />
+  <link rel="stylesheet" href="~/lib/owl-carousel/owl-carousel/owl.theme.css" />
+  <link rel="stylesheet" href="~/lib/owl-carousel/owl-carousel/owl.transitions.css" />
+
 </head>
 <body>
   <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -51,6 +56,7 @@
           <li><a asp-controller="Schedule" asp-action="Index">Schedule</a></li>
           <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/standings">Standings</a></li>
           <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/stats/players">Stats</a></li>
+          <li><a asp-controller="Home" asp-action="About">About</a></li>
         </ul>
         @await Html.PartialAsync("_LoginPartial")
       </div>
@@ -95,6 +101,9 @@
 
   <!-- FOLLOWING WILL NEED TO BE MIN'd -->
   <script src="~/lib/footable3/compiled/footable.js"></script>
+  <script src="~/lib/slider-revolution/src/js/jquery.themepunch.plugins.min.js"></script>
+  <script src="~/lib/slider-revolution/src/js/jquery.themepunch.revolution.min.js"></script>
+  <script src="~/lib/owl-carousel/owl-carousel/owl.carousel.min.js"></script>
 
   @RenderSection("scripts", required: false)
 </body>

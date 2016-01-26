@@ -28,25 +28,25 @@ BEGIN TRY
 
 	CREATE TABLE #goalieStatCareersNew (
 		PlayerId int NOT NULL,
-		Playoffs bit NOT NULL,
+		Seasons int NOT NULL,
 		Games int NOT NULL,
 		GoalsAgainst int NOT NULL,
 		Shutouts int NOT NULL,
 		Wins int NOT NULL,
 		BCS int NULL
 	)
-	CREATE UNIQUE INDEX PK ON #goalieStatCareersNew(PlayerId, Playoffs)
+	CREATE UNIQUE INDEX PK ON #goalieStatCareersNew(PlayerId)
 
 	CREATE TABLE #goalieStatCareersCopy (
 		PlayerId int NOT NULL,
-		Playoffs bit NOT NULL,
+		Seasons int NOT NULL,
 		Games int NOT NULL,
 		GoalsAgainst int NOT NULL,
 		Shutouts int NOT NULL,
 		Wins int NOT NULL,
 		BCS int NULL
 	)
-	CREATE UNIQUE INDEX PK ON #goalieStatCareersCopy(PlayerId, Playoffs)
+	CREATE UNIQUE INDEX PK ON #goalieStatCareersCopy(PlayerId)
 
 	INSERT INTO #results
 	SELECT
@@ -60,7 +60,7 @@ BEGIN TRY
 	insert into #goalieStatCareersNew
 	select
 		s.PlayerId,
-		s.Playoffs,
+		count(distinct s.SeasonId) as Seasons,
 		sum(s.Games) as Games,
 		sum(s.GoalsAgainst) as GoalsAgainst,
 		sum(s.Shutouts) as Shutouts,
@@ -69,16 +69,15 @@ BEGIN TRY
 	from
 		GoalieStatSeasons s
 	where
-		s.PlayerId <> 0
+		s.PlayerId > 0
 	group by
-		s.PlayerId,
-		s.Playoffs
+		s.PlayerId
 
 
 	update #goalieStatCareersNew
 	set
 		BCS = BINARY_CHECKSUM(PlayerId,
-								Playoffs,
+								Seasons,
 								Games,
 								GoalsAgainst,
 								Shutouts,
@@ -87,13 +86,13 @@ BEGIN TRY
 	INSERT INTO #goalieStatCareersCopy
 	SELECT 
 		PlayerId,
-		Playoffs,
+		Seasons,
 		Games,
 		GoalsAgainst,
 		Shutouts,
 		Wins,
 		BINARY_CHECKSUM(PlayerId,
-								Playoffs,
+								Seasons,
 								Games,
 								GoalsAgainst,
 								Shutouts,
@@ -112,13 +111,14 @@ BEGIN TRY
 
 		update #goalieStatCareersCopy
 		set
+			Seasons = n.Seasons,
 			Games = n.Games,
 			GoalsAgainst = n.GoalsAgainst,
 			Shutouts = n.Shutouts,
 			Wins = n.Wins
 		from
 			#goalieStatCareersCopy c INNER JOIN
-			#goalieStatCareersNew n ON (c.PlayerId = n.PlayerId AND c.Playoffs = n.Playoffs)
+			#goalieStatCareersNew n ON (c.PlayerId = n.PlayerId)
 		where
 			c.BCS <> n.BCS
 
@@ -129,7 +129,7 @@ BEGIN TRY
 			n.*
 		from
 			#goalieStatCareersNew n left join
-			#goalieStatCareersCopy c on (c.PlayerId = n.PlayerId AND c.Playoffs = n.Playoffs)
+			#goalieStatCareersCopy c on (c.PlayerId = n.PlayerId)
 		where
 			c.PlayerId is null
 
@@ -145,14 +145,15 @@ BEGIN TRY
 
 		update GoalieStatCareers
 		set
+			Seasons = n.Seasons,
 			Games = n.Games,
 			GoalsAgainst = n.GoalsAgainst,
 			Shutouts = n.Shutouts,
 			Wins = n.Wins
 		from
 			GoalieStatCareers r INNER JOIN
-			#goalieStatCareersCopy c ON (r.PlayerId = c.PlayerId AND r.Playoffs = c.Playoffs) INNER JOIN
-			#goalieStatCareersNew n ON (c.PlayerId = n.PlayerId AND c.Playoffs = n.Playoffs)
+			#goalieStatCareersCopy c ON (r.PlayerId = c.PlayerId) INNER JOIN
+			#goalieStatCareersNew n ON (c.PlayerId = n.PlayerId)
 		where
 			c.BCS <> n.BCS
 
@@ -161,7 +162,7 @@ BEGIN TRY
 		insert into GoalieStatCareers
 		select
 			n.PlayerId,
-			n.Playoffs,
+			n.Seasons,
 			n.Games,
 			n.GoalsAgainst,
 			n.Shutouts,
@@ -169,7 +170,7 @@ BEGIN TRY
 			GETDATE()
 		from
 			#goalieStatCareersNew n left join
-			GoalieStatCareers c on (c.PlayerId = n.PlayerId AND c.Playoffs = n.Playoffs)
+			GoalieStatCareers c on (c.PlayerId = n.PlayerId)
 		where
 			c.PlayerId is null
 

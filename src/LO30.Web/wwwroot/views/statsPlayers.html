@@ -23,30 +23,125 @@
   </div>
 
   <div class="row">
+    <div>
+      <table>
+        <tr>
+          <td align="center">
+            <div class="col-xs-12">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-search"></span>
+                </div>
+                <input class="form-control" id="search-text" name="searchText" ng-model="local.searchText" type="text" focus="" required="" ng-keyup="$event.keyCode == 13 ? navigateToOfferDetailsExecution(local.searchText) : null" placeholder="SEARCH ANY FIELD">
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-remove" ng-click="removeSearch()"></span>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <td align="center">
+            <div class="col-xs-12">
+              <div class="btn-group btn-group-xs btn-group-justified">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary btn-lo30-disabled">Teams:</button>
+                </div>
+                <div data-ng-repeat="team in local.teamsToDisplay" class="btn-group">
+                  <button type="button" class="btn" ng-click="filterByTeam(team)"
+                          ng-class="{'btn-default':team !== local.selectedTeam, 'btn-primary':team === local.selectedTeam}">
+                    {{team.teamNameToDisplay}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <td align="center">
+            <div class="col-xs-12">
+              <div class="btn-group btn-group-xs btn-group-justified">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-danger btn-lo30-disabled">Pos:</button>
+                </div>
+                <div data-ng-repeat="position in positions" class="btn-group">
+                  <button type="button" class="btn" ng-click="filterByPosition(position)"
+                          ng-class="{'btn-default':position !== local.selectedPosition, 'btn-danger':position === local.selectedPosition}">
+                    {{position}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td align="center">
+            <div class="col-xs-12">
+              <div class="btn-group btn-group-xs btn-group-justified">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-warning btn-lo30-disabled">Line:</button>
+                </div>
+                <div data-ng-repeat="line in lines" class="btn-group">
+                  <button type="button" class="btn" ng-click="filterByLine(line)"
+                          ng-class="{'btn-default':line !== local.selectedLine, 'btn-warning':line === local.selectedLine}">
+                    {{line}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td align="center">
+            <div class="col-xs-12">
+              <div class="btn-group btn-group-xs btn-group-justified">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-success btn-lo30-disabled">Subs:</button>
+                </div>
+                <div data-ng-repeat="sub in subs" class="btn-group">
+                  <button type="button" class="btn" ng-click="filterBySub(sub)"
+                          ng-class="{'btn-default':sub !== local.selectedSub, 'btn-success':sub === local.selectedSub}">
+                    {{sub}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div ng-if="local.selectedType === 'skater'">
     <div class="row">
       <div id="pageContents" class="col-xs-12">
-        <table id="showcase-fixedcolumns" class="table table-condensed table-bordered table-striped" datatable="ng" dt-options="local.dt.options">
+        <table id="showcase-fixedcolumns" class="table table-condensed table-bordered table-striped footable">
           <thead>
             <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Games</th>
-              <th>Points</th>
-              <th>Goals</th>
-              <th>Assists</th>
-              <th>PIM</th>
-              <th>PPG</th>
-              <th>SHG</th>
-              <th>GWG</th>
-              <th>Team</th>
-              <th>Position</th>
-              <th>Line</th>
+              <th class="text-left" data-type="numeric">Rank</th>
+              <th class="text-left" data-type="alpha">Player</th>
+              <th class="text-right" data-type="numeric">Games</th>
+              <th class="text-right" data-type="numeric" data-sort-initial="descending">Points</th>
+              <th class="text-right" data-type="numeric">Goals</th>
+              <th class="text-right" data-type="numeric">Assists</th>
+              <th class="text-right" data-type="numeric">PIM</th>
+              <th class="text-right" data-type="numeric">PPG</th>
+              <th class="text-right" data-type="numeric">SHG</th>
+              <th class="text-right" data-type="numeric">GWG</th>
+              <th class="text-right" data-type="numeric">Team</th>
+              <th class="text-right" data-type="numeric">Position</th>
+              <th class="text-right" data-type="numeric">Line</th>
+              <th class="text-right" data-type="alpha">Sub</th>
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="item in local.playerStatTeams | orderBy:sortOn:sortDirection">
+            <tr ng-repeat="item in local.playerStatTeams | filterize:user.searchText | orderBy:sortOn:sortDirection">
               <td></td>
-              <td><a ng-href="/ng/#/players/{{item.playerId}}">{{item.playerNameToDisplay}}</a></td>
+              <td class="text-left"><a ng-href="/ng/#/players/{{item.playerId}}/types/skater/seasons/{{item.seasonId}}?tab=season">{{item.playerNameToDisplay}}</a></td>
               <td class="text-right">{{item.games}}</td>
               <td class="text-right">{{item.points}}</td>
               <td class="text-right">{{item.goals}}</td>
@@ -55,11 +150,60 @@
               <td class="text-right">{{item.powerPlayGoals}}</td>
               <td class="text-right">{{item.shortHandedGoals}}</td>
               <td class="text-right">{{item.gameWinningGoals}}</td>
-              <td>{{item.teamNameToDisplay}}</td>
+              <td class="text-right">{{item.teamNameToDisplay}}{{item.sub == true ? "*" : ""}}</td>
               <td class="text-right">{{item.position}}</td>
               <td class="text-right">{{item.line}}</td>
+              <td class="text-right">{{item.sub}}</td>
             </tr>
           </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div ng-if="local.selectedType === 'goalie'">
+    <div class="row">
+      <div id="pageContents" class="col-xs-12">
+        <table id="showcase-fixedcolumns" class="table table-condensed table-bordered table-striped footable">
+          <thead>
+            <tr>
+              <th class="text-left" data-type="numeric">Rank</th>
+              <th class="text-left" data-type="alpha">Player</th>
+              <th class="text-right" data-type="numeric">Games</th>
+              <th class="text-right" data-type="numeric">Goals Against</th>
+              <th class="text-right" data-type="numeric" data-sort-initial="true">GAA</th>
+              <th class="text-right" data-type="numeric">Wins</th>
+              <th class="text-right" data-type="numeric" data-hide="phone,tablet">Shutouts</th>
+              <th class="text-right" data-type="alpha" data-hide="phone,tablet">Team</th>
+              <th class="text-right" data-type="alpha" data-hide="phone,tablet">Sub</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in local.playerStatTeams">
+              <td></td>
+              <td class="text-left"><a ng-href="/ng/#/players/{{item.playerId}}/types/skater/seasons/{{item.seasonId}}?tab=season">{{item.playerNameToDisplay}}</a></td>
+              <td class="text-right">{{item.games}}</td>
+              <td class="text-right">{{item.goalsAgainst}}</td>
+              <td class="text-right">{{item.goalsAgainst / item.games | number:2}}</td>
+              <td class="text-right">{{item.wins}}</td>
+              <td class="text-right">{{item.shutouts}}</td>
+              <td class="text-right">{{item.teamNameToDisplay}}{{item.sub == true ? "*" : ""}}</td>
+              <td class="text-right">{{item.sub}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr id="datatables-filter-row">
+              <th><input class="input-datatables-filter" /></th>
+              <th><input class="input-datatables-filter" /></th>
+              <th><input class="input-datatables-filter" /></th>
+              <th><input class="input-datatables-filter" /></th>
+              <th><input class="input-datatables-filter" /></th>
+              <th><input class="input-datatables-filter" /></th>
+              <th><input class="input-datatables-filter" /></th>
+              <th><input class="input-datatables-filter" /></th>
+              <th><input id="filter" type="text" class="input-datatables-filter" /></th>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>

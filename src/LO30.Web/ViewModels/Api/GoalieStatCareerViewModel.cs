@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LO30.Web.ViewModels.Api
 {
-  public class PlayerStatCareerViewModel
+  public class GoalieStatCareerViewModel
   {
     [Required]
     public int PlayerId { get; set; }
@@ -15,28 +15,13 @@ namespace LO30.Web.ViewModels.Api
     public int Games { get; set; }
 
     [Required]
-    public int Goals { get; set; }
+    public int GoalsAgainst { get; set; }
 
     [Required]
-    public int Assists { get; set; }
+    public int Shutouts { get; set; }
 
     [Required]
-    public int Points { get; set; }
-
-    [Required]
-    public int PenaltyMinutes { get; set; }
-
-    [Required]
-    public int PowerPlayGoals { get; set; }
-
-    [Required]
-    public int ShortHandedGoals { get; set; }
-
-    [Required]
-    public int GameWinningGoals { get; set; }
-
-    [Required]
-    public DateTime UpdatedOn { get; set; }
+    public int Wins { get; set; }
 
     [Required, MaxLength(35)]
     public string PlayerFirstName { get; set; }
@@ -46,6 +31,5 @@ namespace LO30.Web.ViewModels.Api
 
     [MaxLength(5)]
     public string PlayerSuffix { get; set; }
-
   }
 }

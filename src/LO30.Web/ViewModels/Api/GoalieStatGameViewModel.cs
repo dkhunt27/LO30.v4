@@ -9,16 +9,16 @@ namespace LO30.Web.ViewModels.Api
     public int PlayerId { get; set; }
 
     [Required]
-    public int GameId { get; set; }
+    public int SeasonId { get; set; }
 
     [Required]
     public int TeamId { get; set; }
 
     [Required]
-    public bool Playoffs { get; set; }
+    public int GameId { get; set; }
 
     [Required]
-    public int SeasonId { get; set; }
+    public bool Playoffs { get; set; }
 
     [Required]
     public bool Sub { get; set; }

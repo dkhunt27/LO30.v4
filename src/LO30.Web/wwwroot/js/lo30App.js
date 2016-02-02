@@ -11,7 +11,8 @@ var lo30NgApp = angular.module("lo30NgApp", [
   'datatables.bootstrap',
   'datatables.buttons',
   'datatables.light-columnfilter',
-  'datatables.fixedcolumns'
+  'datatables.fixedcolumns',
+  'ui.footable'
 ]);
 
 lo30NgApp.constant("constApisUrl", "/api");
@@ -35,7 +36,7 @@ lo30NgApp.config(function ($routeProvider) {
     }
   });
 
-  $routeProvider.when("/stats/players", {
+  $routeProvider.when("/stats/players/types/:type", {
     controller: "statsPlayersController",
     templateUrl: "/views/statsPlayers.html",
     resolve: {
@@ -50,7 +51,7 @@ lo30NgApp.config(function ($routeProvider) {
     }
   });
 
-  $routeProvider.when("/players/:playerId", {
+  $routeProvider.when("/players/:playerId/types/:type", {
     controller: "playersController",
     templateUrl: "/views/players.html",
     resolve: {
@@ -65,7 +66,7 @@ lo30NgApp.config(function ($routeProvider) {
     }
   });
 
-  $routeProvider.when("/players/:playerId/seasons/:seasonId", {
+  $routeProvider.when("/players/:playerId/types/:type/seasons/:seasonId", {
     controller: "playersController",
     templateUrl: "/views/players.html",
     resolve: {

@@ -9,7 +9,10 @@ lo30NgApp.factory("apiService",
       var service = {
         dataProcessing: {},
         games: {},
+        goalieStatCareers: {},
         goalieStatGames: {},
+        goalieStatSeasons: {},
+        goalieStatTeams: {},
         playerStatCareers: {},
         playerStatGames: {},
         playerStatSeasons: {},
@@ -17,6 +20,7 @@ lo30NgApp.factory("apiService",
         scoreSheetEntryProcessedGoals: {},
         scoreSheetEntryProcessedPenalties: {},
         seasons: {},
+        teams: {},
         teamStandings: {}
       };
 
@@ -54,6 +58,56 @@ lo30NgApp.factory("apiService",
         var inputs = {
           apiDataType: "games.listForSeasonId",
           urlPartial: "games/seasons/" + seasonId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.goalieStatCareers.getForPlayerId = function (playerId) {
+        var inputs = {
+          apiDataType: "goalieStatCareers.getForPlayerId",
+          urlPartial: "goaliestatcareers/players/" + playerId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.goalieStatSeasons.listForPlayerId = function (playerId) {
+        var inputs = {
+          apiDataType: "goalieStatSeasons.listForPlayerId",
+          urlPartial: "goaliestatseasons/players/" + playerId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.goalieStatSeasons.listForPlayerIdSeasonId = function (playerId, seasonId) {
+        var inputs = {
+          apiDataType: "goalieStatSeasons.listForPlayerId",
+          urlPartial: "goaliestatseasons/players/" + playerId + "/seasons/" + seasonId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.goalieStatTeams.listForSeasonIdPlayoffs = function (seasonId, playoffs) {
+        var inputs = {
+          apiDataType: "goalieStatTeams.listForSeasonIdPlayoffs",
+          urlPartial: "goaliestatteams/seasons/" + seasonId + "/playoffs/" + playoffs,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.goalieStatTeams.listForPlayerIdSeasonId = function (playerId, seasonId) {
+        var inputs = {
+          apiDataType: "goalieStatTeams.listForSeasonIdPlayerId",
+          urlPartial: "goaliestatteams/players/" + playerId + "/seasons/" + seasonId,
           method: "GET",
           params: null
         }
@@ -182,6 +236,16 @@ lo30NgApp.factory("apiService",
         return apiBaseService.execute(inputs).then(function (fulfilled) {
           return _.filter(fulfilled, function (item) { return item.seasonId >= 43; })
         });
+      }
+      
+      service.teams.listForSeasonId = function (seasonId) {
+        var inputs = {
+          apiDataType: "teams.listForSeasonId",
+          urlPartial: "teams/seasons/" + seasonId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
       }
 
       service.teamStandings.listForSeasonIdPlayoffs = function (seasonId, playoffs) {

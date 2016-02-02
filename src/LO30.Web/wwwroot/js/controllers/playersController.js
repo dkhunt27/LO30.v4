@@ -11,6 +11,7 @@ lo30NgApp.controller('playersController',
         $scope.local = {
           selectedPlayerId: 593,
           selectedSeasonId: 56,
+          selectedType: 'skater',
           playerStatGames: [],
           playerStatTeams: [],
           playerStatSeasons: [],
@@ -32,13 +33,21 @@ lo30NgApp.controller('playersController',
         };
       };
 
-      $scope.fetchPlayerStatCareer = function (playerId) {
+      $scope.fetchPlayerStatCareer = function (playerId, type) {
 
         $scope.local.fetchplayerStatCareerCompleted = false;
 
         $scope.local.playerStatCareer = {};
+ 
+        var apiServiceType = "playerStatCareers";
 
-        apiService.playerStatCareers.getForPlayerId(playerId).then(function (fulfilled) {
+        if (type === "goalie") {
+
+          apiServiceType = "goalieStatCareers";
+
+        }
+
+        apiService[apiServiceType].getForPlayerId(playerId).then(function (fulfilled) {
 
           $scope.local.playerStatCareer = fulfilled;
 
@@ -51,13 +60,21 @@ lo30NgApp.controller('playersController',
         });
       };
 
-      $scope.fetchPlayerStatSeasons = function (playerId) {
+      $scope.fetchPlayerStatSeasons = function (playerId, type) {
 
         $scope.local.fetchPlayerStatSeasonsCompleted = false;
 
         $scope.local.playerStatSeasons = [];
 
-        apiService.playerStatSeasons.listForPlayerId(playerId).then(function (fulfilled) {
+        var apiServiceType = "playerStatSeasons";
+
+        if (type === "goalie") {
+
+          apiServiceType = "goalieStatSeasons";
+
+        }
+
+        apiService[apiServiceType].listForPlayerId(playerId).then(function (fulfilled) {
 
           $scope.local.playerStatSeasons = _.sortBy(fulfilled, function (item) { return item.seasonName; });
 
@@ -70,13 +87,21 @@ lo30NgApp.controller('playersController',
         });
       };
 
-      $scope.fetchPlayerStatTeams = function (playerId, seasonId) {
+      $scope.fetchPlayerStatTeams = function (playerId, seasonId, type) {
 
         $scope.local.fetchPlayerStatTeamsCompleted = false;
 
         $scope.local.playerStatTeams = [];
 
-        apiService.playerStatTeams.listForPlayerIdSeasonId(playerId, seasonId).then(function (fulfilled) {
+        var apiServiceType = "playerStatTeams";
+
+        if (type === "goalie") {
+
+          apiServiceType = "goalieStatTeams";
+
+        }
+
+        apiService[apiServiceType].listForPlayerIdSeasonId(playerId, seasonId).then(function (fulfilled) {
 
           $scope.local.playerStatTeams = _.sortBy(fulfilled, function(item) { return item.sub; });
 
@@ -87,15 +112,24 @@ lo30NgApp.controller('playersController',
           $scope.local.fetchPlayerStatTeamsCompleted = true;
 
         });
+
       };
 
-      $scope.fetchPlayerStatGames = function (playerId, seasonId) {
+      $scope.fetchPlayerStatGames = function (playerId, seasonId, type) {
 
         $scope.local.fetchPlayerStatGamesCompleted = false;
 
         $scope.local.playerStatGames = [];
 
-        apiService.playerStatGames.listForPlayerIdSeasonId(playerId, seasonId).then(function (fulfilled) {
+        var apiServiceType = "playerStatGames";
+
+        if (type === "goalie") {
+
+          apiServiceType = "goalieStatGames";
+
+        }
+
+        apiService[apiServiceType].listForPlayerIdSeasonId(playerId, seasonId).then(function (fulfilled) {
 
           $scope.local.playerStatGames = _.sortBy(fulfilled, function (item) { return item.gameId * -1; });
 
@@ -116,26 +150,26 @@ lo30NgApp.controller('playersController',
 
         if (screenSize.is('xs, sm')) {
 
-          item.playerNameToDisplay = item.firstName + '<br/>' + item.lastName;
+          item.playerNameToDisplay = item.playerFirstName + '<br/>' + item.playerLastName;
 
-          if (item.suffix) {
-            item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
+          if (item.playerSuffix) {
+            item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.playerSuffix;
           }
 
         } else if (screenSize.is('md')) {
 
-          item.playerNameToDisplay = item.firstName + '<br/>' + item.lastName;
+          item.playerNameToDisplay = item.playerFirstName + '<br/>' + item.playerLastName;
 
-          if (item.suffix) {
-            item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
+          if (item.playerSuffix) {
+            item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.playerSuffix;
           }
 
         } else {
 
-          item.playerNameToDisplay = item.firstName + ' ' + item.lastName;
+          item.playerNameToDisplay = item.playerFirstName + ' ' + item.playerLastName;
 
-          if (item.suffix) {
-            item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
+          if (item.playerSuffix) {
+            item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.playerSuffix;
           }
 
 
@@ -150,26 +184,26 @@ lo30NgApp.controller('playersController',
 
           if (screenSize.is('xs, sm')) {
 
-            item.playerNameToDisplay = item.firstName + '/n' + item.lastName;
+            item.playerNameToDisplay = item.playerFirstName + '/n' + item.playerLastName;
 
-            if (item.suffix) {
-              item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
+            if (item.playerSuffix) {
+              item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.playerSuffix;
             }
 
           } else if (screenSize.is('md')) {
 
-            item.playerNameToDisplay = item.firstName + '/n' + item.lastName;
+            item.playerNameToDisplay = item.playerFirstName + '/n' + item.playerLastName;
 
-            if (item.suffix) {
-              item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
+            if (item.playerSuffix) {
+              item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.playerSuffix;
             }
 
           } else {
 
-            item.playerNameToDisplay = item.firstName + ' ' + item.lastName;
+            item.playerNameToDisplay = item.playerFirstName + ' ' + item.playerLastName;
 
-            if (item.suffix) {
-              item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
+            if (item.playerSuffix) {
+              item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.playerSuffix;
             }
 
           }
@@ -188,28 +222,28 @@ lo30NgApp.controller('playersController',
           if (screenSize.is('xs, sm')) {
 
             item.teamNameToDisplay = item.teamNameCode;
-            item.playerNameToDisplay = item.firstName + '<br/>' + item.lastName;
+            item.playerNameToDisplay = item.playerFirstName + '<br/>' + item.playerLastName;
 
-            if (item.suffix) {
-              item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
+            if (item.playerSuffix) {
+              item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.playerSuffix;
             }
 
           } else if (screenSize.is('md')) {
 
             item.teamNameToDisplay = item.teamNameShort;
-            item.playerNameToDisplay = item.firstName + '<br/>' + item.lastName;
+            item.playerNameToDisplay = item.playerFirstName + '<br/>' + item.playerLastName;
 
-            if (item.suffix) {
-              item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
+            if (item.playerSuffix) {
+              item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.playerSuffix;
             }
 
           } else {
 
             item.teamNameToDisplay = item.teamNameShort;
-            item.playerNameToDisplay = item.firstName + ' ' + item.lastName;
+            item.playerNameToDisplay = item.playerFirstName + ' ' + item.playerLastName;
 
-            if (item.suffix) {
-              item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.suffix;
+            if (item.playerSuffix) {
+              item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.playerSuffix;
             }
 
           }
@@ -249,9 +283,9 @@ lo30NgApp.controller('playersController',
           if (newVal !== oldVal && newVal) {
 
             // default is season
-            $scope.fetchPlayerStatTeams($scope.local.selectedPlayerId, $scope.local.selectedSeasonId);
+            $scope.fetchPlayerStatTeams($scope.local.selectedPlayerId, $scope.local.selectedSeasonId, $scope.local.selectedType);
 
-            $scope.fetchPlayerStatGames($scope.local.selectedPlayerId, $scope.local.selectedSeasonId);
+            $scope.fetchPlayerStatGames($scope.local.selectedPlayerId, $scope.local.selectedSeasonId, $scope.local.selectedType);
 
           }
 
@@ -261,9 +295,9 @@ lo30NgApp.controller('playersController',
 
           if (newVal !== oldVal && newVal) {
 
-            $scope.fetchPlayerStatCareer($scope.local.selectedPlayerId);
+            $scope.fetchPlayerStatCareer($scope.local.selectedPlayerId, $scope.local.selectedType);
 
-            $scope.fetchPlayerStatSeasons($scope.local.selectedPlayerId);
+            $scope.fetchPlayerStatSeasons($scope.local.selectedPlayerId, $scope.local.selectedType);
           }
         });
       };
@@ -285,6 +319,11 @@ lo30NgApp.controller('playersController',
           $scope.local.selectedSeasonId = parseInt($routeParams.seasonId, 10);
 
           criteriaServiceResolved.season.setById($scope.local.selectedSeasonId);
+        }
+
+        if ($routeParams.type) {
+
+          $scope.local.selectedType = $routeParams.type;
         }
 
         if ($routeParams.tab) {

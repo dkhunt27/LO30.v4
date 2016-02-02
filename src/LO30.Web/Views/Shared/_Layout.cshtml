@@ -32,7 +32,7 @@
 
 
   <!-- FOLLOWING WILL NEED TO BE MIN'd -->
-  <link rel="stylesheet" href="~/lib/footable3/compiled/footable.bootstrap.css" />
+  <link rel="stylesheet" href="~/lib/footable/css/footable.core.min.css" />
   <link rel="stylesheet" href="~/lib/slider-revolution/src/css/settings.css" />
   <link rel="stylesheet" href="~/lib/owl-carousel/owl-carousel/owl.carousel.css" />
   <link rel="stylesheet" href="~/lib/owl-carousel/owl-carousel/owl.theme.css" />
@@ -56,6 +56,15 @@
           <li><a asp-controller="Schedule" asp-action="Index">Schedule</a></li>
           <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/standings">Standings</a></li>
           <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/stats/players">Stats</a></li>
+          <li>
+            <a href="#">
+              <span>Stats</span>
+            </a>
+            <ul>
+              <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/stats/players/types/skater">Skaters</a></li>
+              <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/stats/players/types/goalie">Goalies</a></li>
+            </ul>
+          </li>
           <li><a asp-controller="Home" asp-action="About">About</a></li>
         </ul>
         @await Html.PartialAsync("_LoginPartial")

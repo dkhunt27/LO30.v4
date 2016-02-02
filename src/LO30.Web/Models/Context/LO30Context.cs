@@ -648,7 +648,7 @@ namespace LO30.Web.Models.Context
     public DbSet<GameTeam> GameTeams { get; set; }
     public DbSet<GoalieStatCareer> GoalieStatCareers { get; set; }
     public DbSet<GoalieStatGame> GoalieStatGames { get; set; }
-    public DbSet<GoalieStatSeason> GoalieStatSeason { get; set; }
+    public DbSet<GoalieStatSeason> GoalieStatSeasons { get; set; }
     public DbSet<GoalieStatTeam> GoalieStatTeams { get; set; }
     public DbSet<Penalty> Penalties { get; set; }
     public DbSet<Player> Players { get; set; }

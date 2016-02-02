@@ -171,6 +171,12 @@ namespace LO30.Web
               .ForMember(vm => vm.Period4ScoreHome, opt => opt.MapFrom(m => m.Game.GameScores.Where(x => x.Period == 4 && x.TeamId == (m.Game.GameOutcomes.Where(y => y.HomeTeam == true).SingleOrDefault().TeamId)).SingleOrDefault().Score))
               .ReverseMap();
 
+        config.CreateMap<GoalieStatCareer, GoalieStatCareerViewModel>()
+              .ForMember(vm => vm.PlayerFirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.PlayerLastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.PlayerSuffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ReverseMap();
+
         config.CreateMap<GoalieStatGame, GoalieStatGameViewModel>()
               .ForMember(vm => vm.PlayerFirstName, opt => opt.MapFrom(m => m.Player.FirstName))
               .ForMember(vm => vm.PlayerLastName, opt => opt.MapFrom(m => m.Player.LastName))
@@ -181,16 +187,39 @@ namespace LO30.Web
               .ForMember(vm => vm.GameDateTime, opt => opt.MapFrom(m => m.Game.GameDateTime))
               .ReverseMap();
 
+        config.CreateMap<GoalieStatSeason, GoalieStatSeasonViewModel>()
+              .ForMember(vm => vm.PlayerFirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.PlayerLastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.PlayerSuffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ForMember(vm => vm.SeasonName, opt => opt.MapFrom(m => m.Season.SeasonName))
+              .ReverseMap();
+
+        config.CreateMap<GoalieStatSeasonNoPlayoffs, GoalieStatSeasonNoPlayoffsViewModel>()
+              .ForMember(vm => vm.PlayerFirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.PlayerLastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.PlayerSuffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ForMember(vm => vm.SeasonName, opt => opt.MapFrom(m => m.Season.SeasonName))
+              .ReverseMap();
+
+        config.CreateMap<GoalieStatTeam, GoalieStatTeamViewModel>()
+              .ForMember(vm => vm.PlayerFirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.PlayerLastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.PlayerSuffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
+              .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
+              .ReverseMap();
+
         config.CreateMap<PlayerStatCareer, PlayerStatCareerViewModel>()
-              .ForMember(vm => vm.FirstName, opt => opt.MapFrom(m => m.Player.FirstName))
-              .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.Player.LastName))
-              .ForMember(vm => vm.Suffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ForMember(vm => vm.PlayerFirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.PlayerLastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.PlayerSuffix, opt => opt.MapFrom(m => m.Player.Suffix))
               .ReverseMap();
 
         config.CreateMap<PlayerStatGame, PlayerStatGameViewModel>()
-              .ForMember(vm => vm.FirstName, opt => opt.MapFrom(m => m.Player.FirstName))
-              .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.Player.LastName))
-              .ForMember(vm => vm.Suffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ForMember(vm => vm.PlayerFirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.PlayerLastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.PlayerSuffix, opt => opt.MapFrom(m => m.Player.Suffix))
               .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
               .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
               .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
@@ -204,23 +233,23 @@ namespace LO30.Web
               .ReverseMap();
 
         config.CreateMap<PlayerStatSeason, PlayerStatSeasonViewModel>()
-              .ForMember(vm => vm.FirstName, opt => opt.MapFrom(m => m.Player.FirstName))
-              .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.Player.LastName))
-              .ForMember(vm => vm.Suffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ForMember(vm => vm.PlayerFirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.PlayerLastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.PlayerSuffix, opt => opt.MapFrom(m => m.Player.Suffix))
               .ForMember(vm => vm.SeasonName, opt => opt.MapFrom(m => m.Season.SeasonName))
               .ReverseMap();
 
         config.CreateMap<PlayerStatSeasonNoPlayoffs, PlayerStatSeasonNoPlayoffsViewModel>()
-              .ForMember(vm => vm.FirstName, opt => opt.MapFrom(m => m.Player.FirstName))
-              .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.Player.LastName))
-              .ForMember(vm => vm.Suffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ForMember(vm => vm.PlayerFirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.PlayerLastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.PlayerSuffix, opt => opt.MapFrom(m => m.Player.Suffix))
               .ForMember(vm => vm.SeasonName, opt => opt.MapFrom(m => m.Season.SeasonName))
               .ReverseMap();
 
         config.CreateMap<PlayerStatTeam, PlayerStatTeamViewModel>()
-              .ForMember(vm => vm.FirstName, opt => opt.MapFrom(m => m.Player.FirstName))
-              .ForMember(vm => vm.LastName, opt => opt.MapFrom(m => m.Player.LastName))
-              .ForMember(vm => vm.Suffix, opt => opt.MapFrom(m => m.Player.Suffix))
+              .ForMember(vm => vm.PlayerFirstName, opt => opt.MapFrom(m => m.Player.FirstName))
+              .ForMember(vm => vm.PlayerLastName, opt => opt.MapFrom(m => m.Player.LastName))
+              .ForMember(vm => vm.PlayerSuffix, opt => opt.MapFrom(m => m.Player.Suffix))
               .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
               .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
               .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
@@ -261,6 +290,12 @@ namespace LO30.Web
               .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
               .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
               .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
+              .ForMember(vm => vm.SeasonName, opt => opt.MapFrom(m => m.Season.SeasonName))
+              .ReverseMap();
+
+        config.CreateMap<Team, TeamViewModel>()
+              .ForMember(vm => vm.DivisionLongName, opt => opt.MapFrom(m => m.Division.DivisionLongName))
+              .ForMember(vm => vm.DivisionShortName, opt => opt.MapFrom(m => m.Division.DivisionShortName))
               .ForMember(vm => vm.SeasonName, opt => opt.MapFrom(m => m.Season.SeasonName))
               .ReverseMap();
 

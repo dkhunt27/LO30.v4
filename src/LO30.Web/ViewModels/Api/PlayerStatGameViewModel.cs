@@ -8,26 +8,11 @@ namespace LO30.Web.ViewModels.Api
     [Required]
     public int PlayerId { get; set; }
 
-    [Required, MaxLength(35)]
-    public string FirstName { get; set; }
-
-    [Required, MaxLength(35)]
-    public string LastName { get; set; }
-
-    [MaxLength(5)]
-    public string Suffix { get; set; }
-
-    [Required, MaxLength(5)]
-    public string TeamCode { get; set; }
-
-    [Required, MaxLength(15)]
-    public string TeamNameShort { get; set; }
-
-    [Required, MaxLength(35)]
-    public string TeamNameLong { get; set; }
-
     [Required]
     public int SeasonId { get; set; }
+
+    [Required]
+    public int TeamId { get; set; }
 
     [Required]
     public int GameId { get; set; }
@@ -67,6 +52,24 @@ namespace LO30.Web.ViewModels.Api
 
     [Required]
     public int GameWinningGoals { get; set; }
+
+    [Required, MaxLength(35)]
+    public string PlayerFirstName { get; set; }
+
+    [Required, MaxLength(35)]
+    public string PlayerLastName { get; set; }
+
+    [MaxLength(5)]
+    public string PlayerSuffix { get; set; }
+
+    [Required, MaxLength(5)]
+    public string TeamCode { get; set; }
+
+    [Required, MaxLength(15)]
+    public string TeamNameShort { get; set; }
+
+    [Required, MaxLength(35)]
+    public string TeamNameLong { get; set; }
 
     [Required, MaxLength(5)]
     public string TeamCodeOpponent { get; set; }

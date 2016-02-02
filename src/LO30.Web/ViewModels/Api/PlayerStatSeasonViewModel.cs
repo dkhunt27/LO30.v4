@@ -8,20 +8,8 @@ namespace LO30.Web.ViewModels.Api
     [Required]
     public int PlayerId { get; set; }
 
-    [Required, MaxLength(35)]
-    public string FirstName { get; set; }
-
-    [Required, MaxLength(35)]
-    public string LastName { get; set; }
-
-    [MaxLength(5)]
-    public string Suffix { get; set; }
-
     [Required]
     public int SeasonId { get; set; }
-
-    [Required, MaxLength(12)]
-    public string SeasonName { get; set; }
 
     [Required]
     public bool Playoffs { get; set; }
@@ -49,5 +37,17 @@ namespace LO30.Web.ViewModels.Api
 
     [Required]
     public int GameWinningGoals { get; set; }
+
+    [Required, MaxLength(35)]
+    public string PlayerFirstName { get; set; }
+
+    [Required, MaxLength(35)]
+    public string PlayerLastName { get; set; }
+
+    [MaxLength(5)]
+    public string PlayerSuffix { get; set; }
+
+    [Required, MaxLength(12)]
+    public string SeasonName { get; set; }
   }
 }

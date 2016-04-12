@@ -9,7 +9,6 @@ select
 	gst.GoalsAgainst,
 	gst.Shutouts,
 	gst.Wins,
-	gst.UpdatedOn,
 	'' as XX,
 	p.FirstName,
 	p.LastName,

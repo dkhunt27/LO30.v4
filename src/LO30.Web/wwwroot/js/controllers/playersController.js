@@ -25,13 +25,58 @@ lo30NgApp.controller('playersController',
           fetchplayerStatSeasonsCompleted: false,
           fetchplayerStatCareerCompleted: false,
 
+          tabActiveIndex: 0,
           tabStates: {
-            season: false,
-            career: false,
-            profile: false
+            career: 0,
+            season: 1,
+            profile: 2
           }
         };
       };
+
+
+      $scope.sortAscOnly = function (column) {
+        $scope.sortOn = column;
+        $scope.sortDirection = false;
+      };
+
+      $scope.sortDescOnly = function (column) {
+        $scope.sortOn = column;
+        $scope.sortDirection = true;
+      };
+
+      $scope.sortAscFirst = function (column) {
+        if ($scope.sortOn === column) {
+          $scope.sortDirection = !$scope.sortDirection;
+        } else {
+          $scope.sortOn = column;
+          $scope.sortDirection = false;
+        }
+      };
+
+      $scope.sortDescFirst = function (column) {
+        if ($scope.sortOn === column) {
+          $scope.sortDirection = !$scope.sortDirection;
+        } else {
+          $scope.sortOn = column;
+          $scope.sortDirection = true;
+        }
+      };
+
+      $scope.sortClass = function (column, sortDirection) {
+
+        var ngClass = "";
+
+        if ($scope.sortOn === column) {
+          if ($scope.sortDirection === true) {
+            ngClass = "fa fa-sort-desc";
+          } else {
+            ngClass = "fa fa-sort-asc";
+          }
+        }
+
+        return ngClass;
+      }
 
       $scope.fetchPlayerStatCareer = function (playerId, type) {
 
@@ -278,6 +323,44 @@ lo30NgApp.controller('playersController',
 
       $scope.setWatches = function () {
 
+        $scope.$watch('local.tabActiveIndex', function (newVal, oldVal) {
+
+          if (newVal !== oldVal && $scope.local.tabActivated) {
+
+            switch (newVal) {
+              case $scope.local.tabStates.career:
+
+                $scope.fetchPlayerStatCareer($scope.local.selectedPlayerId, $scope.local.selectedType);
+
+                $scope.fetchPlayerStatSeasons($scope.local.selectedPlayerId, $scope.local.selectedType);
+
+                $routeParams.tab = "career";
+
+                break;
+              case $scope.local.tabStates.season:
+
+                $scope.fetchPlayerStatTeams($scope.local.selectedPlayerId, $scope.local.selectedSeasonId, $scope.local.selectedType);
+
+                $scope.fetchPlayerStatGames($scope.local.selectedPlayerId, $scope.local.selectedSeasonId, $scope.local.selectedType);
+
+                $routeParams.tab = "season";
+
+                break;
+              default:
+                $log.debug("tabActiveIndex not mapped for: ", newVal)
+            }
+          }
+
+        }, true);
+
+        $scope.$watch('local.tabStates', function (newVal, oldVal) {
+
+          if (newVal !== oldVal && newVal) {
+
+          }
+
+        }, true);
+
         $scope.$watch('local.tabStates.season', function (newVal, oldVal) {
 
           if (newVal !== oldVal && newVal) {
@@ -319,6 +402,10 @@ lo30NgApp.controller('playersController',
           $scope.local.selectedSeasonId = parseInt($routeParams.seasonId, 10);
 
           criteriaServiceResolved.season.setById($scope.local.selectedSeasonId);
+
+          $scope.local.criteriaSeason = criteriaServiceResolved.season.get();
+
+          $scope.local.criteriaGame = criteriaServiceResolved.game.get();
         }
 
         if ($routeParams.type) {
@@ -330,7 +417,9 @@ lo30NgApp.controller('playersController',
 
           // use timeout to let the uib-tab initial the active states
           $timeout(function () {
-            $scope.local.tabStates[$routeParams.tab] = true;
+            // map to active tab index
+            $scope.local.tabActiveIndex = $scope.local.tabStates[$routeParams.tab];
+            $scope.local.tabActivated = true;
           }, 100);
 
         } else {
@@ -338,7 +427,8 @@ lo30NgApp.controller('playersController',
           // set default tab, after watches so correct data events fire
           // use timeout to let the uib-tab initial the active states
           $timeout(function () {
-            $scope.local.tabStates.season = true;
+            $scope.local.tabActiveIndex = $scope.local.tabStates.season;  // set season as default tab
+            $scope.local.tabActivated = true;
           }, 100);
 
         }
@@ -346,5 +436,6 @@ lo30NgApp.controller('playersController',
       };
 
       $scope.activate();
+
     }
 );

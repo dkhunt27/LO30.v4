@@ -274,8 +274,7 @@ BEGIN TRY
 			SubPlayerId = n.SubPlayerId,
 			SubbingForPlayerId = n.SubbingForPlayerId,
 			HomeTeam = n.HomeTeam,
-			JerseyNumber = n.JerseyNumber,
-			UpdatedOn = GETDATE()
+			JerseyNumber = n.JerseyNumber
 		from
 			ScoreSheetEntryProcessedSubs r INNER JOIN
 			#scoreSheetEntryProcessedSubsCopy c ON (r.ScoreSheetEntrySubId = c.ScoreSheetEntrySubId) INNER JOIN
@@ -294,8 +293,7 @@ BEGIN TRY
 			n.SubPlayerId,
 			n.SubbingForPlayerId,
 			n.HomeTeam,
-			n.JerseyNumber,
-			GETDATE()
+			n.JerseyNumber
 		from
 			#scoreSheetEntryProcessedSubsNew n LEFT JOIN
 			ScoreSheetEntryProcessedSubs c ON (n.ScoreSheetEntrySubId = c.ScoreSheetEntrySubId)

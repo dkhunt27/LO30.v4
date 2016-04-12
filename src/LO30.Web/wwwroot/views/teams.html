@@ -1,28 +1,9 @@
 ﻿<div id="standings">
 
   <div class="row">
-    <div id="breadcrumb" class="col-xs-12">
-      <div class="row">
-        <div id="breadcrumb" class="col-xs-12">
-          <ol class="breadcrumb">
-            <li><a href="/ng/#/">Home</a></li>
-            <li><a href="/ng/#/standings">Standings</a></li>
-            <li class="active">Team</li>
-          </ol>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
     <div id="pageHeader" class="col-xs-12">
-        <h3>Teams: {{selectedTeamName}}</h3>
-    </div>
-  </div>
-
-  <div class="row">
-    <div id="pageSubHeader" class="col-xs-12">
-      <lo30-criteria-selector />
+      <span class="page-title">{{selectedTeamName}}</span>
+      <span class="page-subtitle">{{local.criteriaSeason.seasonName}} thru {{local.criteriaGame.gameDateTime | date : "MMM d"}}</span>
     </div>
   </div>
 
@@ -35,24 +16,24 @@
               <table class="table table-condensed table-bordered table-striped">
                 <thead>
                   <tr>
-                    <th>Rank</th>
-                    <th>Team</th>
-                    <th style="padding-right:0px;">GP</th>
-                    <th>W</th>
-                    <th>L</th>
-                    <th>T</th>
-                    <th>PTS</th>
-                    <th>GF</th>
-                    <th>GA</th>
-                    <th>PIM</th>
-                    <th>W%</th>
-                    <th>Subs</th>
+                    <th class="text-left">Rank</th>
+                    <th class="text-left">Team</th>
+                    <th class="text-right">GP</th>
+                    <th class="text-right">W</th>
+                    <th class="text-right">L</th>
+                    <th class="text-right">T</th>
+                    <th class="text-right">PTS</th>
+                    <th class="text-right">GF</th>
+                    <th class="text-right">GA</th>
+                    <th class="text-right">PIM</th>
+                    <th class="text-right">W%</th>
+                    <th class="text-right">Subs</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr ng-repeat="item in local.teamStandingsToDisplay">
-                    <td>{{item.ranking}}</td>
-                    <td>{{item.teamNameToDisplay}}</td>
+                    <td class="text-left">{{item.ranking}}</td>
+                    <td class="text-left">{{item.teamNameToDisplay}}</td>
                     <td class="text-right">{{item.games}}</td>
                     <td class="text-right">{{item.wins}}</td>
                     <td class="text-right">{{item.losses}}</td>

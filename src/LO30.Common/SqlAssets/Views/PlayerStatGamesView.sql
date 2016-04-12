@@ -15,7 +15,6 @@ select
 	psg.PowerPlayGoals,
 	psg.ShortHandedGoals,
 	psg.GameWinningGoals,
-	psg.UpdatedOn,
 	'' as XX,
 	p.FirstName,
 	p.LastName,

@@ -25,44 +25,6 @@ lo30NgApp.controller('teamsController',
           tabStates: {
             completed: false,
             upcoming: false
-          },
-
-          dtStandings: {
-            options: DTOptionsBuilder.newOptions()
-                          .withOption('paging', false)
-                          .withOption('searching', false)
-                          .withOption('order', [5, 'desc'])
-                        .withOption('fnRowCallback', function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                          var index = iDisplayIndex + 1;
-                          $('td:eq(0)', nRow).html(index);
-                          return nRow;
-                        })
-                          .withBootstrap()
-          },
-
-          dtGamesCompleted: {
-            options: DTOptionsBuilder.newOptions()
-                          .withOption('paging', false)
-                          .withOption('searching', false)
-                          .withOption('order', [5, 'desc'])
-                          .withOption('fnRowCallback', function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                            var index = iDisplayIndex + 1;
-                            $('td:eq(0)', nRow).html(index);
-                            return nRow;
-                          })
-                          .withBootstrap()
-          },
-          dtGamesUpcoming: {
-            options: DTOptionsBuilder.newOptions()
-                          .withOption('paging', false)
-                          .withOption('searching', false)
-                          .withOption('order', [5, 'desc'])
-                          .withOption('fnRowCallback', function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                            var index = iDisplayIndex + 1;
-                            $('td:eq(0)', nRow).html(index);
-                            return nRow;
-                          })
-                          .withBootstrap()
           }
         };
       };
@@ -215,6 +177,12 @@ lo30NgApp.controller('teamsController',
 
           criteriaServiceResolved.season.setById($scope.local.selectedSeasonId);
         }
+
+        $scope.local.criteriaSeason = criteriaServiceResolved.season.get();
+
+        $scope.local.criteriaSeasonType = criteriaServiceResolved.seasonType.get();
+
+        $scope.local.criteriaGame = criteriaServiceResolved.game.get();
 
         if ($routeParams.tab) {
 

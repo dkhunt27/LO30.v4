@@ -289,8 +289,7 @@ BEGIN TRY
 			PenaltyId = n.PenaltyId,
 			TimeRemaining = n.TimeRemaining,
 			TimeElapsed = n.TimeElapsed,
-			PenaltyMinutes = n.PenaltyMinutes,
-			UpdatedOn = GETDATE()
+			PenaltyMinutes = n.PenaltyMinutes
 		from
 			ScoreSheetEntryProcessedPenalties r INNER JOIN
 			#scoreSheetEntryProcessedPenaltiesCopy c ON (r.ScoreSheetEntryPenaltyId = c.ScoreSheetEntryPenaltyId) INNER JOIN
@@ -310,8 +309,7 @@ BEGIN TRY
 			PenaltyId,
 			TimeRemaining,
 			TimeElapsed,
-			PenaltyMinutes,
-			UpdatedOn)
+			PenaltyMinutes)
 		select
 			n.ScoreSheetEntryPenaltyId,
 			n.SeasonId,
@@ -323,8 +321,7 @@ BEGIN TRY
 			n.PenaltyId,
 			n.TimeRemaining,
 			n.TimeElapsed,
-			n.PenaltyMinutes,
-			GETDATE()
+			n.PenaltyMinutes
 		from
 			#scoreSheetEntryProcessedPenaltiesNew n left join
 			ScoreSheetEntryProcessedPenalties c ON (c.ScoreSheetEntryPenaltyId = n.ScoreSheetEntryPenaltyId)

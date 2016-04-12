@@ -22,10 +22,7 @@ namespace LO30.Web.Models.Objects
 
     [Required, MaxLength(5)]
     public string JerseyNumber { get; set; }
-
-    [Required]
-    public DateTime UpdatedOn { get; set; }
-
+    
     #region foreign keys
     // items in the classes below must exist before an item in this class
 

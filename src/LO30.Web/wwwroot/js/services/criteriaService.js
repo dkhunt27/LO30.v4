@@ -9,7 +9,8 @@ lo30NgApp.factory("criteriaService",
     var service = {
       season: {},
       seasonType: {},
-      game: {}
+      game: {},
+      gameLastProcessed: {}
     };
 
     var seasons, games, seasonTypes;

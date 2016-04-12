@@ -39,6 +39,11 @@ lo30NgApp.controller('gameBoxScoreController',
           criteriaServiceResolved.game.setById($scope.local.selectedGameId);
         }
 
+        $scope.local.criteriaSeason = criteriaServiceResolved.season.get();
+
+        $scope.local.criteriaSeasonType = criteriaServiceResolved.seasonType.get();
+
+        $scope.local.criteriaGame = criteriaServiceResolved.game.get();
       };
 
       $scope.activate();

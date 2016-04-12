@@ -29,9 +29,6 @@ namespace LO30.Web.Models.Objects
     [Required]
     public int PenaltyMinutes { get; set; }
 
-    [Required]
-    public DateTime UpdatedOn { get; set; }
-
     #region foreign keys
     // items in the classes below must exist before an item in this class
 

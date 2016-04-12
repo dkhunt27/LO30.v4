@@ -12,7 +12,8 @@ var lo30NgApp = angular.module("lo30NgApp", [
   'datatables.buttons',
   'datatables.light-columnfilter',
   'datatables.fixedcolumns',
-  'ui.footable'
+  'ui.footable',
+  'bootstrapLightbox'
 ]);
 
 lo30NgApp.constant("constApisUrl", "/api");
@@ -21,7 +22,7 @@ lo30NgApp.constant("constScheduleTeamFeedBaseUrl", "localhost:5000");
 
 lo30NgApp.config(function ($routeProvider) {
 
-  $routeProvider.when("/standings", {
+  $routeProvider.when("/standings/seasons/:seasonId/seasonType/:seasonTypeId", {
     controller: "standingsController",
     templateUrl: "/views/standings.html",
     resolve: {
@@ -36,7 +37,7 @@ lo30NgApp.config(function ($routeProvider) {
     }
   });
 
-  $routeProvider.when("/stats/players/types/:type", {
+  $routeProvider.when("/stats/players/types/:type/seasons/:seasonId/seasonType/:seasonTypeId", {
     controller: "statsPlayersController",
     templateUrl: "/views/statsPlayers.html",
     resolve: {
@@ -111,9 +112,27 @@ lo30NgApp.config(function ($routeProvider) {
     }
   });
 
+  $routeProvider.when("/gallery/teams/seasons/:seasonId", {
+    controller: "galleryTeamsController",
+    templateUrl: "/views/galleryTeams.html",
+    resolve: {
+      criteriaServiceResolved: [
+        'criteriaService',
+        function (criteriaService) {
+          return criteriaService.initialize().then(function (fulfilled) {
+            return criteriaService;
+          });
+        }
+      ]
+    }
+  });
+
   $routeProvider.otherwise({ redirectTo: "/" });
 });
 
+lo30NgApp.config(function (LightboxProvider) {
+  LightboxProvider.templateUrl = 'views/lightbox.html';
+});
 
 lo30NgApp.config(function ($logProvider, $provide) {
 

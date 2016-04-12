@@ -1,0 +1,52 @@
+﻿<div id="standings">
+
+  <div class="row">
+    <div id="pageHeader" class="col-xs-12">
+      <span class="page-title">{{local.criteriaSeason.seasonName}} {{local.criteriaSeasonType}} Standings</span>
+      <span class="page-subtitle">thru {{local.criteriaGame.gameDateTime | date : "MMM d"}}</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="pageContents" class="col-xs-12">
+      <table class="table table-condensed table-bordered table-striped" datatable="ng" dt-options="local.dt.options">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Team</th>
+            <th style="padding-right:0px;">GP</th>
+            <th>W</th>
+            <th>L</th>
+            <th>T</th>
+            <th>PTS</th>
+            <th>GF</th>
+            <th>GA</th>
+            <th>PIM</th>
+            <th>W%</th>
+            <th>Subs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in local.teamStandingsToDisplay | orderBy:sortOn:sortDirection">
+            <td>{{item.ranking}}</td>
+            <td><a ng-href="/ng/#/teams/{{item.teamId}}/seasons/{{item.seasonId}}">{{item.teamNameToDisplay}}</a></td>
+            <td class="text-right">{{item.games}}</td>
+            <td class="text-right">{{item.wins}}</td>
+            <td class="text-right">{{item.losses}}</td>
+            <td class="text-right">{{item.ties}}</td>
+            <td class="text-right">{{item.points}}</td>
+            <td class="text-right">{{item.goalsFor}}</td>
+            <td class="text-right">{{item.goalsAgainst}}</td>
+            <td class="text-right">{{item.penaltyMinutes}}</td>
+            <td class="text-right">{{item.wins / item.games | percentage:0}}</td>
+            <td class="text-right">{{item.subs}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h6>
+        Tie Breaker:&nbsp;&nbsp;1) Most Points&nbsp;&nbsp;2) Most Wins&nbsp;&nbsp;3) Greatest Goals For/Goals Against difference&nbsp;&nbsp;4) Most Goals For&nbsp;&nbsp;5) Least Penalty Minutes
+      </h6>
+    </div>
+  </div>
+</div>

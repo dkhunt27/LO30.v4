@@ -17,10 +17,10 @@
         <div class="col-xs-offset-1">
           <span ng-show="item.powerPlayGoal"><strong>PP</strong> </span>
           <span ng-show="item.shortHandedGoal"><strong>SH</strong> </span>
-          <span>{{item.teamNameToDisplay}} @ {{item.timeRemaining}} - <a ng-href="/ng/#/players/{{item.goalPlayerId}}/seasons/{{item.seasonId}}">{{item.goalPlayerNameToDisplay}}</a></span>
-          <span ng-show="item.assist1PlayerNameToDisplay"> from <a ng-href="/ng/#/players/{{item.assist1PlayerId}}/seasons/{{item.seasonId}}">{{item.assist1PlayerNameToDisplay}}</a></span>
-          <span ng-show="item.assist2PlayerNameToDisplay"> and <a ng-href="/ng/#/players/{{item.assist2PlayerId}}/seasons/{{item.seasonId}}">{{item.assist2PlayerNameToDisplay}}</a></span>
-          <span ng-show="item.assist3PlayerNameToDisplay"> and <a ng-href="/ng/#/players/{{item.assist3PlayerId}}/seasons/{{item.seasonId}}">{{item.assist3PlayerNameToDisplay}}</a></span>
+          <span>{{item.teamNameToDisplay}} @ {{item.timeRemaining}} - <a ng-href="/ng/#/players/{{item.goalPlayerId}}/types/skater/seasons/{{item.seasonId}}?tab=season">{{item.goalPlayerNameToDisplay}}</a></span>
+          <span ng-show="item.assist1PlayerNameToDisplay"> from <a ng-href="/ng/#/players/{{item.assist1PlayerId}}/types/skater/seasons/{{item.seasonId}}?tab=season">{{item.assist1PlayerNameToDisplay}}</a></span>
+          <span ng-show="item.assist2PlayerNameToDisplay"> and <a ng-href="/ng/#/players/{{item.assist2PlayerId}}/types/skater/seasons/{{item.seasonId}}?tab=season">{{item.assist2PlayerNameToDisplay}}</a></span>
+          <span ng-show="item.assist3PlayerNameToDisplay"> and <a ng-href="/ng/#/players/{{item.assist3PlayerId}}/types/skater/seasons/{{item.seasonId}}?tab=season">{{item.assist3PlayerNameToDisplay}}</a></span>
         </div>
       </div>
     </div>

@@ -34,10 +34,7 @@ namespace LO30.Web.ViewModels.Api
 
     [Required]
     public int GameWinningGoals { get; set; }
-
-    [Required]
-    public DateTime UpdatedOn { get; set; }
-
+    
     [Required, MaxLength(35)]
     public string PlayerFirstName { get; set; }
 

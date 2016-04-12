@@ -10,7 +10,6 @@ select
 	psc.PowerPlayGoals,
 	psc.ShortHandedGoals,
 	psc.GameWinningGoals,
-	psc.UpdatedOn,
 	'' as XX,
 	p.FirstName,
 	p.LastName

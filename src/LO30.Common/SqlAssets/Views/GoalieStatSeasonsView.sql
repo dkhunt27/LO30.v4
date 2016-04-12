@@ -8,7 +8,6 @@ select
 	gss.GoalsAgainst,
 	gss.Shutouts,
 	gss.Wins,
-	gss.UpdatedOn,
 	'' as XX,
 	p.FirstName,
 	p.LastName,

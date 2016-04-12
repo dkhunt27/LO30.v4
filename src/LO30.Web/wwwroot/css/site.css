@@ -1305,3 +1305,69 @@ header#topNav div.nav-collapse div.container nav.nav-main {
     margin-left: auto;
     margin-right: auto;
 }
+
+.page-title {
+  display: block;
+  color: #2E363F;
+  font-size: 2em;
+  font-weight: 300;
+  letter-spacing: -1px;
+  text-align: center;
+}
+
+.page-subtitle {
+  display: block;
+  color: #2E363F;
+  font-size: 1.5em;
+  font-weight: 200;
+  letter-spacing: -1px;
+  text-align: center;
+}
+
+
+/* STYLES FOR LIGHTBOX BEGIN */
+
+.gallery {
+  padding: 0;
+}
+
+.gallery li {
+  display: inline-block;
+  margin: 0 1em 1em 0;
+  list-style-type: none;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .gallery li {
+    margin: 0;
+  }
+}
+
+.gallery1 img {
+  width: 75px;
+  height: 75px;
+}
+
+.gallery2 img {
+  width: 6em;
+}
+
+.gallery5 img {
+  width: 120px;
+}
+
+/* STYLES FOR LIGHTBOX END */
+
+
+.masonary_item {
+ display: inline-block;
+ padding:  .25rem;
+ width:  100%; 
+}
+
+.masonary div {
+    display: inline-block;
+    width: 100%;
+   margin:2px;
+}

@@ -2,7 +2,7 @@
 
 /* jshint -W117 */ //(remove the undefined warning)
 lo30NgApp.controller('statsPlayersController',
-    function ($scope, $routeParams, $timeout, apiService, criteriaService, screenSize, broadcastService, externalLibService) {
+    function ($scope, $routeParams, $timeout, apiService, criteriaServiceResolved, screenSize, broadcastService, externalLibService) {
 
       var _ = externalLibService._;
 
@@ -26,6 +26,9 @@ lo30NgApp.controller('statsPlayersController',
         ];
 
         $scope.local = {
+          screenSizeIsDesktop: false,
+          screenSizeIsTablet: false,
+          screenSizeIsMobile: false,
           selectedType: "skater",
           playerStatTeams: [],
           playerStatTeamsToDisplay: [],
@@ -36,50 +39,32 @@ lo30NgApp.controller('statsPlayersController',
           selectedTeam: null,
           selectedPosition: null,
           selectedLine: null,
-          selectedSub: null
+          selectedSub: null,
+          criteriaSeason: {}
         };
-      };
-
-      $scope.filterTable = function(filterBy) {
-
-        $('.filter-api').click(function (e) {
-            e.preventDefault();
-
-            //get the footable filter object
-            var footableFilter = $('table').data('footable-filter');
-
-            alert('about to filter table by "tech"');
-            //filter by 'tech'
-            footableFilter.filter('tech');
-
-            //clear the filter
-            if (confirm('clear filter now?')) {
-                footableFilter.clearFilter();
-            }
-        }); 
       };
 
       $scope.filterByTeam = function (team) {
 
         var teamToSearchOn;
-        if (screenSize.is('xs, sm')) {
+        if ($scope.local.screenSizeIsMobile) {
 
-          teamToSearchOn = item.teamCode;
+          teamToSearchOn = team.teamCode;
 
-        } else if (screenSize.is('md')) {
+        } else if ($scope.local.screenSizeIsTablet) {
 
-          teamToSearchOn = item.teamNameShort;
+          teamToSearchOn = team.teamNameShort;
 
         } else {
 
-          teamToSearchOn = item.teamNameShort;
+          teamToSearchOn = team.teamNameShort;
 
         }
 
 
-        var existingSearch = "team:" + $scope.filterByTeamMapper($scope.local.selectedTeam);
+        var existingSearch = "team:" + $scope.local.selectedTeam;
 
-        var newSearch = "team:" + $scope.filterByTeamMapper(teamToSearchOn);
+        var newSearch = "team:" + teamToSearchOn;
 
         if ($scope.local.selectedTeam) {
           // if selected populated, that means there was a search before...remove that first 
@@ -96,41 +81,6 @@ lo30NgApp.controller('statsPlayersController',
           $scope.local.selectedTeam = teamToSearchOn;
         }
 
-      };
-
-      $scope.filterByTeamMapper = function (team) {
-        var teamMapped;
-        // map filter keys from columns to object
-        switch (team) {
-          case "Bill Brown":
-            teamMapped = "Bill Brown Auto Clinic";
-            break;
-          case "Hunt's Ace":
-            teamMapped = "Hunt's Ace Hardware";
-            break;
-          case "LAB/PSI":
-            teamMapped = "Liv. Auto Body/Phillips Service Ind";
-            break;
-          case "Zas Ent":
-            teamMapped = "Zaschak Enterprises";
-            break;
-          case "DPKZ":
-            teamMapped = "DeBrincat Padgett Kobliska Zick";
-            break;
-          case "Villanova":
-            teamMapped = "Villanova Construction";
-            break;
-          case "Glover":
-            teamMapped = "Jeff Glover Realtors";
-            break;
-          case "D&G":
-            teamMapped = "D&G Heating & Cooling";
-            break;
-          default:
-            teamMapped = team;
-        }
-
-        return teamMapped;
       };
 
       $scope.filterBySub = function (sub) {
@@ -195,8 +145,8 @@ lo30NgApp.controller('statsPlayersController',
       };
 
       $scope.filterByPosition = function (position) {
-        var existingSearch = "position:" + $scope.local.selectedPosition;
-        var newSearch = "position:" + position;
+        var existingSearch = "pos:" + $scope.local.selectedPosition;
+        var newSearch = "pos:" + position;
 
         if ($scope.local.selectedPosition) {
           // if selected populated, that means there was a search before...remove that first 
@@ -238,6 +188,16 @@ lo30NgApp.controller('statsPlayersController',
         }
       };
 
+      $scope.sortAscOnly = function (column) {
+        $scope.sortOn = column;
+        $scope.sortDirection = false;
+      };
+
+      $scope.sortDescOnly = function (column) {
+        $scope.sortOn = column;
+        $scope.sortDirection = true;
+      };
+
       $scope.sortAscFirst = function (column) {
         if ($scope.sortOn === column) {
           $scope.sortDirection = !$scope.sortDirection;
@@ -256,15 +216,20 @@ lo30NgApp.controller('statsPlayersController',
         }
       };
 
-      $scope.sortAscOnly = function (column) {
-        $scope.sortOn = column;
-        $scope.sortDirection = false;
-      };
+      $scope.sortClass = function (column, sortDirection) {
 
-      $scope.sortDescOnly = function (column) {
-        $scope.sortOn = column;
-        $scope.sortDirection = true;
-      };
+        var ngClass = "";
+
+        if ($scope.sortOn === column) {
+          if ($scope.sortDirection === true) {
+            ngClass = "fa fa-sort-desc";
+          } else {
+            ngClass = "fa fa-sort-asc";
+          }
+        }
+
+        return ngClass;
+      }
 
       $scope.removeSearch = function () {
         $scope.local.searchText = null;
@@ -309,7 +274,7 @@ lo30NgApp.controller('statsPlayersController',
 
           item.rank = index + 1;
 
-          if (screenSize.is('xs, sm')) {
+          if ($scope.local.screenSizeIsMobile) {
 
             item.teamNameToDisplay = item.teamCode;
             item.playerNameToDisplay = item.playerFirstName + ' ' + item.playerLastName;
@@ -318,7 +283,7 @@ lo30NgApp.controller('statsPlayersController',
               item.playerNameToDisplay = item.playerNameToDisplay + ' ' + item.playerSuffix;
             }
 
-          } else if (screenSize.is('md')) {
+          } else if ($scope.local.screenSizeIsTablet) {
 
             item.teamNameToDisplay = item.teamNameShort;
             item.playerNameToDisplay = item.playerFirstName + ' ' + item.playerLastName;
@@ -371,11 +336,11 @@ lo30NgApp.controller('statsPlayersController',
 
           item.rank = index + 1;
 
-          if (screenSize.is('xs, sm')) {
+          if ($scope.local.screenSizeIsMobile) {
 
             item.teamNameToDisplay = item.teamCode;
 
-          } else if (screenSize.is('md')) {
+          } else if ($scope.local.screenSizeIsTablet) {
 
             item.teamNameToDisplay = item.teamNameShort;
 
@@ -390,13 +355,15 @@ lo30NgApp.controller('statsPlayersController',
       };
 
       $scope.fetchData = function () {
-        var criteriaSeason = criteriaService.season.get();
+        $scope.local.criteriaSeason = criteriaServiceResolved.season.get();
 
-        var criteriaSeasonType = criteriaService.seasonType.get();
+        $scope.local.criteriaSeasonType = criteriaServiceResolved.seasonType.get();
+
+        $scope.local.criteriaGame = criteriaServiceResolved.game.get();
 
         var criteriaSeasonTypeBool;
 
-        if (criteriaSeasonType === "Playoffs") {
+        if ($scope.local.criteriaSeasonType === "Playoffs") {
 
           criteriaSeasonTypeBool = true;
 
@@ -406,13 +373,13 @@ lo30NgApp.controller('statsPlayersController',
 
         }
 
-        $scope.fetchTeams(criteriaSeason.seasonId);
-        $scope.fetchPlayerStatTeams(criteriaSeason.seasonId, criteriaSeasonTypeBool);
+        $scope.fetchTeams($scope.local.criteriaSeason.seasonId);
+        $scope.fetchPlayerStatTeams($scope.local.criteriaSeason.seasonId, criteriaSeasonTypeBool);
       };
 
       $scope.setWatches = function () {
 
-        $scope.$on(broadcastService.events().seasonSet, function () {
+        /*$scope.$on(broadcastService.events().seasonSet, function () {
 
           $scope.fetchData();
 
@@ -422,7 +389,7 @@ lo30NgApp.controller('statsPlayersController',
 
           $scope.fetchData();
 
-        });
+        });*/
       };
 
       $scope.activate = function () {
@@ -430,6 +397,22 @@ lo30NgApp.controller('statsPlayersController',
         $scope.initializeScopeVariables();
 
         $scope.setWatches();
+
+        $scope.local.screenSizeIsDesktop = screenSize.is('lg');
+        $scope.local.screenSizeIsTablet = screenSize.is('md');
+        $scope.local.screenSizeIsMobile = screenSize.is('xs, sm');
+
+        criteriaServiceResolved.season.setById(parseInt($routeParams.seasonId, 10));
+
+        if ($routeParams.seasonTypeId === "1") {
+
+          criteriaServiceResolved.seasonType.set("Playoffs");
+
+        } else {
+
+          criteriaServiceResolved.seasonType.set("Regular Season");
+
+        }
 
         if ($routeParams.type) {
 
@@ -439,9 +422,13 @@ lo30NgApp.controller('statsPlayersController',
         $scope.fetchData();
 
         $timeout(function () {
-          $scope.sortDescOnly('p');
+          if ($scope.local.selectedType === 'skater') {
+            $scope.sortDescFirst('points');
+          } else {
+            $scope.sortAscFirst('goalsAgainstAverage');
+          }
           $scope.filterBySub("Without");
-        }, 0);  // using timeout so it fires when done rendering
+        }, 0);  
       };
 
       $scope.activate();

@@ -13,12 +13,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using System.Linq;
+using Microsoft.AspNet.Diagnostics;
+using System.Diagnostics;
 
 namespace LO30.Web
 {
   public class Startup
   {
     public IConfigurationRoot Configuration { get; set; }
+
+    private string _lo30DbConnString;
 
     public Startup(IHostingEnvironment env)
     {
@@ -29,6 +33,7 @@ namespace LO30.Web
 
       if (env.IsDevelopment())
       {
+
         // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
         builder.AddUserSecrets();
       }
@@ -40,12 +45,12 @@ namespace LO30.Web
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      var lo30ReportingConnString = Configuration["Data:LO30ReportingConnection:ConnectionString1"];
+      _lo30DbConnString = Configuration["Data:ConnectionString:LO30Db"];
 
       // Add framework services.
       services.AddEntityFramework()
           .AddSqlServer()
-          .AddDbContext<LO30DbContext>(opt => opt.UseSqlServer(lo30ReportingConnString));
+          .AddDbContext<LO30DbContext>(opt => opt.UseSqlServer(_lo30DbConnString));
 
       services.AddIdentity<ApplicationUser, IdentityRole>()
           .AddEntityFrameworkStores<LO30DbContext>()
@@ -67,6 +72,20 @@ namespace LO30.Web
     {
       loggerFactory.AddConsole(Configuration.GetSection("Logging"));
       loggerFactory.AddDebug();
+
+      var logger = loggerFactory.CreateLogger("LO30");
+
+      logger.LogInformation("Here");
+
+      logger.LogInformation("_lo30DbConnString {0}", _lo30DbConnString.Substring(0, 10));
+
+     // Trace.Listeners.Add(new AzureApplicationLogTraceListener());
+
+      //Trace.WriteLine("Here2");
+
+      Debug.WriteLine("Here3");
+
+      Debug.WriteLine("_lo30DbConnString {0}", _lo30DbConnString.Substring(0, 10));
 
       if (env.IsDevelopment())
       {

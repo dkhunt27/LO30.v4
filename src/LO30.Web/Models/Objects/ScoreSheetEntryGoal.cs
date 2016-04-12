@@ -32,9 +32,6 @@ namespace LO30.Web.Models.Objects
     [MaxLength(2)]
     public string ShortHandedPowerPlay { get; set; }
 
-    [Required]
-    public DateTime UpdatedOn { get; set; }
-
     #region foreign keys
     // items in the classes below must exist before an item in this class
 

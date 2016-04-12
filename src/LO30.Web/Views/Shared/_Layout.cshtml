@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LO30 - @ViewData["Title"]</title>
 
-  <environment names="Development">
+  @*<environment names="Development">*@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/lib/bootswatch/cerulean/bootstrap.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
@@ -17,10 +17,11 @@
     <link rel="stylesheet" href="~/lib/datatables.net-buttons-bs/css/buttons.bootstrap.css" />
     @*<link rel="stylesheet" href="~/lib/datatables.net-buttons-dt/css/buttons.dataTables.css" />*@
 
+    <link rel="stylesheet" href="~/lib/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css">
 
     <link rel="stylesheet" href="~/css/site.css" />
-  </environment>
-  <environment names="Staging,Production">
+  @*</environment>*@
+  @*<environment names="Staging,Production">
     <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css"
           asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
           asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
@@ -28,7 +29,7 @@
 
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-  </environment>
+  </environment>*@
 
 
   <!-- FOLLOWING WILL NEED TO BE MIN'd -->
@@ -54,18 +55,37 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li><a asp-controller="Schedule" asp-action="Index">Schedule</a></li>
-          <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/standings">Standings</a></li>
-          <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/stats/players">Stats</a></li>
-          <li>
-            <a href="#">
-              <span>Stats</span>
-            </a>
-            <ul>
-              <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/stats/players/types/skater">Skaters</a></li>
-              <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/stats/players/types/goalie">Goalies</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Standings<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/standings/seasons/56/seasonType/0">Regular Season</a></li>
+              <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/standings/seasons/56/seasonType/1">Playoffs</a></li>
             </ul>
           </li>
-          <li><a asp-controller="Home" asp-action="About">About</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Stats<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/stats/players/types/skater/seasons/56/seasonType/0">Skaters</a></li>
+              <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/stats/players/types/goalie/seasons/56/seasonType/0">Goalies</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/stats/players/types/skater/seasons/56/seasonType/1">Skaters Playoffs</a></li>
+              <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/stats/players/types/goalie/seasons/56/seasonType/1">Goalies Playoffs</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pictures<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a asp-controller="Ng" asp-action="Index" asp-fragment="/gallery/teams/seasons/56">Teams</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a asp-controller="Players" asp-action="Index">Players</a></li>
+            </ul>
+          </li>
+          <li><a asp-controller="Home" asp-action="News">News <span class="badge">3</span></a></li>
+          <li><a asp-controller="Home" asp-action="Index">About</a></li>
         </ul>
         @await Html.PartialAsync("_LoginPartial")
       </div>
@@ -91,12 +111,12 @@
     </footer>
   </div>
 
-  <environment names="Development">
+  @*<environment names="Development">*@
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     @*<script src="~/js/site.js" asp-append-version="true"></script>*@
-  </environment>
-  <environment names="Staging,Production">
+  @*</environment>*@
+  @*<environment names="Staging,Production">
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"
             asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
             asp-fallback-test="window.jQuery">
@@ -104,9 +124,9 @@
     <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/bootstrap.min.js"
             asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
             asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
-    </script>
+    </script>*@
     @*<script src="~/js/site.min.js" asp-append-version="true"></script>*@
-  </environment>
+  @*</environment>*@
 
   <!-- FOLLOWING WILL NEED TO BE MIN'd -->
   <script src="~/lib/footable3/compiled/footable.js"></script>

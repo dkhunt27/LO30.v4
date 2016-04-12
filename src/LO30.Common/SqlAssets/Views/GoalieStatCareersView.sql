@@ -6,7 +6,6 @@ select
 	gsc.Games,
 	gsc.Shutouts,
 	gsc.Wins,
-	gsc.UpdatedOn,
 	'' as XX,
 	p.FirstName,
 	p.LastName

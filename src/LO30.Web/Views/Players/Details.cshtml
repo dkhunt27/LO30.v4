@@ -1,0 +1,66 @@
+@model LO30.Web.Models.Objects.Player
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Player</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PreferredPosition)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PreferredPosition)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Profession)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Profession)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Shoots)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Shoots)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Suffix)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Suffix)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WifesName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WifesName)
+        </dd>
+    </dl>
+</div>
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.PlayerId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</p>

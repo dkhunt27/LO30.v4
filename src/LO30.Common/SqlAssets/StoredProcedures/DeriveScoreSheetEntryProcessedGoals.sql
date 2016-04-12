@@ -311,8 +311,7 @@ BEGIN TRY
 			TimeElapsed = n.TimeElapsed,
 			ShortHandedGoal = n.ShortHandedGoal,
 			PowerPlayGoal = n.PowerPlayGoal,
-			GameWinningGoal = n.GameWinningGoal,
-			UpdatedOn = GETDATE()
+			GameWinningGoal = n.GameWinningGoal
 		from
 			ScoreSheetEntryProcessedGoals r INNER JOIN
 			#scoreSheetEntryProcessedGoalsCopy c ON (r.ScoreSheetEntryGoalId = c.ScoreSheetEntryGoalId) INNER JOIN
@@ -338,8 +337,7 @@ BEGIN TRY
 			TimeElapsed,
 			ShortHandedGoal,
 			PowerPlayGoal,
-			GameWinningGoal,
-			UpdatedOn)
+			GameWinningGoal)
 		select
 			n.ScoreSheetEntryGoalId,
 			n.SeasonId,
@@ -355,8 +353,7 @@ BEGIN TRY
 			n.TimeElapsed,
 			n.ShortHandedGoal,
 			n.PowerPlayGoal,
-			n.GameWinningGoal,
-			GETDATE()
+			n.GameWinningGoal
 		from
 			#scoreSheetEntryProcessedGoalsNew n left join
 			ScoreSheetEntryProcessedGoals c ON (c.ScoreSheetEntryGoalId = n.ScoreSheetEntryGoalId)

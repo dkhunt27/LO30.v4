@@ -2,119 +2,75 @@
 
 /* jshint -W117 */ //(remove the undefined warning)
 lo30NgApp.controller('standingsController',
-  function ($log, $scope, $timeout, apiService, criteriaServiceResolved, screenSize, broadcastService, DTOptionsBuilder, DTColumnBuilder) {
+  function ($log, $scope, $timeout, $routeParams, apiService, criteriaServiceResolved, screenSize, broadcastService, DTOptionsBuilder, DTColumnBuilder) {
 
     $scope.initializeScopeVariables = function () {
 
       $scope.local = {
         teamStandings: [],
+        teamStandingsByDiv: [],
         teamStandingsToDisplay: [],
         fetchTeamStandingsCompleted: false,
-
-        dt: {
-          options: DTOptionsBuilder.newOptions()
-                        //.withOption('paging', false)
-                        //.withOption('searching', false)
-                        //.withDOM('<"wrapper"flipt>')
-                        .withLightColumnFilter({
-                          1: { "type": "text", "cssClass": "input-non-auto" },
-                          2: { "type": "text", "cssClass": "input-non-auto" },
-                          3: { "type": "text", "cssClass": "input-non-auto" },
-                          4: { "type": "text", "cssClass": "input-non-auto" },
-                          5: { "type": "text", "cssClass": "input-non-auto" },
-                          6: { "type": "text", "cssClass": "input-non-auto" },
-                          7: { "type": "text", "cssClass": "input-non-auto" },
-                          8: { "type": "text", "cssClass": "input-non-auto" }
-                        })
-                        .withButtons([
-                          'copy',
-                          'print',
-                          'excel',
-                          {
-                            text: '<span><span class="fa fa-filter"></span>Filter</span>',
-                            key: '1',
-                            action: function (e, dt, node, config) {
-                              var el = $("#datatables-filter-row").toggle();
-                            }
-                          }
-                        ])
-                        .withBootstrap()
-                        .withBootstrapOptions({
-                          Buttons: {
-                            defaults: {
-                              dom: {
-                                container: {
-                                  className: 'col-xs-6 dt-buttons'
-                                },
-                                buttons: {
-                                  normal: 'btn btn-danger'
-                                }
-                              }
-                            }
-                          }
-          })
-        }
-      };
-
-
-
-      //.withFixedColumns({
-     //   leftColumns: 1
-     // })
-
-
-     //.withColumnFilter({
-     //                     aoColumns: [
-     //                     null, {
-     //                       type: 'text',
-     //                       bRegex: false,
-     //                       bSmart: true
-     //                     }, {
-     //                       type: 'number',
-     //                       bRegex: false
-     //                     }, {
-     //                       type: 'number',
-     //                       bRegex: false
-     //                     }, {
-     //                       type: 'number',
-     //                       bRegex: false
-     //                     }, {
-     //                       type: 'number',
-     //                       bRegex: false
-     //                     }, {
-     //                       type: 'number',
-     //                       bRegex: false
-     //                     }, {
-     //                       type: 'number',
-     //                       bRegex: false
-     //                     }, {
-     //                       type: 'number',
-     //                       bRegex: false
-     //                     }, {
-     //                       type: 'number',
-     //                       bRegex: false
-     //                     }, {
-     //                       type: 'number',
-     //                       bRegex: false
-     //                     }, {
-     //                       type: 'number',
-     //                       bRegex: false
-     //                     }]
-     //                   })
-
+      };  
     };
+
+    $scope.sortAscOnly = function (column) {
+      $scope.sortOn = column;
+      $scope.sortDirection = false;
+    };
+
+    $scope.sortDescOnly = function (column) {
+      $scope.sortOn = column;
+      $scope.sortDirection = true;
+    };
+
+    $scope.sortAscFirst = function (column) {
+      if ($scope.sortOn === column) {
+        $scope.sortDirection = !$scope.sortDirection;
+      } else {
+        $scope.sortOn = column;
+        $scope.sortDirection = false;
+      }
+    };
+
+    $scope.sortDescFirst = function (column) {
+      if ($scope.sortOn === column) {
+        $scope.sortDirection = !$scope.sortDirection;
+      } else {
+        $scope.sortOn = column;
+        $scope.sortDirection = true;
+      }
+    };
+
+    $scope.sortClass = function (column, sortDirection) {
+
+      var ngClass = "";
+
+      if ($scope.sortOn === column) {
+        if ($scope.sortDirection === true) {
+          ngClass = "fa fa-sort-desc";
+        } else {
+          ngClass = "fa fa-sort-asc";
+        }
+      } 
+
+      return ngClass;
+    }
 
     $scope.fetchTeamStandings = function (seasonId, playoffs) {
 
       $scope.local.fetchTeamStandingsCompleted = false;
 
       $scope.local.teamStandings = [];
+      $scope.local.teamStandingsByDiv = [];
 
       apiService.teamStandings.listForSeasonIdPlayoffs(seasonId, playoffs).then(function (fulfilled) {
 
         $scope.local.teamStandings = fulfilled;
 
-        $scope.buildTeamStandingsToDisplay();
+        $scope.buildTeamStandingsToDisplay($scope.local.teamStandings);
+
+        $scope.parseTeamStandingsIntoDivisions($scope.local.teamStandingsToDisplay);
 
       }).finally(function () {
 
@@ -123,9 +79,24 @@ lo30NgApp.controller('standingsController',
       });
     };
 
-    $scope.buildTeamStandingsToDisplay = function () {
+    $scope.parseTeamStandingsIntoDivisions = function (teamStandings) {
+      var divisions = _.pluck(teamStandings, "divisionLongName");
+      var uniqDivs = _.uniq(divisions);
 
-      $scope.local.teamStandingsToDisplay = $scope.local.teamStandings.map(function (item) {
+      uniqDivs.forEach(function (division) {
+
+        var teamStandingsDiv = _.filter(teamStandings, function (item) { return item.divisionLongName === division; })
+
+        $scope.local.teamStandingsByDiv.push({ division: division, teamStandings: teamStandingsDiv });
+
+      });
+
+      $log.debug("teamStandingsByDiv", $scope.local.teamStandingsByDiv);
+    };
+
+    $scope.buildTeamStandingsToDisplay = function (teamStandings) {
+
+      $scope.local.teamStandingsToDisplay = teamStandings.map(function (item) {
 
         if (screenSize.is('xs, sm')) {
 
@@ -149,13 +120,15 @@ lo30NgApp.controller('standingsController',
 
     $scope.fetchData = function () {
 
-      var criteriaSeason = criteriaServiceResolved.season.get();
+      $scope.local.criteriaSeason = criteriaServiceResolved.season.get();
 
-      var criteriaSeasonType = criteriaServiceResolved.seasonType.get();
+      $scope.local.criteriaSeasonType = criteriaServiceResolved.seasonType.get();
+
+      $scope.local.criteriaGame = criteriaServiceResolved.game.get();
 
       var criteriaSeasonTypeBool;
 
-      if (criteriaSeasonType === "Playoffs") {
+      if ($scope.local.criteriaSeasonType === "Playoffs") {
 
         criteriaSeasonTypeBool = true;
 
@@ -165,12 +138,12 @@ lo30NgApp.controller('standingsController',
 
       }
 
-      $scope.fetchTeamStandings(criteriaSeason.seasonId, criteriaSeasonTypeBool);
+      $scope.fetchTeamStandings($scope.local.criteriaSeason.seasonId, criteriaSeasonTypeBool);
     };
 
     $scope.setWatches = function () {
 
-      $scope.$on(broadcastService.events().seasonSet, function () {
+      /*$scope.$on(broadcastService.events().seasonSet, function () {
 
         $scope.fetchData();
 
@@ -180,7 +153,7 @@ lo30NgApp.controller('standingsController',
 
         $scope.fetchData();
 
-      });
+      });*/
     };
 
     $scope.activate = function () {
@@ -189,12 +162,23 @@ lo30NgApp.controller('standingsController',
 
       $scope.setWatches();
 
+      criteriaServiceResolved.season.setById(parseInt($routeParams.seasonId, 10));
+
+      if ($routeParams.seasonTypeId === "1") {
+
+        criteriaServiceResolved.seasonType.set("Playoffs");
+
+      } else {
+
+        criteriaServiceResolved.seasonType.set("Regular Season");
+
+      }
+
       $scope.fetchData();
 
       $timeout(function () {
-        var el = angular.element('datatables-filter-row');
-        el.addClass("ng-hide");
-      }, 100);
+        $scope.sortAscFirst('ranking');
+      }, 0); 
     };
 
     $scope.activate();

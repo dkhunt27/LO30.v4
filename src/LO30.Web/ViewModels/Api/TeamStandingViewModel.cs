@@ -26,6 +26,15 @@ namespace LO30.Web.ViewModels.Api
     public int Wins { get; set; }
 
     [Required]
+    public double WinPercent
+    {
+      get
+      {
+        return (double)Wins / (double)Games;
+      }
+    }
+
+    [Required]
     public int Losses { get; set; }
 
     [Required]

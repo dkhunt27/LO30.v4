@@ -1,7 +1,7 @@
 'use strict';
 
 /* jshint -W117 */ //(remove the undefined warning)
-lo30NgApp.filter('filterize', function() {
+lo30NgApp.filter('filterize', function(screenSize) {
 
   var processIntoFilters = function(filterOn) {
     var filters = [];
@@ -25,14 +25,18 @@ lo30NgApp.filter('filterize', function() {
             filterKeyMapped = "ranking";
             break;
           case "team":
-            filterKeyMapped = "team";
+            if (screenSize.is('xs, sm')) {
+              filterKeyMapped = "teamCode";
+            } else {
+              filterKeyMapped = "teamNameShort";
+            }
             break;
           case "player":
             filterKeyMapped = "player";
             break;
           case "pos":
           case "position":
-            filterKeyMapped = "pos";
+            filterKeyMapped = "position";
             break;
           case "line":
             filterKeyMapped = "line";
@@ -41,7 +45,6 @@ lo30NgApp.filter('filterize', function() {
             filterKeyMapped = "sub";
             break;
           default:
-            filterKeyMapped = filterOnKey;
         }
 
         filters.push({key:filterKeyMapped, value:filterOnValue})

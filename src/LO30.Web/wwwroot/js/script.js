@@ -8,13 +8,39 @@
 
 $(document).ready(function () {
 
+  //$('.dropdown-menu').click(function (event) {
+  //  if (event.target.className === "filter-option pull-left" || event.target.className === "btn dropdown-toggle btn-default") {
+  //    event.stopPropagation();
+  //  }
+  //});
 
-    // Add body-small class if window less than 768px
-    if ($(this).width() < 769) {
-        $('body').addClass('body-small')
-    } else {
-        $('body').removeClass('body-small')
-    }
+  // LO30 Add mini-nav if window less than 801px
+  // LO30 Add body-small if window less than 480px
+  var width = $(this).width();
+  //if (width < 801 && width > 480) {
+  //  $('body').addClass('mini-navbar')
+  //} else {
+  //  $('body').removeClass('mini-navbar')
+  //}
+
+  // LO30 updated to be 481 instead of 769
+    // Add body-small class if window less than 480px
+  if (width <= 800) {
+    $('body').addClass('body-small')
+  } else {
+    $('body').removeClass('body-small')
+  }
+
+  if (width <= 800) {
+    $('body').addClass('body-small')
+    $('body').removeClass('mini-navbar')
+  } else if (width <= 1200) {
+    $('body').removeClass('body-small')
+    $('body').addClass('mini-navbar')
+  } else {
+    $('body').removeClass('body-small')
+    $('body').removeClass('mini-navbar')
+  }
 
     // MetsiMenu
     $('#side-menu').metisMenu();
@@ -173,13 +199,13 @@ $(document).ready(function () {
 
 
 // Minimalize menu when screen is less than 768px
-$(window).bind("resize", function () {
-    if ($(this).width() < 769) {
-        $('body').addClass('body-small')
-    } else {
-        $('body').removeClass('body-small')
-    }
-});
+//$(window).bind("resize", function () {
+//    if ($(this).width() < 1025) {
+//      $('body').addClass('mini-navbar')
+//    } else {
+//      $('body').removeClass('mini-navbar')
+//    }
+//});
 
 // Local Storage functions
 // Set proper body class and plugins based on user configuration

@@ -6,29 +6,43 @@
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">
             <span class="clear">
               <span class="block m-t-xs">
-                <strong class="font-bold">Example user</strong>
-              </span> <span class="text-muted text-xs block">Example menu <b class="caret"></b></span>
+                <strong class="font-bold">Livonia</strong>
+                <strong class="font-bold">Over 30</strong>
+                <strong class="font-bold">Hockey</strong>
+              </span>
+              @*<span class="text-muted text-xs block">@Component.Invoke("SeasonSelected") <b class="caret"></b></span>*@
             </span>
           </a>
-          <ul class="dropdown-menu animated fadeInRight m-t-xs">
-            <li><a href="#">Logout</a></li>
-          </ul>
+          @*<ul class="dropdown-menu animated fadeInRight m-t-xs">
+            @Component.Invoke("SeasonSelector")
+          </ul>*@
         </div>
         <div class="logo-element">
-          IN+
+          LO30
         </div>
-      </li>
-      <li class="@Html.IsSelected(action: "Index")">
-        <a href="@Url.Action("Index", "Home")"><i class="fa fa-laptop"></i> <span class="nav-label">Main page</span> </a>
-      </li>
-      <li class="@Html.IsSelected(action: "Minor")">
-        <a href="@Url.Action("Minor", "Home")"><i class="fa fa-desktop"></i> <span class="nav-label">Minor page</span></a>
       </li>
       <li class="@Html.IsSelected(controller: "Standings")">
         <a href="#"><i class="fa fa-group"></i> <span class="nav-label" data-i18n="nav.graphs">Standings</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Standings", cssClass: "in")">
-          <li class="@Html.IsSelected(action: "RegularSeason")"><a href="@Url.Action("Regular Season", "Standings")">Regular Season</a></li>
-          <li class="@Html.IsSelected(action: "Playoffs")"><a href="@Url.Action("Playoffs", "Standings")">Playoffs</a></li>
+          <li class="@Html.IsSelected(action: "RegularSeason")"><a href="@Url.Action("Index", "Standings", new { Playoffs = false })">Regular Season</a></li>
+          <li class="@Html.IsSelected(action: "Playoffs")"><a href="@Url.Action("Index", "Standings", new { Playoffs = true })">Playoffs</a></li>
+        </ul>
+      </li>
+      <li class="@Html.IsSelected(controller: "Stats")">
+        <a href="#"><i class="fa fa-user"></i> <span class="nav-label" data-i18n="nav.graphs">Stats</span><span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Stats", cssClass: "in")">
+
+          <li>Players</li>
+          <li class="divider"></li>
+          <li class="@Html.IsSelected(action: "RegularSeason")"><a href="@Url.Action("Index", "Stats", new { Playoffs = false })">Regular Season</a></li>
+          <li class="@Html.IsSelected(action: "Playoffs")"><a href="@Url.Action("Index", "Stats", new { Playoffs = true })">Playoffs</a></li>
+        </ul>
+      </li>
+      <li class="@Html.IsSelected(controller: "Careers")">
+        <a href="#"><i class="fa fa-user-plus"></i> <span class="nav-label" data-i18n="nav.graphs">Careers</span><span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Standings", cssClass: "in")">
+          <li class="@Html.IsSelected(action: "RegularSeason")"><a href="@Url.Action("Index", "Standings", new { Playoffs = false })">Regular Season</a></li>
+          <li class="@Html.IsSelected(action: "Playoffs")"><a href="@Url.Action("Index", "Standings", new { Playoffs = true })">Playoffs</a></li>
         </ul>
       </li>
     </ul>

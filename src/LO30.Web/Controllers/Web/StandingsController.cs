@@ -3,25 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
+using LO30.Web.Models;
+using LO30.Web.Models.Objects;
+using LO30.Web.ViewModels.Api;
+using AutoMapper;
+using Microsoft.Data.Entity;
+using Microsoft.AspNet.Http;
+using LO30.Web.Services;
 
-namespace LO30.Web.Controllers
+namespace LO30.Web.Controllers.Web
 {
-    public class StandingsController : Controller
-    {
-    public IActionResult RegularSeason()
-    {
+  public class StandingsController : Controller
+  {
+    private LO30DbContext _context;
+    private CriteriaService _criteriaServices;
 
-      ViewData["SubTitle"] = "Welcome in ASP.NET MVC 6 INSPINIA SeedProject ";
-      ViewData["Message"] = "It is an application skeleton for a typical MVC 6 project. You can use it to quickly bootstrap your webapp projects.";
-
-      return View();
+    public StandingsController(LO30DbContext context, CriteriaService criteriaServices)
+    {
+      _context = context;
+      _criteriaServices = criteriaServices;
     }
 
-    public IActionResult Playoffs()
+    public IActionResult Index(bool playoffs)
     {
-
-      ViewData["SubTitle"] = "Welcome in ASP.NET MVC 6 INSPINIA SeedProject ";
-      ViewData["Message"] = "It is an application skeleton for a typical MVC 6 project. You can use it to quickly bootstrap your webapp projects.";
+      ViewData["SeasonId"] = _criteriaServices.SelectedSeasonId;
+      ViewData["Playoffs"] = playoffs;
+      ViewData["SeasonName"] = _criteriaServices.SelectedSeasonName;
+      ViewData["SeasonType"] = playoffs ? "Playoffs" : "Regular Season";
 
       return View();
     }

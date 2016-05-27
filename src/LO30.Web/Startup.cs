@@ -12,6 +12,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using LO30.Web.Models;
 using LO30.Web.Services;
+using Newtonsoft.Json.Serialization;
+using LO30.Web.Models.Objects;
+using LO30.Web.ViewModels.Api;
+using LO30.Web.ViewModels.Components;
 
 namespace LO30.Web
 {
@@ -51,6 +55,11 @@ namespace LO30.Web
       // Add framework services.
       services.AddApplicationInsightsTelemetry(Configuration);
 
+      // https://neelbhatt40.wordpress.com/2015/09/07/implement-sessions-in-asp-net-5vnext-and-mvc-6/
+      // Adds a default in-memory implementation of IDistributedCache
+      services.AddCaching();
+      services.AddSession();
+
       services.AddEntityFramework()
           .AddSqlServer()
           .AddDbContext<LO30DbContext>(opt => opt.UseSqlServer(_lo30DbConnString));
@@ -68,6 +77,8 @@ namespace LO30.Web
       // Add application services.
       services.AddTransient<IEmailSender, AuthMessageSender>();
       services.AddTransient<ISmsSender, AuthMessageSender>();
+      services.AddTransient<PlayerNameService, PlayerNameService>();
+      services.AddSingleton<CriteriaService, CriteriaService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,7 +105,7 @@ namespace LO30.Web
           using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
               .CreateScope())
           {
-            serviceScope.ServiceProvider.GetService<ApplicationDbContext>()
+            serviceScope.ServiceProvider.GetService<LO30DbContext>()
                  .Database.Migrate();
           }
         }
@@ -104,6 +115,8 @@ namespace LO30.Web
       app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
 
       app.UseApplicationInsightsExceptionTelemetry();
+
+      app.UseSession();
 
       app.UseStaticFiles();
 
@@ -294,6 +307,12 @@ namespace LO30.Web
               .ForMember(vm => vm.PlayerSuffix, opt => opt.MapFrom(m => m.Player.Suffix))
               .ForMember(vm => vm.PenaltyCode, opt => opt.MapFrom(m => m.Penalty.PenaltyCode))
               .ForMember(vm => vm.PenaltyName, opt => opt.MapFrom(m => m.Penalty.PenaltyName))
+              .ReverseMap();
+
+        config.CreateMap<Season, SeasonViewModel>()
+              .ReverseMap();
+
+        config.CreateMap<Season, SeasonSelectorViewModel>()
               .ReverseMap();
 
         config.CreateMap<TeamStanding, TeamStandingViewModel>()

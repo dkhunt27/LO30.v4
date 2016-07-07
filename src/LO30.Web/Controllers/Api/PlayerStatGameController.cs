@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
+﻿using AutoMapper;
 using LO30.Web.Models;
 using LO30.Web.Models.Objects;
-using Microsoft.Data.Entity;
-using AutoMapper;
 using LO30.Web.ViewModels.Api;
+using Microsoft.AspNet.Mvc;
+using Microsoft.Data.Entity;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LO30.Web.Controllers.Api
 {

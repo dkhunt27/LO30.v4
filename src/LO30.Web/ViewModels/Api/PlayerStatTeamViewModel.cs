@@ -51,10 +51,10 @@ namespace LO30.Web.ViewModels.Api
     [Required]
     public int GameWinningGoals { get; set; }
 
-    [Required, MaxLength(50)]
+    [Required, MaxLength(15)]
     public string PlayerNameCode { get; set; }
 
-    [Required, MaxLength(50)]
+    [Required, MaxLength(25)]
     public string PlayerNameShort { get; set; }
 
     [Required, MaxLength(50)]

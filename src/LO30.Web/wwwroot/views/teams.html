@@ -1,0 +1,181 @@
+﻿<div id="standings">
+
+  <div class="row">
+    <div id="pageHeader" class="col-xs-12">
+      <span class="page-title">{{selectedTeamName}}</span>
+      <span class="page-subtitle">{{local.criteriaSeason.seasonName}} thru {{local.criteriaGame.gameDateTime | date : "MMM d"}}</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="pageContents" class="col-xs-12">
+
+          <br />
+          <div class="row">
+            <div class="col-xs-12">
+              <table class="table table-condensed table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th class="text-left">Rank</th>
+                    <th class="text-left">Team</th>
+                    <th class="text-right">GP</th>
+                    <th class="text-right">W</th>
+                    <th class="text-right">L</th>
+                    <th class="text-right">T</th>
+                    <th class="text-right">PTS</th>
+                    <th class="text-right">GF</th>
+                    <th class="text-right">GA</th>
+                    <th class="text-right">PIM</th>
+                    <th class="text-right">W%</th>
+                    <th class="text-right">Subs</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="item in local.teamStandingsToDisplay">
+                    <td class="text-left">{{item.ranking}}</td>
+                    <td class="text-left">{{item.teamNameToDisplay}}</td>
+                    <td class="text-right">{{item.games}}</td>
+                    <td class="text-right">{{item.wins}}</td>
+                    <td class="text-right">{{item.losses}}</td>
+                    <td class="text-right">{{item.ties}}</td>
+                    <td class="text-right">{{item.points}}</td>
+                    <td class="text-right">{{item.goalsFor}}</td>
+                    <td class="text-right">{{item.goalsAgainst}}</td>
+                    <td class="text-right">{{item.penaltyMinutes}}</td>
+                    <td class="text-right">{{item.wins / item.games | percentage:0}}</td>
+                    <td class="text-right">{{item.subs}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <uib-tabset>
+
+                <uib-tab heading="Completed" active="local.tabStates['completed']">
+                  <br />
+                  <table class="table table-condensed table-bordered table-striped table-dk-blue">
+                    <thead>
+                      <tr>
+                        <th>Game</th>
+                        <th>Date</th>
+                        <th class="text-center">Outcome</th>
+                        <th class="text-right" colspan="2">Away</th>
+                        <th class="text-center">@</th>
+                        <th class="text-left" colspan="2">Home</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in local.gamesToDisplayCompleted">
+                        <td><a ng-href="/ng/#/boxscores/games/{{item.gameId}}/seasons/{{item.seasonId}}">{{item.gameId}}</a></td>
+                        <td>{{item.gameDateTime  | date: 'MMM d, y h:mm a' }}</td>
+                        <td class="text-center" ng-class="{'text-bold': item.outcomeToDisplay === 'W' || item.outcomeToDisplay === 'W*'}">
+                          {{item.outcomeToDisplay}}
+                        </td>
+                        <td class="text-right" ng-class="{'text-bold': item.outcomeAway === 'W'}">
+                          {{item.awayTeamToDisplay}}
+                        </td>
+                        <td class="text-center">
+                          <span class="badge">
+                            {{item.goalsForAway}}
+                          </span>
+                        </td>
+                        <td class="text-center">@</td>
+                        <td class="text-center">
+                          <span class="badge">
+                            {{item.goalsForHome}}
+                          </span>
+                        </td>
+                        <td ng-class="{'text-bold': item.outcomeHome === 'W'}">
+                          {{item.homeTeamToDisplay}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+              </uib-tab>
+                <uib-tab heading="Upcoming" active="local.tabStates['upcoming']">
+                  <br />
+                  <table class="table table-condensed table-bordered table-striped table-dk-blue">
+                    <thead>
+                      <tr>
+                        <th>Game</th>
+                        <th>Date</th>
+                        <th class="text-center">Outcome</th>
+                        <th class="text-right" colspan="2">Away</th>
+                        <th class="text-center">@</th>
+                        <th class="text-left" colspan="2">Home</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in local.gamesToDisplayUpcoming">
+                        <td>{{item.gameId}}</td>
+                        <td>{{item.gameDateTime | date: 'MMM d, y h:mm a' }}</td>
+                        <td></td>
+                        <td class="text-right" ng-class="{'text-bold': item.teamIdAway === local.selectedTeamId}">
+                          {{item.awayTeamToDisplay}}
+                        </td>
+                        <td class="text-center">
+                        </td>
+                        <td class="text-center">@</td>
+                        <td class="text-center">
+                        </td>
+                        <td ng-class="{'text-bold': item.teamIdHome === local.selectedTeamId}">
+                          {{item.homeTeamToDisplay}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                </uib-tab>
+
+                <uib-tab heading="Schedule Feed" active="local.tabStates['schedule']">
+                  <br />
+                  <div class="table-responsive">
+                    <table class="table table-condensed">
+                      <tr>
+                        <td>
+                          <b><span style="font-size: large">Team Game Schedule Feeds</span></b>
+                          <br />
+                          <div>Please use the following feed to subscribe to your team's calendar.</div>
+                          <br />
+                          <div>
+                            <b>Phones</b>
+                            <br />
+                            Navigate to this page on your phone and click the Feed link next to your team's name.
+                          </div>
+                          <br />
+                          <br />
+                          <div>
+                            <b>Other Applications</b>
+                            <br />
+                            You can copy and paste the long URL next to your team's name into any calendar product that supports the iCal format.
+                            <br />
+                            <em>Looking for an application that supports iCalendar feeds? Try <a href="http://www.google.com/calendar" target="_blank">Google Calendar</a>.</em>
+                          </div>
+                          <br>
+
+                          <dl class="dl-horizontal">
+                            <dt>{{local.teamFeed.teamNameShort}}</dt>
+                            <dd>
+                              <a ng-href="webcal://{{local.teamFeed.teamFeedUrl}}">iPhone</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                              <a ng-href="http://{{local.teamFeed.teamFeedUrl}}">Non-iPhone</a><br />
+                              {{local.teamFeed.teamFeedUrl}}
+                            </dd>
+                          </dl>
+                          <div><em><small>&nbsp;&nbsp;If you find any descrepencies with the calendar feeds or if you are having trouble subscribing to a feed, please contact Dan Hunt</small></em></div>
+                          <br>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+        </div>
+    </div>
+  </div>
+
+</div>

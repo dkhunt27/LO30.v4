@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
+﻿using AutoMapper;
 using LO30.Web.Models;
 using LO30.Web.Models.Objects;
-using Microsoft.Data.Entity;
-using AutoMapper;
 using LO30.Web.ViewModels.Api;
+using Microsoft.AspNet.Mvc;
+using Microsoft.Data.Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LO30.Web.Controllers.Api
 {
@@ -22,8 +21,8 @@ namespace LO30.Web.Controllers.Api
     }
 
     // statsPlayer
-    [HttpGet("seasons/{seasonId:int}/playoffs/{playoffs:bool}")]
-    public JsonResult ListForSeasonIdPlayoffs(int seasonId, bool playoffs)
+    [HttpGet("seasons/{seasonId:int}/seasonTypes/{seasonTypeId:int}")]
+    public JsonResult ListForSeasonIdSeasonTypeId(int seasonId, int seasonTypeId)
     {
       List<PlayerStatTeam> results;
       using (_context)
@@ -31,7 +30,7 @@ namespace LO30.Web.Controllers.Api
         results = _context.PlayerStatTeams
                           .Include(x=>x.Team)
                           .Include(x=>x.Player)
-                          .Where(x=>x.SeasonId == seasonId && x.Playoffs == playoffs)
+                          .Where(x=>x.SeasonId == seasonId && x.Playoffs == Convert.ToBoolean(seasonTypeId))
                           .ToList();
       }
 

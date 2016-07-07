@@ -1,0 +1,22 @@
+﻿<div id="gameBoxScore">
+
+  <div class="row">
+    <div id="pageHeader" class="col-xs-12">
+      <span class="page-title">Game Box Score for {{local.criteriaGame.gameDateTime | date : "MMM d, y h:mm a"}}</span>
+      <span class="page-subtitle">{{local.criteriaSeason.seasonName}} {{local.criteriaSeasonType}}</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="pageContents" class="col-xs-12">
+
+      <div>
+        <lo30-game-score-by-period-summary game-id="local.selectedGameId" />
+      </div>
+      <div>
+        <lo30-game-score-by-period-detail game-id="local.selectedGameId" />
+      </div>
+
+    </div>
+  </div>
+</div>

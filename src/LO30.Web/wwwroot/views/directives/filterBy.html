@@ -1,0 +1,93 @@
+﻿<div class="row">
+  <div>
+    <table>
+      <tr>
+        <td align="center">
+          <div class="col-xs-12">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <span class="glyphicon glyphicon-search"></span>
+              </div>
+              <input class="form-control" id="search-text" name="searchText" ng-model="user.searchText" type="text" focus="" required="" ng-keyup="$event.keyCode == 13 ? navigateToOfferDetailsExecution(user.searchText) : null" placeholder="SEARCH ANY FIELD">
+              <div class="input-group-addon">
+                <span class="glyphicon glyphicon-remove" ng-click="removeSearch()"></span>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <table>
+      <tr>
+        <td align="center">
+          <div class="col-xs-12">
+            <div class="btn-group btn-group-xs btn-group-justified">
+              <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-lo30-disabled">Teams:</button>
+              </div>
+              <div data-ng-repeat="team in teams" class="btn-group">
+                <button type="button" class="btn" ng-click="filterByTeam(team)"
+                        ng-class="{'btn-default':team !== user.selectedTeam, 'btn-primary':team === user.selectedTeam}">
+                  {{team}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <table>
+      <tr>
+        <td align="center">
+          <div class="col-xs-12">
+            <div class="btn-group btn-group-xs btn-group-justified">
+              <div class="btn-group">
+                <button type="button" class="btn btn-danger btn-lo30-disabled">Pos:</button>
+              </div>
+              <div data-ng-repeat="position in positions" class="btn-group">
+                <button type="button" class="btn" ng-click="filterByPosition(position)"
+                        ng-class="{'btn-default':position !== user.selectedPosition, 'btn-danger':position === user.selectedPosition}">
+                  {{position}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td align="center">
+          <div class="col-xs-12">
+            <div class="btn-group btn-group-xs btn-group-justified">
+              <div class="btn-group">
+                <button type="button" class="btn btn-warning btn-lo30-disabled">Line:</button>
+              </div>
+              <div data-ng-repeat="line in lines" class="btn-group">
+                <button type="button" class="btn" ng-click="filterByLine(line)"
+                        ng-class="{'btn-default':line !== user.selectedLine, 'btn-warning':line === user.selectedLine}">
+                  {{line}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td align="center">
+          <div class="col-xs-12">
+            <div class="btn-group btn-group-xs btn-group-justified">
+              <div class="btn-group">
+                <button type="button" class="btn btn-success btn-lo30-disabled">Subs:</button>
+              </div>
+              <div data-ng-repeat="sub in subs" class="btn-group">
+                <button type="button" class="btn" ng-click="filterBySub(sub)"
+                        ng-class="{'btn-default':sub !== user.selectedSub, 'btn-success':sub === user.selectedSub}">
+                  {{sub}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

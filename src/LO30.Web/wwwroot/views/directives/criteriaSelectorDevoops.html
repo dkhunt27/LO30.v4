@@ -1,0 +1,32 @@
+﻿<div class="row">
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label class="col-sm-4 control-label">Season</label>
+      <div class="col-sm-8">
+        <ui-select theme="select2" ng-model="local.selectedSeason">
+          <ui-select-match>
+            <span ng-bind="$select.selected.seasonName"></span>
+          </ui-select-match>
+          <ui-select-choices repeat="season in (local.seasons | filter: $select.search) track by season.seasonId">
+            <span ng-bind="season.seasonName"></span>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label class="col-sm-4 control-label">Game</label>
+      <div class="col-sm-8">
+        <ui-select theme="select2" ng-model="local.selectedGame">
+          <ui-select-match>
+            <span ng-bind="$select.selected.gameDateTime"></span>
+          </ui-select-match>
+          <ui-select-choices repeat="game in (local.games | filter: $select.search) track by game.gameId">
+            <span ng-bind="game.gameDateTime"></span>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+  </div>
+</div>

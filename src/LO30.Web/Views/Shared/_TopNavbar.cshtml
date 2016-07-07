@@ -1,11 +1,23 @@
-﻿<div class="row border-bottom">
-  <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+﻿<nav class="navbar navbar-fixed-top navbar-default lo30-bg-white">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Livonia Over 30 Hockey</a>
     </div>
-    <ul class="nav navbar-top-links">
-      @Component.Invoke("SeasonSelector")
-      @Html.Partial("_LoginPartial")
-    </ul>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+        <div>
+          @Component.Invoke("SeasonSelector")
+          @Component.Invoke("SeasonTypeSelector")
+          @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+  </div>
 </nav>
-</div>

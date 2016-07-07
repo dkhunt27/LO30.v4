@@ -12,13 +12,25 @@ namespace LO30.Web.Services
   {
     private LO30DbContext _context;
     private List<DecadeSelectorViewModel> _decades;
+
     private List<Season> _seasons;
     private Season _selectedSeason;
     private int _selectedSeasonId;
     private string _selectedSeasonName;
 
+    private List<SeasonType> _seasonTypes;
+    private SeasonType _selectedSeasonType;
+    private int _selectedSeasonTypeId;
+    private string _selectedSeasonTypeName;
+
     public CriteriaService(LO30DbContext context)
     {
+      _seasonTypes = new List<SeasonType>()
+      {
+        new SeasonType() { SeasonTypeId = 0, SeasonTypeName = "Regular Season" },
+        new SeasonType() { SeasonTypeId = 1, SeasonTypeName = "Playoffs" }
+      };
+
       _decades = new List<DecadeSelectorViewModel>()
       {
         new DecadeSelectorViewModel() {
@@ -106,6 +118,9 @@ namespace LO30.Web.Services
       var season = _seasons.Where(x => x.IsCurrentSeason == true).SingleOrDefault();
 
       SetSelectedSeasonBySeason(season);
+
+      // TODO...make this dynamic based on date compared to the season in progress
+      SetSelectedSeasonTypeById(0);
     }
 
     public Season SelectedSeason
@@ -129,6 +144,38 @@ namespace LO30.Web.Services
       get
       {
         return _selectedSeasonName;
+      }
+    }
+
+    public SeasonType SelectedSeasonType
+    {
+      get
+      {
+        return _selectedSeasonType;
+      }
+    }
+
+    public int SelectedSeasonTypeId
+    {
+      get
+      {
+        return _selectedSeasonTypeId;
+      }
+    }
+
+    public string SelectedSeasonTypeName
+    {
+      get
+      {
+        return _selectedSeasonTypeName;
+      }
+    }
+
+    public List<SeasonType> SeasonTypes
+    {
+      get
+      {
+        return _seasonTypes;
       }
     }
 
@@ -160,6 +207,21 @@ namespace LO30.Web.Services
       _selectedSeason = season;
       _selectedSeasonId = season.SeasonId;
       _selectedSeasonName = season.SeasonName;
+    }
+
+
+    public void SetSelectedSeasonTypeById(int seasonTypeId)
+    {
+      var seasonType = _seasonTypes.Where(x => x.SeasonTypeId == seasonTypeId).SingleOrDefault();
+
+      SetSelectedSeasonTypeBySeasonType(seasonType);
+    }
+
+    public void SetSelectedSeasonTypeBySeasonType(SeasonType seasonType)
+    {
+      _selectedSeasonType = seasonType;
+      _selectedSeasonTypeId = seasonType.SeasonTypeId;
+      _selectedSeasonTypeName = seasonType.SeasonTypeName;
     }
   }
 }

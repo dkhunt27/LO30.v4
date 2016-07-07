@@ -1,0 +1,121 @@
+﻿ <div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="col-sm-4 control-label">Season</label>
+      <div class="col-sm-8">
+        <ui-select theme="select2" ng-model="local.selectedSeason">
+          <ui-select-match>
+            <span ng-bind="$select.selected.seasonName"></span>
+          </ui-select-match>
+          <ui-select-choices repeat="season in (local.seasons | filter: $select.search) track by season.seasonId">
+            <span ng-bind="season.seasonName"></span>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="col-sm-4 control-label">Season Type</label>
+      <div class="col-sm-8">
+        <ui-select theme="select2" ng-model="local.selectedSeasonType">
+          <ui-select-match>
+            <span ng-bind="$select.selected"></span>
+          </ui-select-match>
+          <ui-select-choices repeat="seasonType in (local.seasonTypes | filter: $select.search) track by seasonType">
+            <span ng-bind="seasonType"></span>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="col-sm-4 control-label">Game</label>
+      <div class="col-sm-8">
+        <ui-select theme="select2" ng-model="local.selectedGame">
+          <ui-select-match>
+            <span ng-bind="$select.selected.gameDateTime"></span>
+          </ui-select-match>
+          <ui-select-choices repeat="game in (local.games | filter: $select.search) track by game.gameId">
+            <span ng-bind="game.gameDateTime"></span>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+  </div>
+  <!--<div class="criteria-selector">
+    <div class="list-group-horizontal">
+      <div class="criteria-selector list-group-item">
+        <div>
+          <span>Season:</span>
+        </div>
+      </div>
+      <div class="criteria-selector list-group-item" style="cursor: pointer;">
+        <div uib-dropdown>
+          <span uib-dropdown-toggle>
+            {{local.selectedSeason.seasonName}}
+            <span class="caret"></span>
+          </span>
+          <ul class="uib-dropdown-menu" aria-labelledby="simple-dropdown">
+            <li ng-class='{"active": local.selectedSeason.seasonId === season.seasonId }' ng-repeat="season in local.seasons">
+              <a ng-click="selectSeason(season.seasonId)">
+                {{season.seasonName}}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="criteria-selector list-group-item">
+        <div>
+          <span>Game:</span>
+        </div>
+      </div>
+      <div 
+          class="criteria-selector list-group-item" 
+          style="cursor: pointer;"
+          ng-click="displayPreviousGames()">
+        <div>
+          <span class="fa fa-chevron-left" />
+        </div>
+      </div>
+      <div 
+          class="criteria-selector list-group-item" 
+          style="cursor: pointer;" 
+          ng-class='{"active": local.selectedGame.gameId === game.gameId, "active": local.lastProcessedGameId === game.gameId }' 
+          ng-click="selectGame(game.gameId)"
+          ng-repeat="game in local.gamesToDisplay">
+        <div>
+          <span>{{game.gameId}}</span>
+        </div>
+      </div>
+      <div
+           class="criteria-selector list-group-item" 
+          style="cursor: pointer;"
+          ng-click="displayFutureGames()">
+        <div>
+          <span class="fa fa-chevron-right" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    {{ local.selectedSeason.seasonName }}
+    {{ local.selectedGame.gameId}}
+  </div>
+
+  <div class="row">
+    {{ local.games.length }}
+    {{ local.games[0].gameId }}
+    {{ local.games[local.games.length-1].gameId}}
+  </div>
+
+  <div class="row">
+    {{ local.lastProcessedGameId}}
+
+  </div>
+  <div class="row">
+    {{ local.gamesToDisplayMax }}
+    {{ local.gamesToDisplayIndex}}
+  </div>-->
+</div>

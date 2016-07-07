@@ -1,0 +1,56 @@
+﻿@{
+  ViewData["Title"] = "Ng";
+}
+
+
+<div ng-app="lo30NgApp">
+  <div ui-view></div>
+</div>
+
+
+@section Scripts {
+  <!-- FOLLOWING WILL NEED TO BE MIN'd -->
+
+  <!-- Ng App -->
+  <script src="~/js/lo30App.js"></script>
+  <script src="~/js/controllers/careersController.js"></script>
+  <script src="~/js/controllers/galleryTeamsController.js"></script>
+  <script src="~/js/controllers/gameBoxScoreController.js"></script>
+  <script src="~/js/controllers/playersController.js"></script>
+  <script src="~/js/controllers/standingsController.js"></script>
+  <script src="~/js/controllers/statsPlayersController.js"></script>
+  <script src="~/js/controllers/teamsController.js"></script>
+  <script src="~/js/directives/criteriaSelector/criteriaSelector.js"></script>
+  <script src="~/js/directives/criteriaSelector/criteriaSelectorController.js"></script>
+  <script src="~/js/directives/datatablesFilterRowHider/datatablesFilterRowHider.js"></script>
+  <script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetail.js"></script>
+  <script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetailController.js"></script>
+  <script src="~/js/directives/gameScoreByPeriodDetailGoalies/gameScoreByPeriodDetailGoalies.js"></script>
+  <script src="~/js/directives/gameScoreByPeriodDetailPenalties/gameScoreByPeriodDetailPenalties.js"></script>
+  <script src="~/js/directives/gameScoreByPeriodDetailScoring/gameScoreByPeriodDetailScoring.js"></script>
+  <script src="~/js/directives/gameScoreByPeriodSummary/gameScoreByPeriodSummary.js"></script>
+  <script src="~/js/directives/gameScoreByPeriodSummary/gameScoreByPeriodSummaryController.js"></script>
+  <script src="~/js/directives/seasonSelector/seasonSelector.js"></script>
+  <script src="~/js/directives/seasonSelector/seasonSelectorController.js"></script>
+  <script src="~/js/directives/seasonTypeSelector/seasonTypeSelector.js"></script>
+  <script src="~/js/directives/seasonTypeSelector/seasonTypeSelectorController.js"></script>
+  <script src="~/js/directives/sideNavigation/sideNavigation.js"></script>
+  <script src="~/js/filters/filterizeFilter.js"></script>
+  <script src="~/js/filters/percentageFilter.js"></script>
+  <script src="~/js/services/apiBaseService.js"></script>
+  <script src="~/js/services/apiService.js"></script>
+  <script src="~/js/services/broadcastService.js"></script>
+  <script src="~/js/services/criteriaService.js"></script>
+  <script src="~/js/services/externalLibService.js"></script>
+  <script src="~/js/services/returnUrlService.js"></script>
+
+
+    <!-- Get Server Data -->
+  <script>
+    angular.module("lo30NgApp").value("seasonId", @ViewBag.SeasonId);
+    angular.module("lo30NgApp").value("seasonName", "@ViewBag.SeasonName");
+    angular.module("lo30NgApp").value("seasonTypeId", @ViewBag.SeasonTypeId);
+    angular.module("lo30NgApp").value("seasonTypeName", "@ViewBag.SeasonTypeName");
+  </script>
+}
+

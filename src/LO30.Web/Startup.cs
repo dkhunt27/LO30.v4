@@ -75,6 +75,25 @@ namespace LO30.Web
         });
 
       // Add application services.
+      // https://weblog.west-wind.com/posts/2016/May/23/Strongly-Typed-Configuration-Settings-in-ASPNET-Core
+
+      // Add functionality to inject IOptions<T>
+      services.AddOptions();
+
+      // Add our Config object so it can be injected
+
+      services.Configure<MySettings>(mySettings =>
+      {
+        mySettings.ScheduleBaseUrl = "lo30.azurewebsites.net";
+      });
+
+      // cant get the extension to load Microsoft.Extensions.Options.ConfigurationExtensions
+      //services.Configure<MySettings>(Configuration.GetSection("MySettings"));
+
+
+      // *If* you need access to generic IConfiguration this is **required**
+      //services.AddSingleton<MySettings>(Configuration);
+
       services.AddTransient<IEmailSender, AuthMessageSender>();
       services.AddTransient<ISmsSender, AuthMessageSender>();
       services.AddTransient<PlayerNameService, PlayerNameService>();
@@ -315,6 +334,9 @@ namespace LO30.Web
         config.CreateMap<Season, SeasonSelectorViewModel>()
               .ReverseMap();
 
+        config.CreateMap<SeasonType, SeasonTypeSelectorViewModel>()
+              .ReverseMap();
+
         config.CreateMap<TeamStanding, TeamStandingViewModel>()
               .ForMember(vm => vm.DivisionLongName, opt => opt.MapFrom(m => m.Division.DivisionLongName))
               .ForMember(vm => vm.DivisionShortName, opt => opt.MapFrom(m => m.Division.DivisionShortName))
@@ -338,7 +360,7 @@ namespace LO30.Web
       {
         routes.MapRoute(
                   name: "default",
-                  template: "{controller=Home}/{action=Index}/{id?}");
+                  template: "{controller=Ng}/{action=Index}/{id?}");
       });
     }
 

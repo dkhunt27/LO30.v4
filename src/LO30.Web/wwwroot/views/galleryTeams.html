@@ -1,0 +1,19 @@
+﻿<div id="galleryTeams">
+
+  <div class="row">
+    <div id="pageHeader" class="col-xs-12">
+      <span class="page-title">Pictures - Teams</span>
+      <span class="page-subtitle">{{local.criteriaSeason.seasonName}}</span>
+    </div>
+  </div>
+  <div class="col-md-4" ng-repeat="image in images">
+    <div class="panel panel-info">
+      <div class="panel-heading text-center">{{image.thumbCaption}}</div>
+      <div class="panel-body">
+        <a ng-click="openLightboxModal($index)">
+          <img ng-src="{{image.thumbUrl}}" class="img-responsive img-rounded center-block">
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

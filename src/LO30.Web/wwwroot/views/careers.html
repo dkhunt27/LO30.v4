@@ -1,0 +1,101 @@
+﻿<div id="statsPlayers">
+
+  <div class="row">
+    <div id="pageHeader" class="col-xs-12">
+      <span class="page-title">Career Player Statistics for {{local.selectedPlayerType === 'skater' ? "Skaters" : "Goalies"}}  </span>
+      <span class="page-subtitle">thru {{local.criteriaGame.gameDateTime | date : "MMM d"}}</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <table>
+        <tr>
+          <td align="center">
+            <div class="col-xs-12">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-search"></span>
+                </div>
+                <input class="form-control" id="search-text" name="searchText" ng-model="local.searchText" type="text" focus="" required="" placeholder="SEARCH ANY FIELD">
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-remove" ng-click="removeSearch()"></span>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <br />
+
+    <div ng-if="local.selectedPlayerType === 'skater'">
+      <div class="row">
+        <div class="col-xs-12">
+          <table class="table table-condensed table-bordered table-striped">
+            <thead>
+              <tr>
+                <th class="text-left">Rank</th>
+                <th class="text-left" ng-click="sortAscFirst('playerNameToDisplay')">Player <span ng-class="sortClass('playerNameToDisplay')"></span></th>
+                <th class="text-right" ng-click="sortDescFirst('games')"><span ng-class="sortClass('games')"></span> Games</th>
+                <th class="text-right" ng-click="sortDescFirst('goals')"><span ng-class="sortClass('goals')"></span> Goals</th>
+                <th class="text-right" ng-click="sortDescFirst('assists')"><span ng-class="sortClass('assists')"></span> Assists</th>
+                <th class="text-right" ng-click="sortDescFirst('points')"><span ng-class="sortClass('points')"></span> Points</th>
+                <th class="text-right" ng-click="sortDescFirst('penaltyMinutes')"><span ng-class="sortClass('penaltyMinutes')"></span> PIM</th>
+                <th class="text-right" ng-click="sortDescFirst('powerPlayGoals')"><span ng-class="sortClass('powerPlayGoals')"></span> PPG</th>
+                <th class="text-right" ng-click="sortDescFirst('shortHandedGoals')"><span ng-class="sortClass('shortHandedGoals')"></span> SHG</th>
+                <th class="text-right" ng-click="sortDescFirst('gameWinningGoals')"><span ng-class="sortClass('gameWinningGoals')"></span> GWG</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr ng-repeat="item in local.playerStatCareers | filterize:local.searchText | orderBy:sortOn:sortDirection">
+                <td>{{$index + 1}}</td>
+                <td class="text-left"><a ng-href="/ng/#/players/{{item.playerId}}/types/skater/seasons/{{item.seasonId}}?tab=season">{{item.playerNameToDisplay}}</a></td>
+                <td class="text-right">{{item.games}}</td>
+                <td class="text-right">{{item.goals}}</td>
+                <td class="text-right">{{item.assists}}</td>
+                <td class="text-right">{{item.points}}</td>
+                <td class="text-right">{{item.penaltyMinutes}}</td>
+                <td class="text-right">{{item.powerPlayGoals}}</td>
+                <td class="text-right">{{item.shortHandedGoals}}</td>
+                <td class="text-right">{{item.gameWinningGoals}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div ng-if="local.selectedPlayerType === 'goalie'">
+      <div class="row">
+        <div class="col-xs-12">
+          <table class="table table-condensed table-bordered table-striped">
+            <thead>
+              <tr>
+                <th class="text-left">Rank</th>
+                <th class="text-left" ng-click="sortAscFirst('playerNameToDisplay')">Player <span ng-class="sortClass('playerNameToDisplay')"></span></th>
+                <th class="text-right" ng-click="sortDescFirst('games')"><span ng-class="sortClass('games')"></span> Games</th>
+                <th class="text-right" ng-click="sortDescFirst('goalsAgainst')"><span ng-class="sortClass('goalsAgainst')"></span> Goals Against</th>
+                <th class="text-right" ng-click="sortDescFirst('goalsAgainstAverage')"><span ng-class="sortClass('goalsAgainstAverage')"></span> GAA</th>
+                <th class="text-right" ng-click="sortDescFirst('wins')"><span ng-class="sortClass('wins')"></span> Wins</th>
+                <th class="text-right" ng-click="sortDescFirst('shutouts')"><span ng-class="sortClass('shutouts')"></span> Shutouts</th>
+   
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in local.playerStatCareers | filterize:local.searchText | orderBy:sortOn:sortDirection">
+                <td>{{$index + 1}}</td>
+                <td class="text-left"><a ng-href="/ng/#/players/{{item.playerId}}/types/goalie/seasons/{{item.seasonId}}?tab=season">{{item.playerNameToDisplay}}</a></td>
+                <td class="text-right">{{item.games}}</td>
+                <td class="text-right">{{item.goalsAgainst}}</td>
+                <td class="text-right">{{item.goalsAgainstAverage | number:2}}</td>
+                <td class="text-right">{{item.wins}}</td>
+                <td class="text-right">{{item.shutouts}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

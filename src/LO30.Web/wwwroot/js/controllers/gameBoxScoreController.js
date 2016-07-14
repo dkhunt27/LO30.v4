@@ -2,7 +2,7 @@
 
 /* jshint -W117 */ //(remove the undefined warning)
 lo30NgApp.controller('gameBoxScoreController',
-    function ($scope, $state, $stateParams, externalLibService, criteriaService, broadcastService, returnUrlService) {
+    function ($scope, $state, externalLibService, criteriaService, broadcastService, returnUrlService) {
 
       var _ = externalLibService._;
 
@@ -16,17 +16,7 @@ lo30NgApp.controller('gameBoxScoreController',
 
 
       $scope.setWatches = function () {
-        $scope.$on(broadcastService.events().seasonSet, function () {
 
-          $scope.fetchData();
-
-        });
-
-        $scope.$on(broadcastService.events().seasonTypeSet, function () {
-
-          $scope.fetchData();
-
-        });
       };
 
       $scope.setReturnUrlForCriteriaSelector = function () {
@@ -45,13 +35,9 @@ lo30NgApp.controller('gameBoxScoreController',
 
         $scope.setReturnUrlForCriteriaSelector();
 
-        $scope.local.criteriaSeasonId = parseInt($routeParams.seasonId, 10);
+        if ($state.params.gameId) {
 
-        $scope.local.criteriaSeasonTypeId = parseInt($routeParams.seasonTypeId, 10);
-
-        if ($routeParams.gameId) {
-
-          $scope.local.selectedGameId = parseInt($routeParams.gameId, 10);
+          $scope.local.selectedGameId = parseInt($state.params.gameId, 10);
 
         }
 

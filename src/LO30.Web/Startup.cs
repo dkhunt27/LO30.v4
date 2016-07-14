@@ -147,6 +147,7 @@ namespace LO30.Web
               .ForMember(vm => vm.SeasonName, opt => opt.MapFrom(m => m.Season.SeasonName))
 
               // TODO, more research...Team isn't getting populated, but opponentteam is
+              .ForMember(vm => vm.TeamIdAway, opt => opt.MapFrom(m => m.GameTeams.Where(y => y.HomeTeam == true).Single().OpponentTeam.TeamId))
               .ForMember(vm => vm.TeamCodeAway, opt => opt.MapFrom(m => m.GameTeams.Where(y => y.HomeTeam == true).Single().OpponentTeam.TeamCode))
               .ForMember(vm => vm.TeamNameLongAway, opt => opt.MapFrom(m => m.GameTeams.Where(y => y.HomeTeam == true).Single().OpponentTeam.TeamNameLong))
               .ForMember(vm => vm.TeamNameShortAway, opt => opt.MapFrom(m => m.GameTeams.Where(y => y.HomeTeam == true).Single().OpponentTeam.TeamNameShort))
@@ -162,6 +163,7 @@ namespace LO30.Web
               .ForMember(vm => vm.Period4ScoreAway, opt => opt.MapFrom(m => m.GameScores.Where(x => x.Period == 4 && x.TeamId == (m.GameOutcomes.Where(y => y.HomeTeam == false).SingleOrDefault().TeamId)).SingleOrDefault().Score))
 
               // TODO, more research...Team isn't getting populated, but opponentteam is
+              .ForMember(vm => vm.TeamIdHome, opt => opt.MapFrom(m => m.GameTeams.Where(y => y.HomeTeam == false).Single().OpponentTeam.TeamId))
               .ForMember(vm => vm.TeamCodeHome, opt => opt.MapFrom(m => m.GameTeams.Where(y => y.HomeTeam == false).Single().OpponentTeam.TeamCode))
               .ForMember(vm => vm.TeamNameLongHome, opt => opt.MapFrom(m => m.GameTeams.Where(y => y.HomeTeam == false).Single().OpponentTeam.TeamNameLong))
               .ForMember(vm => vm.TeamNameShortHome, opt => opt.MapFrom(m => m.GameTeams.Where(y => y.HomeTeam == false).Single().OpponentTeam.TeamNameShort))

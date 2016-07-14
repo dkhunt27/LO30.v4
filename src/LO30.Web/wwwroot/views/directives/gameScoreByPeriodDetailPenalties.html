@@ -15,7 +15,7 @@
     <div ng-repeat="item in scoreSheetEntryPenalties | orderBy:'timeElapsed':local.timeElapsedSortBy">
       <div class="row">
         <div class="col-xs-offset-1">
-          <span>{{item.team.teamNameToDisplay}} @ {{item.timeRemaining}} - <a ng-href="/ng/#/players/{{item.playerId}}/types/skater/seasons/{{item.seasonId}}?tab=season">{{item.playerNameToDisplay}}</a> {{item.penaltyMinutes}} minutes for {{item.penaltyName}}</span>
+          <span>{{item.team.teamNameToDisplay}} @ {{item.timeRemaining}} - <a ng-href="/ng#/r/players/{{item.playerId}}/playertypes/skater?tab=season">{{item.playerNameToDisplay}}</a> {{item.penaltyMinutes}} minutes for {{item.penaltyName}}</span>
         </div>
       </div>
     </div>

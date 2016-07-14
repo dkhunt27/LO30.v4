@@ -2,7 +2,7 @@
 
 /* jshint -W117 */ //(remove the undefined warning)
 lo30NgApp.controller('teamsController',
-    function ($log, $scope, $state, $stateParams, $timeout, apiService, screenSize, externalLibService, constScheduleTeamFeedBaseUrl, criteriaService, broadcastService, returnUrlService) {
+    function ($log, $scope, $state, $timeout, apiService, screenSize, externalLibService, constScheduleTeamFeedBaseUrl, criteriaService, broadcastService, returnUrlService) {
 
       var _ = externalLibService._;
 
@@ -21,13 +21,12 @@ lo30NgApp.controller('teamsController',
           fetchTeamStandingsCompleted: false,
           fetchGamesCompleted: false,
 
+          tabActiveIndex: -1,
           tabStates: {
-            completed: false,
-            upcoming: false
-          },
-
-          criteriaSeasonId: -1,
-          criteriaSeasonTypeId: -1
+            completed: 0,
+            upcoming: 1,
+            schedule: 2
+          }
         };
       };
 
@@ -169,9 +168,9 @@ lo30NgApp.controller('teamsController',
 
         var seasonTypeId = criteriaService.seasonTypeId.get();
 
-        if ($stateParams.teamId) {
+        if ($state.params.teamId) {
 
-          $scope.local.selectedTeamId = parseInt($stateParams.teamId, 10);
+          $scope.local.selectedTeamId = parseInt($state.params.teamId, 10);
         }
 
         $scope.fetchTeamStandings(seasonId, $scope.local.selectedTeamId);
@@ -207,11 +206,12 @@ lo30NgApp.controller('teamsController',
 
         $scope.setReturnUrlForCriteriaSelector();
 
-        if ($stateParams.tab) {
+        if ($state.params.tab) {
 
           // use timeout to let the uib-tab initial the active states
           $timeout(function () {
-            $scope.local.tabStates[$stateParams.tab] = true;
+            // map to active tab index
+            $scope.local.tabActiveIndex = $scope.local.tabStates[$state.params.tab];
           }, 100);
 
         } else {
@@ -219,11 +219,9 @@ lo30NgApp.controller('teamsController',
           // set default tab, after watches so correct data events fire
           // use timeout to let the uib-tab initial the active states
           $timeout(function () {
-            $scope.local.tabStates.completed = true;
+            $scope.local.tabActiveIndex = $scope.local.tabStates.completed;  // set completed as default tab
           }, 100);
-
         }
-
         $scope.fetchData();
 
       };

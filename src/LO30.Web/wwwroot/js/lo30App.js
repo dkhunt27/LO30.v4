@@ -74,15 +74,7 @@ lo30NgApp.config(function ($stateProvider, $urlRouterProvider) { //, IdleProvide
       }
     })
     .state('root.players', {
-      url: "/players/:playerId/playertypes/:playerType",
-      templateUrl: "views/players.html",
-      controller: "playersController",
-      data: {
-        requiresLogin: false
-      }
-    })
-    .state('root.players2', {
-      url: "/players/:playerId/playertypes/:playerType/seasons/:seasonId",
+      url: "/players/:playerId/playertypes/:playerType?tab",
       templateUrl: "views/players.html",
       controller: "playersController",
       data: {
@@ -90,7 +82,7 @@ lo30NgApp.config(function ($stateProvider, $urlRouterProvider) { //, IdleProvide
       }
     })
     .state('root.teams', {
-      url: "/teams/:teamId/seasons/:seasonId",
+      url: "/teams/:teamId",
       templateUrl: "views/teams.html",
       controller: "teamsController",
       data: {
@@ -98,7 +90,7 @@ lo30NgApp.config(function ($stateProvider, $urlRouterProvider) { //, IdleProvide
       }
     })
     .state('root.boxscores', {
-      url: "/boxscores/games/:gameId/seasons/:seasonId",
+      url: "/boxscores/games/:gameId",
       templateUrl: "views/gameBoxScore.html",
       controller: "gameBoxScoreController",
       data: {
@@ -157,12 +149,12 @@ lo30NgApp.config(['eehNavigationProvider', function (eehNavigationProvider) {
     });
 
   // Add a menu item that links to "/home" to the "bar" menu.
-  eehNavigationProvider
+  /*eehNavigationProvider
     .menuItem('lo30Menu.home', {
       text: 'Home',
       iconClass: 'fa-home',
       href: '/Home'
-    });
+    });*/
 }]);
 
 lo30NgApp.config(function (LightboxProvider) {

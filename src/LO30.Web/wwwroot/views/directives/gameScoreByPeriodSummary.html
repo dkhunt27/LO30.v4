@@ -14,7 +14,7 @@
         </thead>
         <tbody>
           <tr>
-            <td>{{local.gameToDisplay.teamNameHomeToDisplay}}</td>
+            <td><a ng-href="/ng#/r/teams/{{local.gameToDisplay.teamIdHome}}">{{local.gameToDisplay.teamNameHomeToDisplay}}</a></td>
             <td>{{local.gameToDisplay.period1ScoreHome}}</td>
             <td>{{local.gameToDisplay.period2ScoreHome}}</td>
             <td>{{local.gameToDisplay.period3ScoreHome}}</td>
@@ -22,7 +22,7 @@
             <td>{{local.gameToDisplay.goalsForHome}}</td>
           </tr>
           <tr>
-            <td>{{local.gameToDisplay.teamNameAwayToDisplay}}</td>
+            <td><a ng-href="/ng#/r/teams/{{local.gameToDisplay.teamIdAway}}">{{local.gameToDisplay.teamNameAwayToDisplay}}</a></td>
             <td>{{local.gameToDisplay.period1ScoreAway}}</td>
             <td>{{local.gameToDisplay.period2ScoreAway}}</td>
             <td>{{local.gameToDisplay.period3ScoreAway}}</td>

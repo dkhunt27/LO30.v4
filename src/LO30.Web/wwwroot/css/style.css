@@ -8,6 +8,14 @@
   padding-top: -50px;
   padding-bottom: -20px; }
 
+/*.side-nav-logo {
+  background-image: url("../img/lo30LogoSideNav.png");
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  margin-left: 15px;
+  margin-bottom: 15px;
+}*/
+
 /* https://bootswatch.com/spacelab/#buttons info */
 .lo30-bg-blue {
   color: #ffffff;

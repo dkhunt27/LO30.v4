@@ -193,7 +193,7 @@
             <tbody> 
               <tr ng-repeat="item in local.playerStatTeams | filterize:local.searchText | orderBy:sortOn:sortDirection">
                 <td>{{$index + 1}}</td>
-                <td class="text-left"><a ng-href="/ng/#/players/{{item.playerId}}/types/skater/seasons/{{item.seasonId}}?tab=season">{{item.playerNameToDisplay}}</a></td>
+                <td class="text-left"><a ng-href="/ng#/r/players/{{item.playerId}}/playertypes/skater?tab=season">{{item.playerNameToDisplay}}</a></td>
                 <td class="text-right">{{item.games}}</td>
                 <td class="text-right">{{item.goals}}</td>
                 <td class="text-right">{{item.assists}}</td>
@@ -234,7 +234,7 @@
             <tbody>
               <tr ng-repeat="item in local.playerStatTeams | filterize:local.searchText | orderBy:sortOn:sortDirection">
                 <td>{{$index + 1}}</td>
-                <td class="text-left"><a ng-href="/ng/#/players/{{item.playerId}}/types/goalie/seasons/{{item.seasonId}}?tab=season">{{item.playerNameToDisplay}}</a></td>
+                <td class="text-left"><a ng-href="/ng#/r/players/{{item.playerId}}/playertypes/goalie?tab=season">{{item.playerNameToDisplay}}</a></td>
                 <td class="text-right">{{item.games}}</td>
                 <td class="text-right">{{item.goalsAgainst}}</td>
                 <td class="text-right">{{item.goalsAgainstAverage | number:2}}</td>

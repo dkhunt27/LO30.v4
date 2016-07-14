@@ -52,9 +52,10 @@
 
           <div class="row">
             <div class="col-xs-12">
-              <uib-tabset>
 
-                <uib-tab heading="Completed" active="local.tabStates['completed']">
+              <uib-tabset active="local.tabActiveIndex">
+
+                <uib-tab heading="Completed">
                   <br />
                   <table class="table table-condensed table-bordered table-striped table-dk-blue">
                     <thead>
@@ -69,7 +70,7 @@
                     </thead>
                     <tbody>
                       <tr ng-repeat="item in local.gamesToDisplayCompleted">
-                        <td><a ng-href="/ng/#/boxscores/games/{{item.gameId}}/seasons/{{item.seasonId}}">{{item.gameId}}</a></td>
+                        <td><a ng-href="/ng#/r/boxscores/games/{{item.gameId}}">{{item.gameId}}</a></td>
                         <td>{{item.gameDateTime  | date: 'MMM d, y h:mm a' }}</td>
                         <td class="text-center" ng-class="{'text-bold': item.outcomeToDisplay === 'W' || item.outcomeToDisplay === 'W*'}">
                           {{item.outcomeToDisplay}}
@@ -95,8 +96,8 @@
                     </tbody>
                   </table>
 
-              </uib-tab>
-                <uib-tab heading="Upcoming" active="local.tabStates['upcoming']">
+                </uib-tab>
+                <uib-tab heading="Upcoming">
                   <br />
                   <table class="table table-condensed table-bordered table-striped table-dk-blue">
                     <thead>
@@ -117,11 +118,9 @@
                         <td class="text-right" ng-class="{'text-bold': item.teamIdAway === local.selectedTeamId}">
                           {{item.awayTeamToDisplay}}
                         </td>
-                        <td class="text-center">
-                        </td>
+                        <td class="text-center"></td>
                         <td class="text-center">@</td>
-                        <td class="text-center">
-                        </td>
+                        <td class="text-center"></td>
                         <td ng-class="{'text-bold': item.teamIdHome === local.selectedTeamId}">
                           {{item.homeTeamToDisplay}}
                         </td>
@@ -130,8 +129,7 @@
                   </table>
 
                 </uib-tab>
-
-                <uib-tab heading="Schedule Feed" active="local.tabStates['schedule']">
+                <uib-tab heading="Schedule Feed">
                   <br />
                   <div class="table-responsive">
                     <table class="table table-condensed">
@@ -172,7 +170,7 @@
                     </table>
                   </div>
                 </uib-tab>
-            </uib-tabset>
+              </uib-tabset>
         </div>
         </div>
     </div>

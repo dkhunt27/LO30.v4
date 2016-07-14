@@ -30,7 +30,7 @@
           <tbody>
             <tr ng-repeat="item in itemByDiv.teamStandings | orderBy:sortOn:sortDirection">
               <td class="text-left">{{item.ranking}}</td>
-              <td class="text-left"><a ng-href="/ng/#/teams/{{item.teamId}}/seasons/{{item.seasonId}}">{{item.teamNameToDisplay}}</a></td>
+              <td class="text-left"><a ng-href="/ng#/r/teams/{{item.teamId}}">{{item.teamNameToDisplay}}</a></td>
               <td class="text-right">{{item.games}}</td>
               <td class="text-right">{{item.wins}}</td>
               <td class="text-right">{{item.losses}}</td>

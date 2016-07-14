@@ -216,7 +216,7 @@
                   </thead>
                   <tbody>
                     <tr ng-repeat="item in local.playerStatGamesToDisplay | orderBy:sortOn:sortDirection">
-                      <td class="text-left"><a ng-href="/ng/#/boxscores/games/{{item.gameId}}/seasons/{{item.seasonId}}">{{item.gameId}}</a></td>
+                      <td class="text-left"><a ng-href="/ng#/r/boxscores/games/{{item.gameId}}">{{item.gameId}}</a></td>
                       <td class="text-left">{{ item.gameDateTime | date : "MMM d"}}</td>
                       <td class="text-left">{{item.teamCode}}{{item.sub == true ? "*" : ""}}</td>
                       <td class="text-left">{{item.playoffs}}</td>
@@ -286,7 +286,7 @@
                   </thead>
                   <tbody>
                     <tr ng-repeat="item in local.playerStatGamesToDisplay | orderBy:sortOn:sortDirection">
-                      <td class="text-left"><a ng-href="/ng/#/boxscores/games/{{item.gameId}}/seasons/{{item.seasonId}}">{{item.gameId}}</a></td>
+                      <td class="text-left"><a ng-href="/ng#/r/boxscores/games/{{item.gameId}}">{{item.gameId}}</a></td>
                       <td class="text-left">{{ item.gameDateTime | date : "MMM d"}}</td>
                       <td class="text-left">{{item.teamCode}}{{item.sub == true ? "*" : ""}}</td>
                       <td class="text-left">{{item.playoffs}}</td>

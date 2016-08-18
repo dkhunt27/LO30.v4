@@ -1,0 +1,11 @@
+﻿<div>
+  <uib-accordion>
+    <div uib-accordion-group class="panel-default" heading="{{decade.decadeName}}" is-open="decade.hasSelectedSeason" ng-repeat="decade in decades">
+      <table class="table table-condensed table-hover table-striped">
+        <tr ng-class="{'info': season.isSelectedSeason}" ng-repeat="season in decade.seasons">
+          <td ng-click="changeSeason(season.seasonId)">{{ season.seasonName}}</td>
+        </tr>
+      </table>
+    </div>
+  </uib-accordion>
+</div>

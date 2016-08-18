@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-/* jshint -W117 */ //(remove the undefined warning)
-lo30NgApp.factory("apiBaseService",
+angular.module('lo30NgApp')
+  .factory("apiBaseService",
     function ($log, $http) {
 
       var baseApiUrl = "/api/";

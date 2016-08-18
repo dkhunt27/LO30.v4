@@ -116,7 +116,7 @@ namespace LO30.Web.Controllers.Web
           //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
           await _signInManager.SignInAsync(user, isPersistent: false);
           _logger.LogInformation(3, "User created a new account with password.");
-          return RedirectToAction(nameof(HomeController.Index), "Home");
+          return RedirectToAction(nameof(NgController.Index), "Ng");
         }
         AddErrors(result);
       }
@@ -133,7 +133,7 @@ namespace LO30.Web.Controllers.Web
     {
       await _signInManager.SignOutAsync();
       _logger.LogInformation(4, "User logged out.");
-      return RedirectToAction(nameof(HomeController.Index), "Home");
+      return RedirectToAction(nameof(NgController.Index), "Ng");
     }
 
     //
@@ -458,7 +458,7 @@ namespace LO30.Web.Controllers.Web
       }
       else
       {
-        return RedirectToAction(nameof(HomeController.Index), "Home");
+        return RedirectToAction(nameof(NgController.Index), "Ng");
       }
     }
 

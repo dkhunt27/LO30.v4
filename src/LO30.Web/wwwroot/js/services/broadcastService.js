@@ -1,8 +1,8 @@
 ﻿'use strict';
 
-/* jshint -W117 */ //(remove the undefined warning)
-lo30NgApp.factory(/* jshint +W117 */
-  'broadcastService',
+
+angular.module('lo30NgApp')
+  .factory(  'broadcastService',
   [
     '$log',
     '$rootScope',

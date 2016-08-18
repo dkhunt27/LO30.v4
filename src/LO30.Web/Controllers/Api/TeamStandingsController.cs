@@ -15,12 +15,10 @@ namespace LO30.Web.Controllers.Api
   public class TeamStandingsController : Controller
   {
     private LO30DbContext _context;
-    private CriteriaService _criteriaServices;
 
-    public TeamStandingsController(LO30DbContext context, CriteriaService criteriaServices)
+    public TeamStandingsController(LO30DbContext context)
     {
       _context = context;
-      _criteriaServices = criteriaServices;
     }
 
     //[HttpGet("seasonTypes/{seasonTypeId:int}")]

@@ -2,55 +2,150 @@
   ViewData["Title"] = "Ng";
 }
 
+@section Styles {
+
+  <link rel="stylesheet" href="~/lib/animate-css/animate.min.css" />
+  <link rel="stylesheet" href="~/lib/metisMenu/dist/metisMenu.min.css" />
+  <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+  @*<link rel="stylesheet" href="~/lib/datatables/media/css/jquery.dataTables.min.css" />*@
+  <link rel="stylesheet" href="~/lib/datatables.net-bs/css/dataTables.bootstrap.min.css" />
+  <link rel="stylesheet" href="~/lib/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" />
+  <link rel="stylesheet" href="~/lib/angular-datatables/dist/css/angular-datatables.min.css" />
+  @*<link rel="stylesheet" href="~/lib/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css" />*@
+  <link rel="stylesheet" href="~/lib/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css" />
+
+  <environment names="Development">
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/css/style.overrides.css" />
+  </environment>
+  <environment names="Staging,Production">
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.overrides.css" asp-append-version="true" />
+  </environment>
+}
 
 <div ng-app="lo30NgApp">
   <div ui-view></div>
 </div>
 
-
 @section Scripts {
-  <!-- FOLLOWING WILL NEED TO BE MIN'd -->
 
-  <!-- Ng App -->
-  <script src="~/js/lo30App.js"></script>
-  <script src="~/js/controllers/careersController.js"></script>
-  <script src="~/js/controllers/galleryTeamsController.js"></script>
-  <script src="~/js/controllers/gameBoxScoreController.js"></script>
-  <script src="~/js/controllers/playersController.js"></script>
-  <script src="~/js/controllers/standingsController.js"></script>
-  <script src="~/js/controllers/statsPlayersController.js"></script>
-  <script src="~/js/controllers/teamsController.js"></script>
-  <script src="~/js/directives/criteriaSelector/criteriaSelector.js"></script>
-  <script src="~/js/directives/criteriaSelector/criteriaSelectorController.js"></script>
-  <script src="~/js/directives/datatablesFilterRowHider/datatablesFilterRowHider.js"></script>
-  <script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetail.js"></script>
-  <script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetailController.js"></script>
-  <script src="~/js/directives/gameScoreByPeriodDetailGoalies/gameScoreByPeriodDetailGoalies.js"></script>
-  <script src="~/js/directives/gameScoreByPeriodDetailPenalties/gameScoreByPeriodDetailPenalties.js"></script>
-  <script src="~/js/directives/gameScoreByPeriodDetailScoring/gameScoreByPeriodDetailScoring.js"></script>
-  <script src="~/js/directives/gameScoreByPeriodSummary/gameScoreByPeriodSummary.js"></script>
-  <script src="~/js/directives/gameScoreByPeriodSummary/gameScoreByPeriodSummaryController.js"></script>
+  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+  <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+  @*<script src="~/lib/jquery-ui/jquery-ui.min.js"></script>*@
+
+  <script src="~/lib/angular/angular.min.js"></script>
+  <script src="~/lib/angular-animate/angular-animate.min.js"></script>
+  <script src="~/lib/angular-cookies/angular-cookies.min.js"></script>
+  <script src="~/lib/angular-touch/angular-touch.min.js"></script>
+  <script src="~/lib/angular-sanitize/angular-sanitize.min.js"></script>
+  <script src="~/lib/angular-messages/angular-messages.min.js"></script>
+  <script src="~/lib/angular-aria/angular-aria.min.js"></script>
+  <script src="~/lib/angular-resource/angular-resource.min.js"></script>
+  <script src="~/lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+
+  <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="~/lib/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+  <script src="~/lib/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="~/lib/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+  <script src="~/lib/pdfmake/build/pdfmake.min.js"></script>
+  <script src="~/lib/pdfmake/build/vfs_fonts.js"></script> <!--TODO MIN-->
+  <script src="~/lib/jszip/dist/jszip.min.js"></script>
+  <script src="~/lib/datatables.net-buttons/js/buttons.html5.min.js"></script>
+  <script src="~/lib/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+  <script src="~/lib/jquery-datatables-columnfilter/jquery.dataTables.columnFilter.js"></script>
+  <script src="~/lib/angular-datatables/dist/angular-datatables.js"></script>
+  <script src="~/lib/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
+  <script src="~/lib/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.min.js"></script>
+  <script src="~/lib/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.min.js"></script>
+  <script src="~/lib/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.min.js"></script>
+  <script src="~/lib/angular-datatables/dist/plugins/fixedheader/angular-datatables.fixedheader.min.js"></script>
+
+  <script src="~/lib/angular-pageslide-directive/dist/angular-pageslide-directive.min.js"></script>
+
+  <script src="~/lib/bootstrap-switch/dist/js/bootstrap-switch.min.js"></script>
+  <script src="~/lib/angular-bootstrap-switch/dist/angular-bootstrap-switch.min.js"></script>
+
+  <script src="~/lib/angular-media-queries/match-media.js"></script>  <!--TODO MIN-->
+
+  <script src="~/lib/metisMenu/dist/metisMenu.min.js"></script>
+  <script src="~/lib/slimScroll/jquery.slimscroll.min.js"></script>
+  <script src="~/lib/pace/pace.min.js"></script>
+  <script src="~/lib/moment/min/moment.min.js"></script>
+  <script src="~/lib/underscore/underscore-min.js"></script>
+  <script src="~/lib/simple-js-validator/lib/simple.js.validator.min.js"></script>
+
+  <environment names="Development">
+    <script src="~/js/script.js"></script>
+  </environment>
+  <environment names="Staging,Production">
+    <script src="~/js/script.min.js" asp-append-version="true"></script>
+  </environment>
+
+
+  <!--TODO MIN-->  
+
+  <script src="~/js/index.module.js"></script>
+  <script src="~/js/index.route.js"></script>
+  <script src="~/js/index.run.js"></script>
+
+  <script src="~/js/main/main.controller.js"></script>
+  <script src="~/js/standings/standings.controller.js"></script>
+  <script src="~/js/statsPlayers/statsPlayers.controller.js"></script>
+
+  <script src="~/js/components/content/content.component.js"></script>
+  <script src="~/js/components/navigation/navigation.component.js"></script>
+  <script src="~/js/components/topnavbar/topnavbar.component.js"></script>
+
+  <script src="~/js/directives.js"></script>
+  <script src="~/js/directives/pageHeader/pageHeader.js"></script>
+  <script src="~/js/directives/pageHeader/pageHeader.controller.js"></script>
   <script src="~/js/directives/seasonSelector/seasonSelector.js"></script>
-  <script src="~/js/directives/seasonSelector/seasonSelectorController.js"></script>
+  <script src="~/js/directives/seasonSelector/seasonSelector.controller.js"></script>
   <script src="~/js/directives/seasonTypeSelector/seasonTypeSelector.js"></script>
-  <script src="~/js/directives/seasonTypeSelector/seasonTypeSelectorController.js"></script>
-  <script src="~/js/directives/sideNavigation/sideNavigation.js"></script>
+  <script src="~/js/directives/seasonTypeSelector/seasonTypeSelector.controller.js"></script>
+
   <script src="~/js/filters/filterizeFilter.js"></script>
   <script src="~/js/filters/percentageFilter.js"></script>
+
   <script src="~/js/services/apiBaseService.js"></script>
   <script src="~/js/services/apiService.js"></script>
-  <script src="~/js/services/broadcastService.js"></script>
   <script src="~/js/services/criteriaService.js"></script>
+  <script src="~/js/services/broadcastService.js"></script>
   <script src="~/js/services/externalLibService.js"></script>
-  <script src="~/js/services/returnUrlService.js"></script>
 
 
-    <!-- Get Server Data -->
-  <script>
-    angular.module("lo30NgApp").value("seasonId", @ViewBag.SeasonId);
-    angular.module("lo30NgApp").value("seasonName", "@ViewBag.SeasonName");
-    angular.module("lo30NgApp").value("seasonTypeId", @ViewBag.SeasonTypeId);
-    angular.module("lo30NgApp").value("seasonTypeName", "@ViewBag.SeasonTypeName");
-  </script>
+  <!-- FOLLOWING WILL NEED TO BE MIN'd -->
+  <!-- Ng App -->
+  @*<script src="~/js/lo30App.js"></script>
+    <script src="~/js/controllers/careersController.js"></script>
+    <script src="~/js/controllers/galleryTeamsController.js"></script>
+    <script src="~/js/controllers/gameBoxScoreController.js"></script>
+    <script src="~/js/controllers/playersController.js"></script>
+    <script src="~/js/controllers/rootController.js"></script>
+    <script src="~/js/controllers/standingsController.js"></script>
+    <script src="~/js/controllers/statsPlayersController.js"></script>
+    <script src="~/js/controllers/teamsController.js"></script>
+    <script src="~/js/directives/criteriaSelector/criteriaSelector.js"></script>
+    <script src="~/js/directives/criteriaSelector/criteriaSelectorController.js"></script>
+    <script src="~/js/directives/datatablesFilterRowHider/datatablesFilterRowHider.js"></script>
+    <script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetail.js"></script>
+    <script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetailController.js"></script>
+    <script src="~/js/directives/gameScoreByPeriodDetailGoalies/gameScoreByPeriodDetailGoalies.js"></script>
+    <script src="~/js/directives/gameScoreByPeriodDetailPenalties/gameScoreByPeriodDetailPenalties.js"></script>
+    <script src="~/js/directives/gameScoreByPeriodDetailScoring/gameScoreByPeriodDetailScoring.js"></script>
+    <script src="~/js/directives/gameScoreByPeriodSummary/gameScoreByPeriodSummary.js"></script>
+    <script src="~/js/directives/gameScoreByPeriodSummary/gameScoreByPeriodSummaryController.js"></script>
+    <script src="~/js/directives/pageInit/pageInit.js"></script>
+    <script src="~/js/directives/seasonSelector/seasonSelector.js"></script>
+    <script src="~/js/directives/seasonSelector/seasonSelectorController.js"></script>
+    <script src="~/js/directives/seasonTypeSelector/seasonTypeSelector.js"></script>
+    <script src="~/js/directives/seasonTypeSelector/seasonTypeSelectorController.js"></script>
+    <script src="~/js/directives/sideNavigation/sideNavigation.js"></script>
+    <script src="~/js/filters/filterizeFilter.js"></script>
+    <script src="~/js/services/returnUrlService.js"></script>*@
 }
 

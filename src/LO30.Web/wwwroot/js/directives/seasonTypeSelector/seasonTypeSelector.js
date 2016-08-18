@@ -1,12 +1,12 @@
 ﻿'use strict';
 
-/* jshint -W117 */ //(remove the undefined warning)
-lo30NgApp.directive('lo30SeasonTypeSelector',
+angular.module('lo30NgApp')
+  .directive('lo30SeasonTypeSelector',
   [
     function () {
       return {
         restrict: 'E',
-        templateUrl: "/views/directives/seasonTypeSelector.html",
+        templateUrl: "js/directives/seasonTypeSelector/seasonTypeSelector.html",
         scope: {
         },
         controller: "lo30SeasonTypeSelectorController",

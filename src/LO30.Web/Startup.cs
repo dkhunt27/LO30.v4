@@ -15,7 +15,6 @@ using LO30.Web.Services;
 using Newtonsoft.Json.Serialization;
 using LO30.Web.Models.Objects;
 using LO30.Web.ViewModels.Api;
-using LO30.Web.ViewModels.Components;
 
 namespace LO30.Web
 {
@@ -80,13 +79,6 @@ namespace LO30.Web
       // Add functionality to inject IOptions<T>
       services.AddOptions();
 
-      // Add our Config object so it can be injected
-
-      services.Configure<MySettings>(mySettings =>
-      {
-        mySettings.ScheduleBaseUrl = "lo30.azurewebsites.net";
-      });
-
       // cant get the extension to load Microsoft.Extensions.Options.ConfigurationExtensions
       //services.Configure<MySettings>(Configuration.GetSection("MySettings"));
 
@@ -97,7 +89,6 @@ namespace LO30.Web
       services.AddTransient<IEmailSender, AuthMessageSender>();
       services.AddTransient<ISmsSender, AuthMessageSender>();
       services.AddTransient<PlayerNameService, PlayerNameService>();
-      services.AddSingleton<CriteriaService, CriteriaService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -331,12 +322,6 @@ namespace LO30.Web
               .ReverseMap();
 
         config.CreateMap<Season, SeasonViewModel>()
-              .ReverseMap();
-
-        config.CreateMap<Season, SeasonSelectorViewModel>()
-              .ReverseMap();
-
-        config.CreateMap<SeasonType, SeasonTypeSelectorViewModel>()
               .ReverseMap();
 
         config.CreateMap<TeamStanding, TeamStandingViewModel>()

@@ -1,7 +1,7 @@
 'use strict';
 
-/* jshint -W117 */ //(remove the undefined warning)
-lo30NgApp.filter('filterize', function(screenSize) {
+angular.module('lo30NgApp')
+  .filter('filterize', function (screenSize) {
 
   var processIntoFilters = function(filterOn) {
     var filters = [];

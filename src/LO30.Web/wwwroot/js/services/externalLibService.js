@@ -1,8 +1,7 @@
 ﻿'use strict';
 
-/* jshint -W117 */ //(remove the undefined warning)
-lo30NgApp.factory(
-  'externalLibService',
+angular.module('lo30NgApp')
+  .factory('externalLibService',
   [
     function () {
 

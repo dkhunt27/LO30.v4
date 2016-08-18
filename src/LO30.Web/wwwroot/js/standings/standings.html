@@ -1,0 +1,30 @@
+<div>
+  <lo30-page-header></lo30-page-header>
+
+  <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="text-center m-t-lg">
+
+          <div class="ibox float-e-margins" ng-repeat="item in vm.teamStandings">
+            <div class="ibox-title">
+              <h5 ng-show="vm.seasonTypeId === 0">League </h5>
+              <h5 ng-show="vm.seasonTypeId === 1">{{item.division}} Division </h5>
+              <div class="ibox-tools">
+              </div>
+            </div>
+            <div class="ibox-content">
+              <div class="row">
+                <table datatable="standings" dt-options="vm.dtOptions[$index]" class="table table-striped table-bordered table-hover">
+                </table>
+              </div>
+            </div>
+          </div>
+          <h6>
+            Tie Breaker:&nbsp;&nbsp;1) Most Points&nbsp;&nbsp;2) Most Wins&nbsp;&nbsp;3) Greatest Goals For/Goals Against difference&nbsp;&nbsp;4) Most Goals For&nbsp;&nbsp;5) Least Penalty Minutes
+          </h6>
+            
+      </div>
+    </div>
+  </div>
+</div>

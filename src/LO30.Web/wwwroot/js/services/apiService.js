@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-/* jshint -W117 */ //(remove the undefined warning)
-lo30NgApp.factory("apiService",
+angular.module('lo30NgApp')
+  .factory("apiService",
     function (externalLibService, apiBaseService) {
 
       var _ = externalLibService._;
@@ -197,7 +197,17 @@ lo30NgApp.factory("apiService",
       service.playerStatTeams.listForSeasonIdSeasonTypeId = function (seasonId, seasonTypeId) {
         var inputs = {
           apiDataType: "playerStatTeams.listForSeasonIdSeasonTypeId",
-          urlPartial: "playerstatteams/seasons/" + seasonId + "/seasonTypes/" + seasonTypeId,
+          urlPartial: "playerstatteams/seasons/" + seasonId + "/seasonTypes/" + seasonTypeId + "?key=1",
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.playerStatTeams.filterListForSeasonIdSeasonTypeId = function (seasonId, seasonTypeId, filters) {
+        var inputs = {
+          apiDataType: "playerStatTeams.listForSeasonIdSeasonTypeId",
+          urlPartial: "playerstatteams/seasons/" + seasonId + "/seasonTypes/" + seasonTypeId + "?" + filters,
           method: "GET",
           params: null
         }

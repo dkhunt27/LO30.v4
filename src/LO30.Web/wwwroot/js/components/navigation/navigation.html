@@ -1,0 +1,38 @@
+  <nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+      <ul side-navigation class="nav metismenu" id="side-menu">
+        <li class="nav-header">
+
+          <div class="profile-element">
+            <div class="logo-brand">
+              Livonia Over 30 Hockey
+            </div>
+          </div>
+
+          <div class="logo-element">
+            LO30
+          </div>
+
+        </li>
+
+        <li ng-class="{active: $ctrl.isActive('standings')}">
+          <a ui-sref="root.standings({seasonId: $ctrl.season.seasonId, seasonTypeId: $ctrl.seasonType.seasonTypeId})" ng-click="$ctrl.setActive('standings')"><i class="fa fa-group"></i> <span class="nav-label">Standings</span></a>
+        </li>
+        <li ng-class="{active: $ctrl.isActive('stats')}">
+          <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Stats</span><span class="fa arrow"></span></a>
+          <ul class="nav nav-second-level collapse" ng-class="{in: $ctrl.isActive('stats')}">
+            <li ng-click="$ctrl.setActive('stats')"><a ui-sref="root.stats({seasonId: $ctrl.season.seasonId, seasonTypeId: $ctrl.seasonType.seasonTypeId, playerType: 'skater'})">Skaters</a></li>
+            <li ng-click="$ctrl.setActive('stats')"><a ui-sref="root.stats({seasonId: $ctrl.season.seasonId, seasonTypeId: $ctrl.seasonType.seasonTypeId, playerType: 'goalie'})">Goalies</a></li>
+          </ul>
+        </li>
+        <li ng-class="{active: $ctrl.isActive('careers')}">
+          <a href="#"><i class="fa fa-user-plus"></i> <span class="nav-label">Careers</span><span class="fa arrow"></span></a>
+          <ul class="nav nav-second-level collapse" ng-class="{in: $ctrl.isActive('careers')}">
+            <li ng-click="$ctrl.setActive('careers')"><a ui-sref="root.careers({playerType: 'skater'})">Skaters</a></li>
+            <li ng-click="$ctrl.setActive('careers')"><a ui-sref="root.careers({playerType: 'goalie'})">Goalies</a></li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+  </nav>

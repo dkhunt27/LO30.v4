@@ -1,7 +1,7 @@
 'use strict';
 
-/* jshint -W117 */ //(remove the undefined warning)
-lo30NgApp.filter('percentage',
+angular.module('lo30NgApp')
+  .filter('percentage',
   [
     '$filter',
     function ($filter) {

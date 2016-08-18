@@ -28,9 +28,9 @@ namespace LO30.Web.Controllers.Api
       using (_context)
       {
         results = _context.PlayerStatTeams
-                          .Include(x=>x.Team)
-                          .Include(x=>x.Player)
-                          .Where(x=>x.SeasonId == seasonId && x.Playoffs == Convert.ToBoolean(seasonTypeId))
+                          .Include(x => x.Team)
+                          .Include(x => x.Player)
+                          .Where(x => x.SeasonId == seasonId && x.Playoffs == Convert.ToBoolean(seasonTypeId) && x.PlayerId > 0)
                           .ToList();
       }
 

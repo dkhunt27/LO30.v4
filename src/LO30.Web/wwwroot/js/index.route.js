@@ -60,6 +60,22 @@
         data: { pageTitle: 'Stats' }
       })
 
+      .state('root.profiles', {
+        url: "/profiles/players/:playerId/playertypes/:playerType/seasons/:seasonId/seasontypes/:seasonTypeId?tab",
+        templateUrl: "js/profilesPlayers/profilesPlayers.html",
+        controller: "profilesPlayersController",
+        controllerAs: "vm",
+        data: { pageTitle: 'Profiles' }
+      })
+
+      .state('root.profiles2', {
+        url: "/profiles/players/:playerId/playertypes/:playerType?tab",
+        templateUrl: "js/profilesPlayers/profilesPlayers.html",
+        controller: "profilesPlayersController",
+        controllerAs: "vm",
+        data: { pageTitle: 'Profiles' }
+      })
+
     $urlRouterProvider.otherwise('/r/standings');
 
 

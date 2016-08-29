@@ -25,6 +25,11 @@
 }
 
 
+div.dataTables_paginate { 
+  float: none; 
+  text-align: center !important;
+}
+
 /* Pageslide Needed for hiding scrollbars when pushing */
 html {
     overflow-x: hidden;

@@ -76,6 +76,14 @@
         data: { pageTitle: 'Profiles' }
       })
 
+      .state('root.careers', {
+        url: "/careers/playertypes/:playerType",
+        templateUrl: "js/careers/careers.html",
+        controller: "careersController",
+        controllerAs: "vm",
+        data: { pageTitle: 'Careers' }
+      })
+
     $urlRouterProvider.otherwise('/r/standings');
 
 

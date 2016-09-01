@@ -7,11 +7,14 @@ angular.module('lo30NgApp')
     var sjv = externalLibService.sjv;
 
     var vm = this;
+    var deferred = {};
+    var tabStates = {
+      career: 0,
+      season: 1,
+      profile: 2
+    };
 
-    var dataCareerDefer = $q.defer();
-    var dataSeasonsDefer = $q.defer();
-    var dataTeamsDefer = $q.defer();
-    var dataGamesDefer = $q.defer();
+    var tabLoaded = [false, false, false] // must match tabStates length
 
     var initDatatable = function () {
 
@@ -88,7 +91,7 @@ angular.module('lo30NgApp')
 
       var career = DTOptionsBuilder
           .fromFnPromise(function () {
-            return dataCareerDefer.promise;
+            return deferred.career.promise;
           })
           .withOption('processing', false)
           .withOption('paging', false)
@@ -100,7 +103,7 @@ angular.module('lo30NgApp')
 
       var seasons = DTOptionsBuilder
           .fromFnPromise(function () {
-            return dataSeasonsDefer.promise;
+            return deferred.seasons.promise;
           })
           .withOption('processing', false)
           .withOption('paging', false)
@@ -129,7 +132,7 @@ angular.module('lo30NgApp')
 
       var teams = DTOptionsBuilder
           .fromFnPromise(function () {
-            return dataTeamsDefer.promise;
+            return deferred.teams.promise;
           })
           .withOption('processing', false)
           .withOption('paging', false)
@@ -158,7 +161,7 @@ angular.module('lo30NgApp')
 
       var games = DTOptionsBuilder
           .fromFnPromise(function () {
-            return dataGamesDefer.promise;
+            return deferred.games.promise;
           })
           .withOption('processing', false)
           .withOption('paging', false)
@@ -222,7 +225,7 @@ angular.module('lo30NgApp')
 
         careerTabCareerData.push(vm.playerStatCareer);
 
-        dataCareerDefer.resolve(careerTabCareerData);
+        deferred.career.resolve(careerTabCareerData);
 
         vm.careerDataLoaded = true;
 
@@ -251,7 +254,7 @@ angular.module('lo30NgApp')
 
       }).finally(function () {
 
-        dataSeasonsDefer.resolve(vm.playerStatSeasons);
+        deferred.seasons.resolve(vm.playerStatSeasons);
 
         vm.seasonsDataLoaded = true;
 
@@ -280,7 +283,7 @@ angular.module('lo30NgApp')
 
       }).finally(function () {
 
-        dataTeamsDefer.resolve(vm.playerStatTeams);
+        deferred.teams.resolve(vm.playerStatTeams);
 
         vm.teamsDataLoaded = true;
 
@@ -310,7 +313,7 @@ angular.module('lo30NgApp')
 
       }).finally(function () {
 
-        dataGamesDefer.resolve(vm.playerStatGames);
+        deferred.games.resolve(vm.playerStatGames);
 
         vm.gamesDataLoaded = true;
 
@@ -456,8 +459,8 @@ angular.module('lo30NgApp')
 
     var fetchData = function (seasonId, seasonTypeId, playerId, playerType) {
 
-      switch ($scope.local.tabActiveIndex) {
-        case $scope.local.tabStates.career:
+      switch ($scope.tabActiveIndex) {
+        case tabStates.career:
 
           fetchPlayerStatCareer(playerId, playerType);
 
@@ -466,7 +469,7 @@ angular.module('lo30NgApp')
           $state.params.tab = "career";
 
           break;
-        case $scope.local.tabStates.season:
+        case tabStates.season:
 
           fetchPlayerStatTeams(playerId, seasonId, playerType);
 
@@ -476,7 +479,7 @@ angular.module('lo30NgApp')
 
           break;
         default:
-          $log.debug("tabActiveIndex not mapped for: ", $scope.local.tabActiveIndex);
+          $log.debug("tabActiveIndex not mapped for: ", $scope.tabActiveIndex);
       }
     };
 
@@ -502,11 +505,15 @@ angular.module('lo30NgApp')
 
       });
 
-      $scope.$watch('local.tabActiveIndex', function (newVal, oldVal) {
+      $scope.$watch('tabActiveIndex', function (newVal, oldVal) {
 
         if (newVal > -1 && newVal !== oldVal) {
 
-          fetchData(vm.seasonId, vm.seasonTypeId, vm.playerId, vm.playerType);
+          if (!tabLoaded[newVal]) {
+            // only fetch the data once per tab
+            fetchData(vm.seasonId, vm.seasonTypeId, vm.playerId, vm.playerType);
+            tabLoaded[newVal] = true;
+          }
 
         }
       });
@@ -521,30 +528,14 @@ angular.module('lo30NgApp')
 
       vm.careerDataLoaded = false;
 
-      $scope.local = {
-        selectedPlayerId: 593,
-        selectedSeasonId: 56,
-        selectedPlayerType: 'skater',
-        playerStatGames: [],
-        playerStatTeams: [],
-        playerStatSeasons: [],
-        playerStatCareer: {},
-        playerStatGamesToDisplay: [],
-        playerStatTeamsToDisplay: [],
-        playerStatSeasonsToDisplay: [],
-        playerStatCareerToDisplay: [],
-        fetchplayerStatGamesCompleted: false,
-        fetchPlayerStatTeamsCompleted: false,
-        fetchplayerStatSeasonsCompleted: false,
-        fetchplayerStatCareerCompleted: false,
+      $scope.tabActiveIndex = -1;
 
-        tabActiveIndex: -1,
-        tabStates: {
-          career: 0,
-          season: 1,
-          profile: 2
-        }
-      };
+      deferred = {
+        career: $q.defer(),
+        seasons: $q.defer(),
+        teams: $q.defer(),
+        games: $q.defer()
+      }
 
       var season = criteriaService.seasons.get();
 
@@ -558,15 +549,12 @@ angular.module('lo30NgApp')
 
       vm.playerType = $state.params.playerType;
 
-      // (this covers tab=career since initializes as index=0)
-      $scope.local.tabActiveIndex = -1;
-
       if ($state.params.tab) {
 
         // use timeout to let the uib-tab initial the active states
         $timeout(function () {
           // map to active tab index
-          $scope.local.tabActiveIndex = $scope.local.tabStates[$state.params.tab];
+          $scope.tabActiveIndex = tabStates[$state.params.tab];
         }, 200);
 
       } else {
@@ -574,7 +562,7 @@ angular.module('lo30NgApp')
         // set default tab, after watches so correct data events fire
         // use timeout to let the uib-tab initial the active states
         $timeout(function () {
-          $scope.local.tabActiveIndex = $scope.local.tabStates.season;  // set season as default tab
+          $scope.tabActiveIndex = tabStates.season;  // set season as default tab
         }, 200);
 
       }

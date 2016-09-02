@@ -16,7 +16,7 @@ angular.module('lo30NgApp')
 
     var tabLoaded = [false, false, false] // must match tabStates length
 
-    var initDatatable = function () {
+    var initDatatable = function (playerType) {
 
       //define default option
       vm.dtOptions = {
@@ -26,58 +26,119 @@ angular.module('lo30NgApp')
         playerGames: DTOptionsBuilder.newOptions()
       }
 
-      //define colum
-      vm.dtColumns = {
-        playerCareer: [
-              DTColumnBuilder.newColumn('playerNameToDisplay').withTitle('Player'),
-              DTColumnBuilder.newColumn('seasons').withTitle('Seasons'),
-              DTColumnBuilder.newColumn('games').withTitle('Games'),
-              DTColumnBuilder.newColumn('goals').withTitle('Goals'),
-              DTColumnBuilder.newColumn('assists').withTitle('Assists'),
-              DTColumnBuilder.newColumn('points').withTitle('Points'),
-              DTColumnBuilder.newColumn('penaltyMinutes').withTitle('PIM'),
-              DTColumnBuilder.newColumn('powerPlayGoals').withTitle('PPG'),
-              DTColumnBuilder.newColumn('shortHandedGoals').withTitle('SHG'),
-              DTColumnBuilder.newColumn('gameWinningGoals').withTitle('GWG')
-        ],
-        playerSeasons: [
-              DTColumnBuilder.newColumn('seasonName').withTitle('Season'),
-              DTColumnBuilder.newColumn('games').withTitle('Games'),
-              DTColumnBuilder.newColumn('goals').withTitle('Goals'),
-              DTColumnBuilder.newColumn('assists').withTitle('Assists'),
-              DTColumnBuilder.newColumn('points').withTitle('Points'),
-              DTColumnBuilder.newColumn('penaltyMinutes').withTitle('PIM'),
-              DTColumnBuilder.newColumn('powerPlayGoals').withTitle('PPG'),
-              DTColumnBuilder.newColumn('shortHandedGoals').withTitle('SHG'),
-              DTColumnBuilder.newColumn('gameWinningGoals').withTitle('GWG')
-        ],
-        playerTeams: [
-              DTColumnBuilder.newColumn('playerNameToDisplay').withTitle('Player'),
-              DTColumnBuilder.newColumn('teamNameToDisplay').withTitle('Team'),
-              DTColumnBuilder.newColumn('playoffs').withTitle('Playoffs'),
-              DTColumnBuilder.newColumn('games').withTitle('Games'),
-              DTColumnBuilder.newColumn('goals').withTitle('Goals'),
-              DTColumnBuilder.newColumn('assists').withTitle('Assists'),
-              DTColumnBuilder.newColumn('points').withTitle('Points'),
-              DTColumnBuilder.newColumn('penaltyMinutes').withTitle('PIM'),
-              DTColumnBuilder.newColumn('powerPlayGoals').withTitle('PPG'),
-              DTColumnBuilder.newColumn('shortHandedGoals').withTitle('SHG'),
-              DTColumnBuilder.newColumn('gameWinningGoals').withTitle('GWG')
-        ],
-        playerGames: [
-              DTColumnBuilder.newColumn('gameId').withTitle('Game'),
-              DTColumnBuilder.newColumn('gameDateTime').withTitle('Date'),
-              DTColumnBuilder.newColumn('teamCode').withTitle('Team'),
-              DTColumnBuilder.newColumn('playoffs').withTitle('Playoffs'),
-              DTColumnBuilder.newColumn('goals').withTitle('Goals'),
-              DTColumnBuilder.newColumn('assists').withTitle('Assists'),
-              DTColumnBuilder.newColumn('points').withTitle('Points'),
-              DTColumnBuilder.newColumn('penaltyMinutes').withTitle('PIM'),
-              DTColumnBuilder.newColumn('powerPlayGoals').withTitle('PPG'),
-              DTColumnBuilder.newColumn('shortHandedGoals').withTitle('SHG'),
-              DTColumnBuilder.newColumn('gameWinningGoals').withTitle('GWG')
-        ]
-      };
+      if (playerType === "skater") {
+        vm.dtColumns = {
+          playerCareer: [
+                DTColumnBuilder.newColumn('playerNameToDisplay').withTitle('Player'),
+                DTColumnBuilder.newColumn('seasons').withTitle('Seasons'),
+                DTColumnBuilder.newColumn('games').withTitle('Games'),
+                DTColumnBuilder.newColumn('goals').withTitle('Goals'),
+                DTColumnBuilder.newColumn('assists').withTitle('Assists'),
+                DTColumnBuilder.newColumn('points').withTitle('Points'),
+                DTColumnBuilder.newColumn('penaltyMinutes').withTitle('PIM'),
+                DTColumnBuilder.newColumn('powerPlayGoals').withTitle('PPG'),
+                DTColumnBuilder.newColumn('shortHandedGoals').withTitle('SHG'),
+                DTColumnBuilder.newColumn('gameWinningGoals').withTitle('GWG')
+          ],
+          playerSeasons: [
+                DTColumnBuilder.newColumn('seasonName').withTitle('Season'),
+                DTColumnBuilder.newColumn('games').withTitle('Games'),
+                DTColumnBuilder.newColumn('goals').withTitle('Goals'),
+                DTColumnBuilder.newColumn('assists').withTitle('Assists'),
+                DTColumnBuilder.newColumn('points').withTitle('Points'),
+                DTColumnBuilder.newColumn('penaltyMinutes').withTitle('PIM'),
+                DTColumnBuilder.newColumn('powerPlayGoals').withTitle('PPG'),
+                DTColumnBuilder.newColumn('shortHandedGoals').withTitle('SHG'),
+                DTColumnBuilder.newColumn('gameWinningGoals').withTitle('GWG')
+          ],
+          playerTeams: [
+                DTColumnBuilder.newColumn('playerNameToDisplay').withTitle('Player'),
+                DTColumnBuilder.newColumn('teamNameToDisplay').withTitle('Team'),
+                DTColumnBuilder.newColumn('playoffs').withTitle('Playoffs'),
+                DTColumnBuilder.newColumn('games').withTitle('Games'),
+                DTColumnBuilder.newColumn('goals').withTitle('Goals'),
+                DTColumnBuilder.newColumn('assists').withTitle('Assists'),
+                DTColumnBuilder.newColumn('points').withTitle('Points'),
+                DTColumnBuilder.newColumn('penaltyMinutes').withTitle('PIM'),
+                DTColumnBuilder.newColumn('powerPlayGoals').withTitle('PPG'),
+                DTColumnBuilder.newColumn('shortHandedGoals').withTitle('SHG'),
+                DTColumnBuilder.newColumn('gameWinningGoals').withTitle('GWG')
+          ],
+          playerGames: [
+                DTColumnBuilder.newColumn('gameId').withTitle('Game'),
+                DTColumnBuilder.newColumn('gameDateTime').withTitle('Date'),
+                DTColumnBuilder.newColumn('teamCode').withTitle('Team'),
+                DTColumnBuilder.newColumn('playoffs').withTitle('Playoffs'),
+                DTColumnBuilder.newColumn('goals').withTitle('Goals'),
+                DTColumnBuilder.newColumn('assists').withTitle('Assists'),
+                DTColumnBuilder.newColumn('points').withTitle('Points'),
+                DTColumnBuilder.newColumn('penaltyMinutes').withTitle('PIM'),
+                DTColumnBuilder.newColumn('powerPlayGoals').withTitle('PPG'),
+                DTColumnBuilder.newColumn('shortHandedGoals').withTitle('SHG'),
+                DTColumnBuilder.newColumn('gameWinningGoals').withTitle('GWG')
+          ]
+        };
+      } else {
+        vm.dtColumns = {
+          playerCareer: [
+                DTColumnBuilder.newColumn('playerNameToDisplay').withTitle('Player'),
+                DTColumnBuilder.newColumn('seasons').withTitle('Seasons'),
+                DTColumnBuilder.newColumn('games').withTitle('Games'),
+                DTColumnBuilder.newColumn('wins').withTitle('Wins'),
+                DTColumnBuilder.newColumn('winPercent').withTitle('W%')
+                      .renderWith(function (data, type, row, meta) {
+                        return Math.round(data * 100) + "%";
+                      }),
+                DTColumnBuilder.newColumn('goalsAgainst').withTitle('GA'),
+                DTColumnBuilder.newColumn('goalsAgainstAverage').withTitle('GAA')
+                    .renderWith(function (data, type, row, meta) {
+                      return data.toFixed(2);
+                    }),
+                DTColumnBuilder.newColumn('shutouts').withTitle('Shutouts')
+          ],
+          playerSeasons: [
+                DTColumnBuilder.newColumn('seasonName').withTitle('Season'),
+                DTColumnBuilder.newColumn('games').withTitle('Games'),
+                DTColumnBuilder.newColumn('wins').withTitle('Wins'),
+                DTColumnBuilder.newColumn('winPercent').withTitle('W%')
+                      .renderWith(function (data, type, row, meta) {
+                        return Math.round(data * 100) + "%";
+                      }),
+                DTColumnBuilder.newColumn('goalsAgainst').withTitle('GA'),
+                DTColumnBuilder.newColumn('goalsAgainstAverage').withTitle('GAA')
+                    .renderWith(function (data, type, row, meta) {
+                      return data.toFixed(2);
+                    }),
+                DTColumnBuilder.newColumn('shutouts').withTitle('Shutouts')
+          ],
+          playerTeams: [
+                DTColumnBuilder.newColumn('playerNameToDisplay').withTitle('Player'),
+                DTColumnBuilder.newColumn('teamNameToDisplay').withTitle('Team'),
+                DTColumnBuilder.newColumn('playoffs').withTitle('Playoffs'),
+                DTColumnBuilder.newColumn('games').withTitle('Games'),
+                DTColumnBuilder.newColumn('wins').withTitle('Wins'),
+                DTColumnBuilder.newColumn('winPercent').withTitle('W%')
+                      .renderWith(function (data, type, row, meta) {
+                        return Math.round(data * 100) + "%";
+                      }),
+                DTColumnBuilder.newColumn('goalsAgainst').withTitle('GA'),
+                DTColumnBuilder.newColumn('goalsAgainstAverage').withTitle('GAA')
+                    .renderWith(function (data, type, row, meta) {
+                      return data.toFixed(2);
+                    }),
+                DTColumnBuilder.newColumn('shutouts').withTitle('Shutouts')
+          ],
+          playerGames: [
+                DTColumnBuilder.newColumn('gameId').withTitle('Game'),
+                DTColumnBuilder.newColumn('gameDateTime').withTitle('Date'),
+                DTColumnBuilder.newColumn('teamCode').withTitle('Team'),
+                DTColumnBuilder.newColumn('playoffs').withTitle('Playoffs'),
+                DTColumnBuilder.newColumn('wins').withTitle('Win'),
+                DTColumnBuilder.newColumn('goalsAgainst').withTitle('GA'),
+                DTColumnBuilder.newColumn('shutouts').withTitle('Shutout'),
+          ]
+        };
+      }
 
       vm.dtInstance = {
         playerCareer: {},
@@ -87,7 +148,7 @@ angular.module('lo30NgApp')
       };
     }
 
-    var renderDatatable = function () {
+    var renderDatatable = function (playerType) {
 
       var career = DTOptionsBuilder
           .fromFnPromise(function () {
@@ -549,6 +610,12 @@ angular.module('lo30NgApp')
 
       vm.playerType = $state.params.playerType;
 
+      vm.playerTypeTitle = "Skater";
+
+      if (vm.playerType === "goalie") {
+        vm.playerTypeTitle = "Goalie";
+      }
+
       if ($state.params.tab) {
 
         // use timeout to let the uib-tab initial the active states
@@ -567,11 +634,11 @@ angular.module('lo30NgApp')
 
       }
 
-      initDatatable();
+      initDatatable(vm.playerType);
 
       $timeout(function () {
         setWatches();
-        renderDatatable();
+        renderDatatable(vm.playerType);
       }, 100);  //needs to occur before the timeouts for the activetabs
     };
 

@@ -136,7 +136,7 @@ angular.module('lo30NgApp')
                 DTColumnBuilder.newColumn('wins').withTitle('Win'),
                 DTColumnBuilder.newColumn('goalsAgainst').withTitle('GA'),
                 DTColumnBuilder.newColumn('shutouts').withTitle('Shutout'),
-          ]
+          ] 
         };
       }
 
@@ -258,128 +258,6 @@ angular.module('lo30NgApp')
         playerGames: games
       };
     }
-
-    var fetchPlayerStatCareer = function (playerId, type) {
-
-      vm.careerDataLoaded = false;
-
-      vm.playerStatCareer = {};
-
-      var apiServiceType = "playerStatCareers";
-
-      if (type === "goalie") {
-
-        apiServiceType = "goalieStatCareers";
-
-      }
-
-      apiService[apiServiceType].getForPlayerId(playerId).then(function (fulfilled) {
-
-        vm.playerStatCareer = fulfilled;
-
-        vm.playerStatCareer = buildPlayerStatCareerToDisplay(vm.playerStatCareer);
-
-      }).finally(function () {
-        
-        // convert single career stat into an array of one for datatable
-        var careerTabCareerData = [];
-
-        careerTabCareerData.push(vm.playerStatCareer);
-
-        deferred.career.resolve(careerTabCareerData);
-
-        vm.careerDataLoaded = true;
-
-      });
-    };
-
-    var fetchPlayerStatSeasons = function (playerId, type) {
-
-      vm.seasonsDataLoaded = false;
-
-      vm.playerStatSeasons = [];
-
-      var apiServiceType = "playerStatSeasons";
-
-      if (type === "goalie") {
-
-        apiServiceType = "goalieStatSeasons";
-
-      }
-
-      apiService[apiServiceType].listForPlayerId(playerId).then(function (fulfilled) {
-
-        vm.playerStatSeasons = _.sortBy(fulfilled, function (item) { return item.seasonName; });
-
-        vm.playerStatSeasons = buildPlayerStatSeasonsToDisplay(vm.playerStatSeasons);
-
-      }).finally(function () {
-
-        deferred.seasons.resolve(vm.playerStatSeasons);
-
-        vm.seasonsDataLoaded = true;
-
-      });
-    };
-
-    var fetchPlayerStatTeams = function (playerId, seasonId, type) {
-
-      vm.teamsDataLoaded = false;
-
-      vm.playerStatTeams = [];
-
-      var apiServiceType = "playerStatTeams";
-
-      if (type === "goalie") {
-
-        apiServiceType = "goalieStatTeams";
-
-      }
-
-      apiService[apiServiceType].listForPlayerIdSeasonId(playerId, seasonId).then(function (fulfilled) {
-
-        vm.playerStatTeams = _.sortBy(fulfilled, function (item) { return item.sub; });
-
-        vm.playerStatTeams = buildPlayerStatTeamsToDisplay(vm.playerStatTeams);
-
-      }).finally(function () {
-
-        deferred.teams.resolve(vm.playerStatTeams);
-
-        vm.teamsDataLoaded = true;
-
-      });
-
-    };
-
-    var fetchPlayerStatGames = function (playerId, seasonId, type) {
-
-      vm.gamesDataLoaded = false;
-
-      vm.playerStatGames = [];
-
-      var apiServiceType = "playerStatGames";
-
-      if (type === "goalie") {
-
-        apiServiceType = "goalieStatGames";
-
-      }
-
-      apiService[apiServiceType].listForPlayerIdSeasonId(playerId, seasonId).then(function (fulfilled) {
-
-        vm.playerStatGames = _.sortBy(fulfilled, function (item) { return item.gameId * -1; });
-
-        vm.playerStatGames = buildPlayerStatGamesToDisplay(vm.playerStatGames);
-
-      }).finally(function () {
-
-        deferred.games.resolve(vm.playerStatGames);
-
-        vm.gamesDataLoaded = true;
-
-      });
-    };
 
     var buildPlayerStatCareerToDisplay = function (playerStatCareer) {
 
@@ -518,6 +396,126 @@ angular.module('lo30NgApp')
       return playerStatGamesToDisplay;
     };
 
+    var fetchPlayerStatCareer = function (playerId, playerType) {
+
+      vm.careerDataLoaded = false;
+
+      vm.playerStatCareer = {};
+
+      var apiServiceType = "playerStatCareers";
+
+      if (playerType === "goalie") {
+
+        apiServiceType = "goalieStatCareers";
+
+      }
+
+      apiService[apiServiceType].getForPlayerId(playerId).then(function (fulfilled) {
+
+        vm.playerStatCareer = buildPlayerStatCareerToDisplay(fulfilled);
+
+      }).finally(function () {
+        
+        // convert single career stat into an array of one for datatable
+        var careerTabCareerData = [];
+
+        careerTabCareerData.push(vm.playerStatCareer);
+
+        deferred.career.resolve(careerTabCareerData);
+
+        vm.careerDataLoaded = true;
+
+      });
+    };
+
+    var fetchPlayerStatSeasons = function (playerId, playerType) {
+
+      vm.seasonsDataLoaded = false;
+
+      vm.playerStatSeasons = [];
+
+      var apiServiceType = "playerStatSeasons";
+
+      if (playerType === "goalie") {
+
+        apiServiceType = "goalieStatSeasons";
+
+      }
+
+      apiService[apiServiceType].listForPlayerId(playerId).then(function (fulfilled) {
+
+        vm.playerStatSeasons = _.sortBy(fulfilled, function (item) { return item.seasonName; });
+
+        vm.playerStatSeasons = buildPlayerStatSeasonsToDisplay(vm.playerStatSeasons);
+
+      }).finally(function () {
+
+        deferred.seasons.resolve(vm.playerStatSeasons);
+
+        vm.seasonsDataLoaded = true;
+
+      });
+    };
+
+    var fetchPlayerStatTeams = function (playerId, seasonId, playerType) {
+
+      vm.teamsDataLoaded = false;
+
+      vm.playerStatTeams = [];
+
+      var apiServiceType = "playerStatTeams";
+
+      if (playerType === "goalie") {
+
+        apiServiceType = "goalieStatTeams";
+
+      }
+
+      apiService[apiServiceType].listForPlayerIdSeasonId(playerId, seasonId).then(function (fulfilled) {
+
+        vm.playerStatTeams = _.sortBy(fulfilled, function (item) { return item.sub; });
+
+        vm.playerStatTeams = buildPlayerStatTeamsToDisplay(vm.playerStatTeams);
+
+      }).finally(function () {
+
+        deferred.teams.resolve(vm.playerStatTeams);
+
+        vm.teamsDataLoaded = true;
+
+      });
+
+    };
+
+    var fetchPlayerStatGames = function (playerId, seasonId, playerType) {
+
+      vm.gamesDataLoaded = false;
+
+      vm.playerStatGames = [];
+
+      var apiServiceType = "playerStatGames";
+
+      if (playerType === "goalie") {
+
+        apiServiceType = "goalieStatGames";
+
+      }
+
+      apiService[apiServiceType].listForPlayerIdSeasonId(playerId, seasonId).then(function (fulfilled) {
+
+        vm.playerStatGames = _.sortBy(fulfilled, function (item) { return item.gameId * -1; });
+
+        vm.playerStatGames = buildPlayerStatGamesToDisplay(vm.playerStatGames);
+
+      }).finally(function () {
+
+        deferred.games.resolve(vm.playerStatGames);
+
+        vm.gamesDataLoaded = true;
+
+      });
+    };
+
     var fetchData = function (seasonId, seasonTypeId, playerId, playerType) {
 
       switch ($scope.tabActiveIndex) {
@@ -552,7 +550,7 @@ angular.module('lo30NgApp')
 
         vm.seasonId = season.seasonId;
 
-        fetchData(vm.seasonId, vm.seasonTypeId, vm.playerType, false);
+        fetchData(vm.seasonId, vm.seasonTypeId, vm.playerId, vm.playerType);
 
       });
 
@@ -562,7 +560,7 @@ angular.module('lo30NgApp')
 
         vm.seasonTypeId = seasonType.seasonTypeId;
 
-        fetchData(vm.seasonId, vm.seasonTypeId, vm.playerType, false);
+        fetchData(vm.seasonId, vm.seasonTypeId, vm.playerId, vm.playerType);
 
       });
 

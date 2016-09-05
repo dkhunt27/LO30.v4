@@ -162,7 +162,6 @@ angular.module('lo30NgApp')
        .draw();
     };
 
-
     $scope.performSearch = function () {
 
       var searchOn = $scope.searchText ? $scope.searchText : "";

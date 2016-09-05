@@ -60,7 +60,7 @@
         data: { pageTitle: 'Stats' }
       })
 
-      .state('root.profiles', {
+      .state('root.profilesPlayers', {
         url: "/profiles/players/:playerId/playertypes/:playerType/seasons/:seasonId/seasontypes/:seasonTypeId?tab",
         templateUrl: "js/profilesPlayers/profilesPlayers.html",
         controller: "profilesPlayersController",
@@ -68,10 +68,26 @@
         data: { pageTitle: 'Profiles' }
       })
 
-      .state('root.profiles2', {
+      .state('root.profilesPlayers2', {
         url: "/profiles/players/:playerId/playertypes/:playerType?tab",
         templateUrl: "js/profilesPlayers/profilesPlayers.html",
         controller: "profilesPlayersController",
+        controllerAs: "vm",
+        data: { pageTitle: 'Profiles' }
+      })
+
+      .state('root.profilesTeams', {
+        url: "/profiles/teams/:teamId/seasons/:seasonId?tab",
+        templateUrl: "js/profilesTeams/profilesTeams.html",
+        controller: "profilesTeamsController",
+        controllerAs: "vm",
+        data: { pageTitle: 'Profiles' }
+      })
+
+      .state('root.profilesTeams2', {
+        url: "/profiles/teams/:teamId?tab",
+        templateUrl: "js/profilesTeams/profilesTeams.html",
+        controller: "profilesTeamsController",
         controllerAs: "vm",
         data: { pageTitle: 'Profiles' }
       })

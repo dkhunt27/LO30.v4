@@ -3,6 +3,7 @@
 
   angular
     .module('lo30NgApp')
+    .constant("constScheduleTeamFeedBaseUrl", "localhost:49419")
     .run(['$rootScope', '$urlRouter', '$location', '$state', function ($rootScope, $urlRouter, $location, $state) {
     $rootScope.$on('$locationChangeSuccess', function(e, newUrl, oldUrl) {
       // Prevent $urlRouter's default handler from firing

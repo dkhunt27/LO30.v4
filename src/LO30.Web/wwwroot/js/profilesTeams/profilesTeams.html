@@ -1,0 +1,86 @@
+﻿<div>
+  <lo30-page-header></lo30-page-header>
+
+  <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="m-t-lg">
+
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>Team Profile</h5>
+              <div class="ibox-tools">
+              </div>
+            </div>
+            <div class="ibox-content">
+              <div class="row">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <table ng-if="vm.teamStandingsDataLoaded" datatable="teamStandings" dt-options="vm.dtOptions.teamStandings" dt-columns="vm.dtColumns.teamStandings" dt-instance="vm.dtInstance.teamStandings" class="table table-striped table-bordered table-hover" style="width: 100%;"></table>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-12">
+
+                    <uib-tabset active="local.tabActiveIndex">
+
+                      <uib-tab heading="Completed">
+                        <br />
+                        <table ng-if="vm.gamesDataLoaded" datatable="gamesCompleted" dt-options="vm.dtOptions.gamesCompleted" dt-columns="vm.dtColumns.gamesCompleted" dt-instance="vm.dtInstance.gamesCompleted" class="table table-striped table-bordered table-hover" style="width: 100%;"></table>
+                      </uib-tab>
+                      <uib-tab heading="Upcoming">
+                        <br />
+                        <table ng-if="vm.gamesDataLoaded" datatable="gamesUpcoming" dt-options="vm.dtOptions.gamesUpcoming" dt-columns="vm.dtColumns.gamesUpcoming" dt-instance="vm.dtInstance.gamesUpcoming" class="table table-striped table-bordered table-hover" style="width: 100%;"></table>
+                      </uib-tab>
+                      <uib-tab heading="Schedule Feed">
+                        <br />
+                        <div class="table-responsive">
+                          <table class="table table-condensed">
+                            <tr>
+                              <td>
+                                <b><span style="font-size: large">Team Game Schedule Feeds</span></b>
+                                <br />
+                                <div>Please use the following feed to subscribe to your team's calendar.</div>
+                                <br />
+                                <div>
+                                  <b>Phones</b>
+                                  <br />
+                                  Navigate to this page on your phone and click the Feed link next to your team's name.
+                                </div>
+                                <br />
+                                <br />
+                                <div>
+                                  <b>Other Applications</b>
+                                  <br />
+                                  You can copy and paste the long URL next to your team's name into any calendar product that supports the iCal format.
+                                  <br />
+                                  <em>Looking for an application that supports iCalendar feeds? Try <a href="http://www.google.com/calendar" target="_blank">Google Calendar</a>.</em>
+                                </div>
+                                <br>
+
+                                <dl class="dl-horizontal">
+                                  <dt>{{vm.teamFeed.teamNameShort}}</dt>
+                                  <dd>
+                                    <a ng-href="webcal://{{vm.teamFeed.teamFeedUrl}}">iPhone</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a ng-href="http://{{vm.teamFeed.teamFeedUrl}}">Non-iPhone</a><br />
+                                    {{vm.teamFeed.teamFeedUrl}}
+                                  </dd>
+                                </dl>
+                                <div><em><small>&nbsp;&nbsp;If you find any descrepencies with the calendar feeds or if you are having trouble subscribing to a feed, please contact Dan Hunt</small></em></div>
+                                <br>
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                      </uib-tab>
+                    </uib-tabset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

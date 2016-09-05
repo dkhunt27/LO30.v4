@@ -35,6 +35,7 @@ angular.module('lo30NgApp')
             }
             //return result;
 
+            return '<a href="/#/r/profiles/teams/' + row.teamId + '/seasons/' + row.seasonId + '?tab=completed">' + data + '</a>';
             return '<a href="/Teams/SeasonBreakdown/' + row.teamId + '">' + result + '</a>';
           }
         },

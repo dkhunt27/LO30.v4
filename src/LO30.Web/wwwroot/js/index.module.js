@@ -1,4 +1,4 @@
-(function() {
+﻿(function () {
   'use strict';
 
   angular
@@ -18,8 +18,7 @@
       'datatables.bootstrap',
       'datatables.buttons',
       'datatables.columnfilter',
-      'frapontillo.bootstrap-switch',
-      'btford.markdown'
+      'frapontillo.bootstrap-switch'
     ]);
 
 })();

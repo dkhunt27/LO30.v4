@@ -8,7 +8,8 @@ angular.module('lo30NgApp')
         restrict: 'E',
         templateUrl: "js/directives/gameScoreByPeriodSummary/gameScoreByPeriodSummary.html",
         scope: {
-          gameId: '='
+          gameId: '=',
+          game: '='
         },
         controller: "lo30GameScoreByPeriodSummaryController",
         link: function (scope, element, attrs, controller) {

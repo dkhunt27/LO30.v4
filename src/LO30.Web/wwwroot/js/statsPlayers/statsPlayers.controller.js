@@ -475,6 +475,16 @@ angular.module('lo30NgApp')
         "3",
       ];
 
+      if (screenSize.is('xs, sm')) {
+
+        vm.screenSizeIsMobile = true;
+
+      } else if (screenSize.is('md')) {
+
+        vm.screenSizeIsMobile = false;
+
+      }
+
       var season = criteriaService.seasons.get();
 
       vm.seasonId = season.seasonId;

@@ -41,7 +41,133 @@ angular.module('lo30NgApp')
     var selectedSeasonId = 56;
     var selectedSeasonTypeId = 0;
 
+    var fetchSeasons = function () {
+
+      $log.debug("criteriaService.fetchSeasons()");
+
+      seasons = [];
+
+      return apiService.seasons.listForSeasonsWithGameSelection().then(function (fulfilled) {
+
+        seasons = fulfilled;
+
+        if (service.season.isNotSet()) {
+          // default selected season to the current season
+
+          var currentSeason = _.find(seasons, function (season) { return season.isCurrentSeason === true; });
+
+          return service.season.set(currentSeason);
+
+        } else {
+
+          return service.season.get();
+        }
+      });
+    };
+
+    var fetchSeasonTypes = function (gamePlayoffs, seasonId) {
+
+      $log.debug("criteriaService.fetchSeasonTypes()  for seasonId:" + seasonId + " for gamePlayoffs: " + gamePlayoffs);
+
+      seasonTypes = [{ seasonTypeId: 0, seasonTypeName: "Regular Season" }, { seasonTypeId: 1, seasonTypeName: "Playoffs" }];
+
+      var seasonType;
+
+      if (gamePlayoffs) {
+
+        seasonType = _.find(seasonTypes, function (seasonType) { return seasonType.seasonTypeName === "Playoffs"; });
+
+        return service.seasonType.set(seasonType);
+
+      } else {
+
+        seasonType = _.find(seasonTypes, function (seasonType) { return seasonType.seasonTypeName === "Regular Season"; });
+
+        return service.seasonType.set(seasonType);
+
+      }
+    };
+
+    var fetchGames = function (seasonId) {
+
+      $log.debug("criteriaService.fetchGames() for seasonId:" + seasonId);
+
+      games = [];
+
+      return apiService.games.listForSeasonId(seasonId).then(function (fulfilled) {
+
+        games = fulfilled;
+
+        return apiService.dataProcessing.getLastGameProcessedForSeasonId(seasonId)
+
+      }).then(function (fulfilled) {
+
+        var lastProcessedGame = _.find(games, function (game) { return game.gameId === fulfilled.gameId; });
+
+        return service.game.set(lastProcessedGame);
+
+      });
+    };
+
     var service = {};
+
+    service.initialize = function () {
+      return $q(function (fulfill, reject) {
+
+        var promises = [];
+
+        if (service.season.isNotSet()) {
+
+          promises.push(fetchSeasons());
+
+        } else {
+
+          $log.debug("criteriaService.initialize() season already set");
+
+          // rebroadcast that season is set
+          broadcastService.emitEvent(broadcastService.events().seasonSet);
+
+        }
+
+        if (service.game.isNotSet()) {
+
+          // no need to fetch...will be done when seasons are fetched
+
+        } else {
+
+          $log.debug("criteriaService.initialize() game already set");
+
+          // rebroadcast that game is set
+          broadcastService.emitEvent(broadcastService.events().gameSet);
+
+        }
+
+        if (service.seasonType.isNotSet()) {
+
+          // no need to fetch...will be done when games are fetched
+
+        } else {
+
+          $log.debug("criteriaService.initialize() seasonType already set");
+
+          // rebroadcast that seasonType is set
+          broadcastService.emitEvent(broadcastService.events().seasonTypeSet);
+
+        }
+
+        $q.all(promises).finally(function (fulfilled) {
+
+          return fulfill(fulfilled);
+
+        }, function (rejected) {
+
+          $log.error("Error while trying to criteriaService.initialize()", rejected);
+
+          return reject(rejected);
+
+        });
+      });
+    };
 
     service.decades = {
       get: function () {
@@ -130,6 +256,34 @@ angular.module('lo30NgApp')
           selectedSeasonTypeId = seasonTypeId;
 
           broadcastService.emitEvent(broadcastService.events().seasonTypeSet);
+        }
+      }
+    }
+
+    service.games = {
+      get: function () {
+
+        return _.findWhere(games, { gameId: selectedGameId });;
+
+      },
+      set: function (game) {
+
+        if (game.gameId !== selectedGameId) {
+
+          selectedGameId = game.gameId;
+
+          broadcastService.emitEvent(broadcastService.events().gameSet);
+        }
+      },
+      setById: function (gameId) {
+
+        gameId = parseInt(gameId, 10);
+
+        if (gameId !== selectedGameId) {
+
+          selectedGameId = parseInt(gameId, 10);
+
+          broadcastService.emitEvent(broadcastService.events().gameSet);
         }
       }
     }

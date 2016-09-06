@@ -5,6 +5,7 @@ angular.module('lo30NgApp')
 
     var _ = externalLibService._;
     var sjv = externalLibService.sjv;
+    var moment = externalLibService.moment;
 
     var vm = this;
     var deferred = {};
@@ -65,8 +66,14 @@ angular.module('lo30NgApp')
                 DTColumnBuilder.newColumn('gameWinningGoals').withTitle('GWG')
           ],
           playerGames: [
-                DTColumnBuilder.newColumn('gameId').withTitle('Game'),
-                DTColumnBuilder.newColumn('gameDateTime').withTitle('Date'),
+                DTColumnBuilder.newColumn('gameId').withTitle('Game')
+                    .renderWith(function (data, type, row, meta) {
+                      return '<a href="/#/r/gameBoxScore/games/' + data + '/seasons/' + row.seasonId + '">' + data + '</a>';
+                    }),
+                DTColumnBuilder.newColumn('gameDateTime').withTitle('Date')
+                    .renderWith(function (data, type, row, meta) {
+                      return moment(data).format('MMM Do h:mm a');
+                    }),
                 DTColumnBuilder.newColumn('teamCode').withTitle('Team'),
                 DTColumnBuilder.newColumn('playoffs').withTitle('Playoffs'),
                 DTColumnBuilder.newColumn('goals').withTitle('Goals'),
@@ -129,8 +136,14 @@ angular.module('lo30NgApp')
                 DTColumnBuilder.newColumn('shutouts').withTitle('Shutouts')
           ],
           playerGames: [
-                DTColumnBuilder.newColumn('gameId').withTitle('Game'),
-                DTColumnBuilder.newColumn('gameDateTime').withTitle('Date'),
+                DTColumnBuilder.newColumn('gameId').withTitle('Game')
+                    .renderWith(function (data, type, row, meta) {
+                      return '<a href="/#/r/gameBoxScore/games/' + data + '/seasons/' + row.seasonId + '">' + data + '</a>';
+                    }),
+                DTColumnBuilder.newColumn('gameDateTime').withTitle('Date')
+                    .renderWith(function (data, type, row, meta) {
+                      return moment(data).format('MMM Do h:mm a');
+                    }),
                 DTColumnBuilder.newColumn('teamCode').withTitle('Team'),
                 DTColumnBuilder.newColumn('playoffs').withTitle('Playoffs'),
                 DTColumnBuilder.newColumn('wins').withTitle('Win'),
@@ -172,7 +185,7 @@ angular.module('lo30NgApp')
           .withOption('bInfo', false)
           //.withOption('page-length', false)
           .withOption('searching', false)
-          //.withOption('order', [[5, "desc"]])
+          .withOption('order', [[3, "desc"]])
           .withOption('scrollX', true)
           //.withPaginationType('full_numbers')
           //.withDisplayLength(10)
@@ -263,6 +276,8 @@ angular.module('lo30NgApp')
 
       var item = playerStatCareer;
 
+      vm.playerTitle = item.playerFirstName + ' ' + item.playerLastName;
+
       if (screenSize.is('xs, sm')) {
 
         item.playerNameToDisplay = item.playerFirstName + '<br/>' + item.playerLastName;
@@ -334,6 +349,8 @@ angular.module('lo30NgApp')
       var playerStatTeamsToDisplay = playerStatTeams.map(function (item, index) {
 
         item.rank = index + 1;
+
+        vm.playerTitle = item.playerFirstName + ' ' + item.playerLastName;
 
         if (screenSize.is('xs, sm')) {
 
@@ -516,7 +533,7 @@ angular.module('lo30NgApp')
       });
     };
 
-    var fetchData = function (seasonId, seasonTypeId, playerId, playerType) {
+    var fetchData = function (seasonId, playerId, playerType) {
 
       switch ($scope.tabActiveIndex) {
         case tabStates.career:
@@ -550,17 +567,7 @@ angular.module('lo30NgApp')
 
         vm.seasonId = season.seasonId;
 
-        fetchData(vm.seasonId, vm.seasonTypeId, vm.playerId, vm.playerType);
-
-      });
-
-      $scope.$on(broadcastService.events().seasonTypeSet, function () {
-
-        var seasonType = criteriaService.seasonTypes.get();
-
-        vm.seasonTypeId = seasonType.seasonTypeId;
-
-        fetchData(vm.seasonId, vm.seasonTypeId, vm.playerId, vm.playerType);
+        fetchData(vm.seasonId, vm.playerId, vm.playerType);
 
       });
 
@@ -570,7 +577,7 @@ angular.module('lo30NgApp')
 
           if (!tabLoaded[newVal]) {
             // only fetch the data once per tab
-            fetchData(vm.seasonId, vm.seasonTypeId, vm.playerId, vm.playerType);
+            fetchData(vm.seasonId, vm.playerId, vm.playerType);
             tabLoaded[newVal] = true;
           }
 
@@ -599,10 +606,6 @@ angular.module('lo30NgApp')
       var season = criteriaService.seasons.get();
 
       vm.seasonId = season.seasonId;
-
-      var seasonType = criteriaService.seasonTypes.get();
-
-      vm.seasonTypeId = seasonType.seasonTypeId;
 
       vm.playerId = $state.params.playerId;
 

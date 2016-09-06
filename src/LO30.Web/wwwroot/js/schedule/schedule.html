@@ -1,0 +1,65 @@
+<div>
+  <lo30-page-header-seasons-only></lo30-page-header-seasons-only>
+
+  <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="m-t-lg">
+
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>Team Game Schedule Feeds </h5>
+              <div class="ibox-tools">
+              </div>
+            </div>
+            <div class="ibox-content">
+              <div>Please use the following feed to subscribe to your team's calendar.</div>
+              <br />
+              <div>
+                <b>Phones</b>
+                <br />
+                Navigate to this page on your phone and click the Feed link next to your team's name.
+              </div>
+              <br />
+              <div>
+                <b>Other Applications</b>
+                <br />
+                You can copy and paste the long URL next to your team's name into any calendar product that supports the iCal format.
+                <br />
+                <em>Looking for an application that supports iCalendar feeds? Try <a href="http://www.google.com/calendar" target="_blank">Google Calendar</a>.</em>
+              </div>
+              <br />
+              <br />
+              <br />
+              <dl class="dl-horizontal">
+                <dt ng-repeat-start="item in vm.teamFeeds">{{item.teamNameToDisplay}}</dt>
+                <dd ng-repeat-end>
+                  <a href="webcal://{{item.teamFeedUrl}}">iPhone</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <a href="http://{{item.teamFeedUrl}}">Non-iPhone</a><br />
+                  {{item.teamFeedUrl}}
+                </dd>
+              </dl>
+              <div>
+                <em><small>&nbsp;&nbsp;If you find any descrepencies with the calendar feeds or if you are having trouble subscribing to a feed, please contact Dan Hunt</small></em>
+              </div>
+            </div>
+          </div>
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>League Schedule </h5>
+              <div class="ibox-tools">
+              </div>
+            </div>
+
+            <div class="ibox-content">
+              <dl class="dl-horizontal">
+                <dt>Link to PDF</dt>
+                <dd><a href="files/schedules/2016-17/LO30 Schedule 2016-17.v1.pdf">LO30 Schedule 2016-17.pdf</a></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

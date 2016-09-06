@@ -18,7 +18,8 @@
       'datatables.bootstrap',
       'datatables.buttons',
       'datatables.columnfilter',
-      'frapontillo.bootstrap-switch'
+      'frapontillo.bootstrap-switch',
+      'btford.markdown'
     ]);
 
 })();

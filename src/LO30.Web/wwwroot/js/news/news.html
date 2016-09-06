@@ -1,0 +1,51 @@
+<div>
+  <lo30-page-header></lo30-page-header>
+
+  <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="m-t-lg">
+
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>Latest News </h5>
+              <div class="ibox-tools">
+              </div>
+            </div>
+            <div class="ibox-content">
+              <div class="row">
+                <div class="col-lg-12">
+
+                  <div class="ibox chat-view">
+
+                    <div class="ibox-content">
+
+                      <div class="row">
+
+                        <div class="col-md-12">
+                          <div class="chat-discussion">
+                            <div ng-repeat="item in vm.news">
+                              <div ng-class="item.class">
+                                <img class="message-avatar" ng-src="{{item.image}}" alt="">
+                                <div class="message">
+                                  <a class="message-author" href="#"> {{ item.author }} </a>
+                                  <span class="message-date">{{ item.date }} </span>
+                                  <span class="message-content" ng-bind-html="item.content">
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

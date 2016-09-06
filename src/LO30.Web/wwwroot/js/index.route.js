@@ -21,14 +21,6 @@
         templateUrl: "js/components/common/root.html"
       })
 
-      .state('root.main', {
-        url: "/main",
-        templateUrl: "js/main/main.html",
-        controller: "mainController",
-        controllerAs: "vm",
-        data: { pageTitle: 'Main view' }
-      })
-
       .state('root.standings', {
         url: "/standings/seasons/:seasonId/seasontypes/:seasonTypeId",
         templateUrl: "js/standings/standings.html",
@@ -65,7 +57,7 @@
         templateUrl: "js/profilesPlayers/profilesPlayers.html",
         controller: "profilesPlayersController",
         controllerAs: "vm",
-        data: { pageTitle: 'Profiles' }
+        data: { pageTitle: 'Player Profiles' }
       })
 
       .state('root.profilesPlayers2', {
@@ -73,7 +65,7 @@
         templateUrl: "js/profilesPlayers/profilesPlayers.html",
         controller: "profilesPlayersController",
         controllerAs: "vm",
-        data: { pageTitle: 'Profiles' }
+        data: { pageTitle: 'Player Profiles' }
       })
 
       .state('root.profilesTeams', {
@@ -81,7 +73,7 @@
         templateUrl: "js/profilesTeams/profilesTeams.html",
         controller: "profilesTeamsController",
         controllerAs: "vm",
-        data: { pageTitle: 'Profiles' }
+        data: { pageTitle: 'Team Profiles' }
       })
 
       .state('root.profilesTeams2', {
@@ -89,7 +81,7 @@
         templateUrl: "js/profilesTeams/profilesTeams.html",
         controller: "profilesTeamsController",
         controllerAs: "vm",
-        data: { pageTitle: 'Profiles' }
+        data: { pageTitle: 'Team Profiles' }
       })
 
       .state('root.careers', {
@@ -105,10 +97,26 @@
         templateUrl: "js/gameBoxScore/gameBoxScore.html",
         controller: "gameBoxScoreController",
         controllerAs: "vm",
-        data: { pageTitle: 'Profiles' }
+        data: { pageTitle: 'Game Box Score' }
       })
 
-    $urlRouterProvider.otherwise('/r/standings');
+      .state('root.news', {
+        url: "/news",
+        templateUrl: "js/news/news.html",
+        controller: "newsController",
+        controllerAs: "vm",
+        data: { pageTitle: 'News' }
+      })
+
+      .state('root.schedule', {
+        url: "/schedule",
+        templateUrl: "js/schedule/schedule.html",
+        controller: "scheduleController",
+        controllerAs: "vm",
+        data: { pageTitle: 'Schedule' }
+      })
+
+    $urlRouterProvider.otherwise('/r/news');
 
 
 //    .menuItem('lo30Menu.standings', {

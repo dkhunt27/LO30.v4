@@ -1,34 +1,6 @@
 <div class="row border-bottom">
   <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
     <span minimaliza-sidebar></span>
-    <span ng-click="toggleSeasonCriteriaPanel()">
-      <span class="navbar-title">{{season.seasonName}}</span>
-      <small>
-        <i style="padding-top:10px; vertical-align:top;" class="fa fa-gear"></i>
-      </small>
-    </span>
-    <span ng-click="toggleSeasonTypeCriteriaPanel()">
-      <span class="navbar-title">{{seasonType.seasonTypeName}}</span>
-      <small>
-        <i style="padding-top:10px; vertical-align:top;" class="fa fa-gear"></i>
-      </small>
-    </span>
     <span class="navbar-title">{{pageTitle}}</span>
   </nav>
-
-  <div pageslide ps-open="seasonCriteriaPanelOpen">
-    <div style="padding:20px" id="demo-right">
-      <h2>Select Season</h2>
-      <lo30-season-selector></lo30-season-selector>
-      <a ng-click="toggleSeasonCriteriaPanel()" class="button">Close</a>
-    </div>
-  </div>
-  <div pageslide ps-open="seasonTypeCriteriaPanelOpen">
-    <div style="padding:20px" id="demo-right">
-      <h2>Select Season Type</h2>
-      <lo30-season-type-selector></lo30-season-type-selector>
-      <a ng-click="toggleSeasonTypeCriteriaPanel()" class="button">Close</a>
-    </div>
-  </div>
-
 </div>

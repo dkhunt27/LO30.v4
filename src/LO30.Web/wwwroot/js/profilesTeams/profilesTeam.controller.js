@@ -64,7 +64,7 @@ angular.module('lo30NgApp')
             }),
           DTColumnBuilder.newColumn('gameDateTime').withTitle('Date')
             .renderWith(function (data, type, row, meta) {
-              return moment(data).format('MMM Do YY h:mm a');
+              return moment(data).format('MMM Do h:mm a');
             }),
           DTColumnBuilder.newColumn('outcomeToDisplay').withTitle('Outcome')                  
             .renderWith(function (data, type, row, meta) {

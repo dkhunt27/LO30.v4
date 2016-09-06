@@ -15,8 +15,6 @@ angular.module('lo30NgApp')
       $scope.initializeScopeVariables = function () {
 
         $scope.local = {
-          game: {},
-
           fetchGameCompleted: false
         };
       };
@@ -26,11 +24,11 @@ angular.module('lo30NgApp')
 
         $scope.local.fetchGameCompleted = false;
 
-        $scope.local.game = {};
+        $scope.game = {};
 
         apiService.games.getForGameId(gameId).then(function (fulfilled) {
 
-          $scope.local.game = fulfilled;
+          $scope.game = fulfilled;
 
           $scope.buildGameToDisplay();
 
@@ -43,22 +41,22 @@ angular.module('lo30NgApp')
 
       $scope.buildGameToDisplay = function () {
 
-        $scope.local.gameToDisplay = _.clone($scope.local.game);
+        $scope.local.gameToDisplay = _.clone($scope.game);
 
         if (screenSize.is('xs, sm')) {
 
-          $scope.local.gameToDisplay.teamNameAwayToDisplay = $scope.local.game.teamCodeAway;
-          $scope.local.gameToDisplay.teamNameHomeToDisplay = $scope.local.game.teamCodeHome;
+          $scope.local.gameToDisplay.teamNameAwayToDisplay = $scope.game.teamCodeAway;
+          $scope.local.gameToDisplay.teamNameHomeToDisplay = $scope.game.teamCodeHome;
 
         } else if (screenSize.is('md')) {
 
-          $scope.local.gameToDisplay.teamNameAwayToDisplay = $scope.local.game.teamNameShortAway;
-          $scope.local.gameToDisplay.teamNameHomeToDisplay = $scope.local.game.teamNameShortHome;
+          $scope.local.gameToDisplay.teamNameAwayToDisplay = $scope.game.teamNameShortAway;
+          $scope.local.gameToDisplay.teamNameHomeToDisplay = $scope.game.teamNameShortHome;
 
         } else {
 
-          $scope.local.gameToDisplay.teamNameAwayToDisplay = $scope.local.game.teamNameLongAway;
-          $scope.local.gameToDisplay.teamNameHomeToDisplay = $scope.local.game.teamNameLongHome;
+          $scope.local.gameToDisplay.teamNameAwayToDisplay = $scope.game.teamNameLongAway;
+          $scope.local.gameToDisplay.teamNameHomeToDisplay = $scope.game.teamNameLongHome;
 
         }
 

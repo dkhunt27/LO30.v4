@@ -40,6 +40,7 @@ angular.module('lo30NgApp')
 
         $scope.local = {
           selectedGameId: 3480,
+          selectedGame: {}, // gets set by gameScoreByPeriodSummary
           selectedSeasonId: 56
         };
 

@@ -1,0 +1,63 @@
+﻿<div class="row">
+  <div class="col-xs-12">
+    <div class="well well-sm">
+      <div>
+        <div class="row">
+          <span>&nbsp;&nbsp;&nbsp;<b>1st Period:</b></span>
+        </div>
+        <div>
+          <lo30-game-score-by-period-detail-scoring score-sheet-entry-goals="local.scoreSheetEntryScoring1st" />
+        </div>
+        <div>
+          <lo30-game-score-by-period-detail-penalties score-sheet-entry-penalties="local.scoreSheetEntryPenalties1st" />
+        </div>
+      </div>
+
+      <div>
+        <div class="row">
+          <span>&nbsp;&nbsp;&nbsp;<b>2nd Period:</b></span>
+        </div>
+        <div>
+          <lo30-game-score-by-period-detail-scoring score-sheet-entry-goals="local.scoreSheetEntryScoring2nd" />
+        </div>
+        <div>
+          <lo30-game-score-by-period-detail-penalties score-sheet-entry-penalties="local.scoreSheetEntryPenalties2nd" />
+        </div>
+      </div>
+
+      <div>
+        <div class="row">
+          <span>&nbsp;&nbsp;&nbsp;<b>3rd Period:</b></span>
+        </div>
+        <div>
+          <lo30-game-score-by-period-detail-scoring score-sheet-entry-goals="local.scoreSheetEntryScoring3rd" />
+        </div>
+        <div>
+          <lo30-game-score-by-period-detail-penalties score-sheet-entry-penalties="local.scoreSheetEntryPenalties3rd" />
+        </div>
+      </div>
+
+      <div ng-show="local.scoreSheetEntryScoringOT.length > 0">
+        <div class="row">
+          <span>&nbsp;&nbsp;&nbsp;<b>Overtime:</b></span>
+        </div>
+        <div>
+          <lo30-game-score-by-period-detail-scoring score-sheet-entry-goals="local.scoreSheetEntryScoringOT" />
+        </div>
+        <div>
+          <lo30-game-score-by-period-detail-penalties score-sheet-entry-penalties="local.scoreSheetEntryPenaltiesOT" />
+        </div>
+      </div>
+
+      <div>
+        <div class="row">
+          <span>&nbsp;&nbsp;&nbsp;<b>Goalies:</b></span>
+        </div>
+        <div>
+          <lo30-game-score-by-period-detail-goalies goalie-stat-game-winner="local.goalieStatGameWinner" goalie-stat-game-loser="local.goalieStatGameLoser" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

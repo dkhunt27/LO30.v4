@@ -1,0 +1,36 @@
+﻿<div class="row">
+  <div class="col-xs-12">
+    <div class="table-responsive">
+      <table class="table table-responsive table-bordered">
+        <thead>
+          <tr>
+            <th></th>
+            <th>1st</th>
+            <th>2nd</th>
+            <th>3rd</th>
+            <th>OT</th>
+            <th>Final</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a ng-href="/#/r/profiles/teams/{{local.gameToDisplay.teamIdHome}}/seasons/{{local.gameToDisplay.seasonId}}?tab=completed">{{local.gameToDisplay.teamNameHomeToDisplay}}</a></td>
+            <td>{{local.gameToDisplay.period1ScoreHome}}</td>
+            <td>{{local.gameToDisplay.period2ScoreHome}}</td>
+            <td>{{local.gameToDisplay.period3ScoreHome}}</td>
+            <td>{{local.gameToDisplay.period4ScoreHome}}</td>
+            <td>{{local.gameToDisplay.goalsForHome}}</td>
+          </tr>
+          <tr>
+            <td><a ng-href="/#/r/profiles/teams/{{local.gameToDisplay.teamIdAway}}/seasons/{{local.gameToDisplay.seasonId}}?tab=completed">{{local.gameToDisplay.teamNameAwayToDisplay}}</a></td>
+            <td>{{local.gameToDisplay.period1ScoreAway}}</td>
+            <td>{{local.gameToDisplay.period2ScoreAway}}</td>
+            <td>{{local.gameToDisplay.period3ScoreAway}}</td>
+            <td>{{local.gameToDisplay.period4ScoreAway}}</td>
+            <td>{{local.gameToDisplay.goalsForAway}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

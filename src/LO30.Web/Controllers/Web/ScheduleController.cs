@@ -72,7 +72,9 @@ namespace LO30.Web.Controllers.Web
 
       List<GameTeam> gameTeams = _context.GameTeams
                               .Include(x => x.Season)
+                              .Include(x => x.Game)
                               .Include(x => x.Team)
+                              .Include(x => x.OpponentTeam)
                               .Where(x => x.SeasonId == seasonId && x.TeamId == teamId)
                               .ToList();
 

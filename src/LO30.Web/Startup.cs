@@ -346,6 +346,18 @@ namespace LO30.Web
       app.UseMvc(routes =>
       {
         routes.MapRoute(
+            name: "schedule",
+            template: "Schedule/Index",
+            defaults: new { controller = "Schedule", action = "Index" }
+        );
+
+        routes.MapRoute(
+            name: "scheduleTeamFeed",
+            template: "Schedule/TeamFeed/Seasons/{seasonId}/Teams/{teamId}/{desc}",
+            defaults: new { controller = "Schedule", action = "TeamFeed" }
+        );
+
+        routes.MapRoute(
                   name: "default",
                   template: "{controller=Ng}/{action=Index}/{id?}");
       });

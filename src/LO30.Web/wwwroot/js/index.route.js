@@ -100,6 +100,14 @@
         data: { pageTitle: 'Careers' }
       })
 
+      .state('root.gameBoxScore', {
+        url: "/gameBoxScore/games/:gameId/seasons/:seasonId",
+        templateUrl: "js/gameBoxScore/gameBoxScore.html",
+        controller: "gameBoxScoreController",
+        controllerAs: "vm",
+        data: { pageTitle: 'Profiles' }
+      })
+
     $urlRouterProvider.otherwise('/r/standings');
 
 

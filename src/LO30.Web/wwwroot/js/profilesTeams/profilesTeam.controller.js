@@ -60,7 +60,7 @@ angular.module('lo30NgApp')
         gamesCompleted: [
           DTColumnBuilder.newColumn('gameId').withTitle('Game')
             .renderWith(function (data, type, row, meta) {
-              return '<a href="#">' + data + '</a>';
+              return '<a href="/#/r/gameBoxScore/games/' + data + '/seasons/' + row.seasonId + '">' + data + '</a>';
             }),
           DTColumnBuilder.newColumn('gameDateTime').withTitle('Date')
             .renderWith(function (data, type, row, meta) {

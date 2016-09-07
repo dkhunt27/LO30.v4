@@ -116,6 +116,14 @@
         data: { pageTitle: 'Schedule' }
       })
 
+      .state('root.about', {
+        url: "/about",
+        templateUrl: "js/about/about.html",
+        controller: "aboutController",
+        controllerAs: "vm",
+        data: { pageTitle: 'About' }
+      })
+
     $urlRouterProvider.otherwise('/r/news');
 
 

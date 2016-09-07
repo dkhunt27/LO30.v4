@@ -4,6 +4,10 @@
 
 @section Styles {
 
+  <link rel="stylesheet" href="~/lib/slider-revolution/src/css/settings.css" />
+  <link rel="stylesheet" href="~/lib/owl-carousel/owl-carousel/owl.carousel.css" />
+  <link rel="stylesheet" href="~/lib/owl-carousel/owl-carousel/owl.theme.css" />
+  <link rel="stylesheet" href="~/lib/owl-carousel/owl-carousel/owl.transitions.css" />
   <link rel="stylesheet" href="~/lib/animate-css/animate.min.css" />
   <link rel="stylesheet" href="~/lib/metisMenu/dist/metisMenu.min.css" />
   <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
@@ -70,7 +74,7 @@
   <script src="~/lib/angular-bootstrap-switch/dist/angular-bootstrap-switch.min.js"></script>
 
   <script src="~/lib/angular-media-queries/match-media.js"></script>  <!--TODO MIN-->
-<script src="~/lib/showdown/compressed/Showdown.min.js"></script>
+  <script src="~/lib/showdown/compressed/Showdown.min.js"></script>
   <script src="~/lib/angular-markdown-directive/markdown.js"></script>  <!--TODO MIN-->
 
   <script src="~/lib/metisMenu/dist/metisMenu.min.js"></script>
@@ -79,21 +83,25 @@
   <script src="~/lib/moment/min/moment.min.js"></script>
   <script src="~/lib/underscore/underscore-min.js"></script>
   <script src="~/lib/simple-js-validator/lib/simple.js.validator.min.js"></script>
+  <script src="~/lib/owl-carousel/owl-carousel/owl.carousel.min.js"></script>
+  <script src="~/lib/slider-revolution/src/js/jquery.themepunch.plugins.min.js"></script>
+  <script src="~/lib/slider-revolution/src/js/jquery.themepunch.revolution.min.js"></script>
 
-  <environment names="Development">
+  @*<environment names="Development">*@
     <script src="~/js/script.js"></script>
-  </environment>
+  @*</environment>
   <environment names="Staging,Production">
     <script src="~/js/script.min.js" asp-append-version="true"></script>
-  </environment>
+  </environment>*@
 
 
   <!--TODO MIN-->  
 
-  <script src="~/js/index.module.js"></script>
+  <script src="~/js/index.modules.js"></script>
   <script src="~/js/index.route.js"></script>
   <script src="~/js/index.run.js"></script>
 
+  <script src="~/js/about/about.controller.js"></script>
   <script src="~/js/careers/careers.controller.js"></script>
   <script src="~/js/gameBoxScore/gameBoxScore.controller.js"></script>
   <script src="~/js/news/news.controller.js"></script>
@@ -138,35 +146,5 @@
   <script src="~/js/services/broadcastService.js"></script>
   <script src="~/js/services/externalLibService.js"></script>
 
-
-  <!-- FOLLOWING WILL NEED TO BE MIN'd -->
-  <!-- Ng App -->
-  @*<script src="~/js/lo30App.js"></script>
-    <script src="~/js/controllers/careersController.js"></script>
-    <script src="~/js/controllers/galleryTeamsController.js"></script>
-    <script src="~/js/controllers/gameBoxScoreController.js"></script>
-    <script src="~/js/controllers/playersController.js"></script>
-    <script src="~/js/controllers/rootController.js"></script>
-    <script src="~/js/controllers/standingsController.js"></script>
-    <script src="~/js/controllers/statsPlayersController.js"></script>
-    <script src="~/js/controllers/teamsController.js"></script>
-    <script src="~/js/directives/criteriaSelector/criteriaSelector.js"></script>
-    <script src="~/js/directives/criteriaSelector/criteriaSelectorController.js"></script>
-    <script src="~/js/directives/datatablesFilterRowHider/datatablesFilterRowHider.js"></script>
-    <script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetail.js"></script>
-    <script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetailController.js"></script>
-    <script src="~/js/directives/gameScoreByPeriodDetailGoalies/gameScoreByPeriodDetailGoalies.js"></script>
-    <script src="~/js/directives/gameScoreByPeriodDetailPenalties/gameScoreByPeriodDetailPenalties.js"></script>
-    <script src="~/js/directives/gameScoreByPeriodDetailScoring/gameScoreByPeriodDetailScoring.js"></script>
-    <script src="~/js/directives/gameScoreByPeriodSummary/gameScoreByPeriodSummary.js"></script>
-    <script src="~/js/directives/gameScoreByPeriodSummary/gameScoreByPeriodSummaryController.js"></script>
-    <script src="~/js/directives/pageInit/pageInit.js"></script>
-    <script src="~/js/directives/seasonSelector/seasonSelector.js"></script>
-    <script src="~/js/directives/seasonSelector/seasonSelectorController.js"></script>
-    <script src="~/js/directives/seasonTypeSelector/seasonTypeSelector.js"></script>
-    <script src="~/js/directives/seasonTypeSelector/seasonTypeSelectorController.js"></script>
-    <script src="~/js/directives/sideNavigation/sideNavigation.js"></script>
-    <script src="~/js/filters/filterizeFilter.js"></script>
-    <script src="~/js/services/returnUrlService.js"></script>*@
 }
 

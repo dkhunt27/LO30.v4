@@ -4,7 +4,9 @@
   angular
     .module('lo30NgApp')
 
-    .constant("constScheduleTeamFeedBaseUrl", "localhost:49419")
+    //.constant("constScheduleTeamFeedBaseUrl", "localhost:24176")
+    .constant("constScheduleTeamFeedBaseUrl", "livoniaover30hockey.com")
+    //.constant("constScheduleTeamFeedBaseUrl", "lo30v4.azurewebsites.net")
 
     .config(['$compileProvider',
       function($compileProvider) {

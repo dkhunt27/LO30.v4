@@ -10,7 +10,7 @@ angular.module('lo30NgApp')
     a1 = a1 + "Please read the Registration Cover Letter, complete the Registration Form, and mail it with your check to league (address info on the form) by July 1st, 2016.<br/>";
 
     var a2 = "<h3>Board Members</h3>";
-    a2 = a2 + "Your 2015-2017 Board Members are:<br/>";
+    a2 = a2 + "Your 2016-2017 Board Members are:<br/>";
     a2 = a2 + "<br/>";
     a2 = a2 + "<h4><b>President:</b> Steve Crandall</h4>";
     a2 = a2 + "<br/>";
@@ -36,8 +36,17 @@ angular.module('lo30NgApp')
     var a4 = "<h3>Socks</h3>";
     a4 = a4 + "The sox we have used the last two seasons belong to the League. When you pack your bag this week, plz include any sox you might have from last year or the year before. If you are on the same team, those are your sox this year. If you are on a different team, give those sox to your Board Member -- he will get them back to where they belong.<br/>";
 
+    var a5 = "<h3>New Site</h3>";
+    a5 = a5 + "Updated the site.  Will be rolling out more functionality over the coming months.";
+
 
     vm.news = [{
+      "class": "chat-message left",
+      "image": "img/board/dan.png",
+      "author": "Dan Hunt",
+      "date": "Sun Sept 11 2016",
+      "content": $sce.trustAsHtml(a5)
+    },{
       "class": "chat-message right",
       "image": "img/board/steve.png",
       "author": "Steve Crandall",

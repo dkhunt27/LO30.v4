@@ -84,6 +84,14 @@ angular.module('lo30NgApp')
 
     var renderDatatable = function () {
 
+      var dom = "<'row'<'col-sm-4'l><'col-sm-4 text-center'i><'col-sm-4'<'html5buttons'B>>><'row'<'col-sm-12'rt>><'row'<'col-sm-12'p>>";
+
+      if (screenSize.is('xs, sm')) {
+
+        dom = "<'row'<'col-xs-6'l><'col-xs-6'<'html5buttons'B>>><'row'<'col-xs-12 text-center'i>><'row'<'col-sm-12'rt>><'row'<'col-sm-12'p>>";
+
+      }
+
       //re define option
       vm.dtOptions = DTOptionsBuilder
         .fromFnPromise(function () {
@@ -112,8 +120,9 @@ angular.module('lo30NgApp')
           }
         })*/
         .withBootstrap()
-        .withButtons(["colvis", "copyHtml5", "excelHtml5", { extend: 'pdfHtml5', orientation: 'landscape', pageSize: 'letter' }])
-        .withDOM("<'row'<'col-sm-4'l><'col-sm-4 text-center'i><'col-sm-4'<'html5buttons'B>>><'row'<'col-sm-12'rt>><'row'<'col-sm-12'p>>");
+        //.withButtons(["colvis", "copyHtml5", "excelHtml5", { extend: 'pdfHtml5', orientation: 'landscape', pageSize: 'letter' }])
+        .withButtons(["colvis", "excelHtml5"])
+        .withDOM(dom);
 
     };
 
@@ -308,6 +317,14 @@ angular.module('lo30NgApp')
 
     };
 
+    $scope.filterByTeamDropDown = function (team) {
+
+      vm.teamDropDownIsOpen = !vm.teamDropDownIsOpen;
+
+      $scope.filterByTeam(team);
+
+    };
+
     var subMapper = function (sub) {
       var subMapped;
 
@@ -397,6 +414,7 @@ angular.module('lo30NgApp')
             });
           }).draw();
 
+          $scope.filterBySub("Without");
         }
       });
 
@@ -455,6 +473,7 @@ angular.module('lo30NgApp')
     vm.$onInit = function () {
 
       vm.dataLoaded = false;
+      vm.teamDropDownIsOpen = false;
 
       deferred = $q.defer();
 
@@ -494,8 +513,6 @@ angular.module('lo30NgApp')
       vm.seasonTypeId = seasonType.seasonTypeId;
 
       vm.playerType = $state.params.playerType;
-
-      //$scope.filterBySub("Without");
 
       initDatatable(vm.playerType);
 

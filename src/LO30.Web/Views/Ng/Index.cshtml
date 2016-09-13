@@ -18,6 +18,7 @@
   @*<link rel="stylesheet" href="~/lib/angular-datatables/dist/css/angular-datatables.min.css" />*@
   @*<link rel="stylesheet" href="~/lib/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css" />*@
   <link rel="stylesheet" href="~/lib/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css" />
+  <link rel="stylesheet" href="~/libManual/toastr/toastr.css" />
 
   <environment names="Development">
     <link rel="stylesheet" href="~/css/style.css" />
@@ -74,7 +75,7 @@
   <script src="~/lib/angular-bootstrap-switch/dist/angular-bootstrap-switch.min.js"></script>
 
   <script src="~/lib/angular-media-queries/match-media.js"></script>  <!--TODO MIN-->
-  <script src="~/lib/showdown/compressed/Showdown.min.js"></script>
+  <script src="~/lib/showdown/dist/showdown.min.js"></script>
   <script src="~/lib/angular-markdown-directive/markdown.js"></script>  <!--TODO MIN-->
 
   <script src="~/lib/metisMenu/dist/metisMenu.min.js"></script>
@@ -86,6 +87,7 @@
   <script src="~/lib/owl-carousel/owl-carousel/owl.carousel.min.js"></script>
   <script src="~/lib/slider-revolution/src/js/jquery.themepunch.plugins.min.js"></script>
   <script src="~/lib/slider-revolution/src/js/jquery.themepunch.revolution.min.js"></script>
+  <script src="~/libManual/toastr/toastr.min.js"></script>
 
   @*<environment names="Development">*@
     <script src="~/js/script.js"></script>
@@ -103,10 +105,15 @@
 
   <script src="~/js/about/about.controller.js"></script>
   <script src="~/js/careers/careers.controller.js"></script>
+  <script src="~/js/crud/players/crud.players.controller.js"></script>
+  <script src="~/js/crud/players/crud.players.factory.js"></script>
   <script src="~/js/gameBoxScore/gameBoxScore.controller.js"></script>
+  <script src="~/js/modalWindow/modal-window.factory.js"></script>
+  <script src="~/js/notifications/notifications.factory.js"></script>
   <script src="~/js/news/news.controller.js"></script>
   <script src="~/js/profilesPlayers/profilesPlayers.controller.js"></script>
   <script src="~/js/profilesTeams/profilesTeam.controller.js"></script>
+  <script src="~/js/reactive/reactive.factory.js"></script>
   <script src="~/js/schedule/schedule.controller.js"></script>
   <script src="~/js/standings/standings.controller.js"></script>
   <script src="~/js/statsPlayers/statsPlayers.controller.js"></script>
@@ -114,8 +121,14 @@
   <script src="~/js/components/content/content.component.js"></script>
   <script src="~/js/components/navigation/navigation.component.js"></script>
   <script src="~/js/components/topnavbar/topnavbar.component.js"></script>
+  <script src="~/js/components/footer/footer.component.js"></script>
 
   <script src="~/js/directives.js"></script>
+  <script src="~/js/directives/crud.grid/crud.grid.controller.js"></script>
+  <script src="~/js/directives/crud.grid/crud.grid.directive.js"></script>
+  <script src="~/js/directives/crud.grid/crud.grid.factory.js"></script>
+  <script src="~/js/directives/crud.grid/cell.editor/cell.editor.controller.js"></script>
+  <script src="~/js/directives/crud.grid/cell.editor/cell.editor.directive.js"></script>
   <script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetail.controller.js"></script>
   <script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetail.js"></script>
   <script src="~/js/directives/gameScoreByPeriodDetailGoalies/gameScoreByPeriodDetailGoalies.js"></script>

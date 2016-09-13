@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C4CB98DD-3912-45EC-901D-D5E1F17566B6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LO30.Common</RootNamespace>
+    <AssemblyName>LO30.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SqlAssets\StoredProcedures\old\DeriveForWebTeamStandings.sql" />
+    <Content Include="SqlAssets\StoredProcedures\old\DeriveForWebGoalieStats.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DeriveGoalieStatsCareer.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DeriveGoalieStatsSeason.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DeriveGoalieStatsTeam.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DeriveGoalieStatsGame.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DeriveGameOutcomes.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DeriveGameRosters.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DeriveGameScores.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DerivePlayerStatsCareer.sql" />
+    <Content Include="SqlAssets\StoredProcedures\old\DeriveForWebPlayerStats.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DerivePlayerStatsGame.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DerivePlayerStatsSeason.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DerivePlayerStatsTeam.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DeriveScoreSheetEntryProcessedGoals.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DeriveScoreSheetEntryProcessedPenalties.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DeriveScoreSheetEntryProcessedSubs.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DeriveTeamStandings.sql" />
+    <Content Include="SqlAssets\Views\PlayersActiveSubs.sql" />
+    <Content Include="SqlAssets\Views\BoxScoresDetailView.sql" />
+    <Content Include="SqlAssets\Views\BoxScoresSummaryView.sql" />
+    <Content Include="SqlAssets\Views\GameRostersView.sql" />
+    <Content Include="SqlAssets\Views\GoalieStatCareersView.sql" />
+    <Content Include="SqlAssets\Views\GoalieStatSeasonsView.sql" />
+    <Content Include="SqlAssets\Views\GoalieStatTeamsView.sql" />
+    <Content Include="SqlAssets\Views\PlayerStatCareersView.sql" />
+    <Content Include="SqlAssets\Views\GoalieStatGamesView.sql" />
+    <Content Include="SqlAssets\Views\PlayerStatSeasonsView.sql" />
+    <Content Include="SqlAssets\Views\PlayerStatTeamsView.sql" />
+    <Content Include="SqlAssets\Views\PlayerStatGamesView.sql" />
+    <Content Include="SqlAssets\Views\GamesView.sql" />
+    <Content Include="SqlAssets\Views\GameTeamsView.sql" />
+    <Content Include="SqlAssets\Views\TeamStandingsView.sql" />
+    <Content Include="SqlAssets\Views\TeamRostersView.sql" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -4,16 +4,19 @@
   <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
       <div class="col-lg-12">
-        <div class=" m-t-lg">
+        <div class="m-t-lg">
 
           <div class="ibox float-e-margins">
             <div class="ibox-title">
-              <h5 >Individual Statistics</h5>
+              <h5>Individual Statistics</h5>
               <div class="ibox-tools">
               </div>
             </div>
             <div class="ibox-content">
-              <div class="row">
+
+              <button ng-if="vm.screenSizeIsMobile" class="btn btn-info btn-sm btn-block" ng-click="vm.showFilters=!vm.showFilters">{{vm.showFilters ? "Hide" : "Show" }} Filters</button>
+
+              <div ng-hide="vm.screenSizeIsMobile && !vm.showFilters" class="row">
                 <div class="row">
                   <div class="col-xs-12">
                     <div class="input-group">
@@ -29,60 +32,66 @@
                 </div>
                 <div class="row" ng-if="vm.screenSizeIsMobile">
                   <well>
-                    <form class="form-horizontal">
-                      <div class="form-group">
-                        <div class="col-xs-1"></div>
-                        <label for="teamDropdown" class="col-xs-2 control-label">Team:</label>
-                        <div id="teamDropdown" class="col-xs-3 btn-group" uib-dropdown dropdown-append-to-body>
-                          <button id="btn-append-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>
-                            {{vm.selectedTeam ? vm.selectedTeam : "Any"}} <span class="caret"></span>
-                          </button>
-                          <ul uib-dropdown-menu>
-                            <li id="filterByTeam{{$index}}" data-ng-repeat="team in vm.teamsToDisplay" ng-click="filterByTeam(team)">
-                              {{team.teamNameToDisplay}}
-                            </li>
-                          </ul>
-                        </div>
-                        <label for="subDropdown" class="col-xs-2 control-label">Sub:</label>
-                        <div id="subDropdown" class="col-xs-3 btn-group" uib-dropdown dropdown-append-to-body>
-                          <button id="btn-append-to-body" type="button" class="btn btn-success" uib-dropdown-toggle>
-                            {{vm.selectedSub ? vm.selectedSub : "Any"}} <span class="caret"></span>
-                          </button>
-                          <ul uib-dropdown-menu>
-                            <li data-ng-repeat="sub in subs" ng-click="filterBySub(sub)">
-                              {{sub}}
-                            </li>
-                          </ul>
-                        </div>
-                        <div class="col-xs-1"></div>
+                    <div class="row">
+                      <div class="col-xs-1"></div>
+                      <label for="teamDropdown" class="col-xs-2 control-label">Team:</label>
+                      <div class="col-xs-8 btn-group" uib-dropdown is-open="ddlTeam.isopen">
+                        <button id="single-button" type="button" class="btn btn-success btn-sm btn-block" uib-dropdown-toggle ng-disabled="disabled">
+                          {{vm.selectedTeam ? vm.selectedTeam : "Any"}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                          <li role="menuitem" id="filterByTeam{{$index}}" data-ng-repeat="team in vm.teams">
+                            <a ng-click="filterByTeam(team)">{{team.teamNameToDisplay}}</a>
+                          </li>
+                        </ul>
                       </div>
-                      <div ng-if="vm.selectedType==='skater'" class="form-group">
-                        <div class="col-xs-1"></div>
-                        <label for="lineDropdown" class="col-xs-2 control-label">Line:</label>
-                        <div id="lineDropdown" class="col-xs-3 btn-group" uib-dropdown dropdown-append-to-body>
-                          <button id="btn-append-to-body" type="button" class="btn btn-warning" uib-dropdown-toggle ng-disabled="vm.playerType==='goalie'">
-                            {{vm.selectedLine ? vm.selectedLine : "Any"}} <span class="caret"></span>
-                          </button>
-                          <ul uib-dropdown-menu>
-                            <li data-ng-repeat="line in lines" ng-click="filterByLine(line)">
-                              {{line}}
-                            </li>
-                          </ul>
-                        </div>
-                        <label for="positionDropdown" class="col-xs-2 control-label">Pos:</label>
-                        <div id="positionDropdown" class="col-xs-3 btn-group" uib-dropdown dropdown-append-to-body>
-                          <button id="btn-append-to-body" type="button" class="btn btn-danger" uib-dropdown-toggle ng-disabled="vm.playerType==='goalie'">
-                            {{vm.selectedPosition ? vm.selectedPosition : "Any"}} <span class="caret"></span>
-                          </button>
-                          <ul uib-dropdown-menu>
-                            <li data-ng-repeat="position in positions" ng-click="filterByPosition(position)">
-                              {{position}}
-                            </li>
-                          </ul>
-                        </div>
-                        <div class="col-xs-1"></div>
+                    </div>
+
+                    <div ng-if="vm.playerType==='skater'" class="row">
+                      <div class="col-xs-1"></div>
+                      <label for="teamDropdown" class="col-xs-2 control-label">Pos:</label>
+                      <div class="col-xs-8 btn-group" uib-dropdown is-open="ddlLine.isopen">
+                        <button id="single-button" type="button" class="btn btn-danger btn-sm btn-block" uib-dropdown-toggle ng-disabled="disabled">
+                          {{vm.selectedPosition ? vm.selectedPosition : "Any"}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                          <li role="menuitem" id="filterByPosition{{$index}}" data-ng-repeat="position in vm.positions">
+                            <a ng-click="filterByPosition(position)">{{position}}</a>
+                          </li>
+                        </ul>
                       </div>
-                    </form>
+                    </div>
+
+                    <div ng-if="vm.playerType==='skater'" class="row">
+                      <div class="col-xs-1"></div>
+                      <label for="teamDropdown" class="col-xs-2 control-label">Line:</label>
+                      <div class="col-xs-8 btn-group" uib-dropdown is-open="ddlLine.isopen">
+                        <button id="single-button" type="button" class="btn btn-warning btn-sm btn-block" uib-dropdown-toggle ng-disabled="disabled">
+                          {{vm.selectedLine ? vm.selectedLine : "Any"}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                          <li role="menuitem" id="filterByLine{{$index}}" data-ng-repeat="line in vm.lines">
+                            <a ng-click="filterByLine(line)">{{line}}</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-xs-1"></div>
+                      <label for="teamDropdown" class="col-xs-2 control-label">Sub:</label>
+                      <div class="col-xs-8 btn-group" uib-dropdown is-open="ddlSub.isopen">
+                        <button id="single-button" type="button" class="btn btn-primary btn-sm btn-block" uib-dropdown-toggle ng-disabled="disabled">
+                          {{vm.selectedSub ? vm.selectedSub : "Any"}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                          <li role="menuitem" id="filterBySub{{$index}}" data-ng-repeat="sub in vm.subs">
+                            <a ng-click="filterBySub(sub)">{{sub}}</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
                   </well>
                 </div>
                 <div class="row" ng-if="!vm.screenSizeIsMobile">
@@ -172,4 +181,4 @@
       </div>
     </div>
   </div>
- </div>
+</div>

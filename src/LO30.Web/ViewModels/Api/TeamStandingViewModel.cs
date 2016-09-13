@@ -30,7 +30,14 @@ namespace LO30.Web.ViewModels.Api
     {
       get
       {
-        return (double)Wins / (double)Games;
+        if (Games > 0)
+        {
+          return (double)Wins / (double)Games;
+        }
+        else
+        {
+          return 0;
+        }
       }
     }
 

@@ -1,6 +1,5 @@
-﻿using LO30.Web.Models;
-using LO30.Web.Models.Objects;
-using Microsoft.AspNet.Mvc;
+﻿using LO30.Data;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 

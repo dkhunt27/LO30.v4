@@ -1,7 +1,6 @@
-﻿using LO30.Web.Models;
-using LO30.Web.Models.Objects;
-using Microsoft.AspNet.Mvc;
-using Microsoft.Data.Entity;
+﻿using LO30.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 

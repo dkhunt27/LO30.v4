@@ -8,9 +8,43 @@ angular.module('lo30NgApp')
     '$state',
     'criteriaService',
     'broadcastService',
-    function ($log, $scope, $state, criteriaService, broadcastService) {
+    'screenSize',
+    function ($log, $scope, $state, criteriaService, broadcastService, screenSize) {
 
       var vm = this;
+
+      var buildSeasonNameToDisplay = function (seasonName) {
+        var display = seasonName;
+
+        if (screenSize.is('xs, sm')) {
+
+          display = seasonName.replace(/.-.\d\d/, "-");
+
+        } 
+
+        return display;
+      };
+
+      $scope.determineNgClass = function () {
+
+        var ngClass = "";
+
+        if (screenSize.is('xs, sm')) {
+
+          ngClass = "navbar-title navbar-title-mobile";
+
+        } else if (screenSize.is('md')) {
+
+          ngClass = "navbar-title";
+
+        } else {
+
+          ngClass = "navbar-title";
+
+        }
+
+        return ngClass;
+      };
 
       $scope.toggleSeasonCriteriaPanel = function () {
         $scope.seasonCriteriaPanelOpen = !$scope.seasonCriteriaPanelOpen
@@ -44,6 +78,8 @@ angular.module('lo30NgApp')
 
           $scope.season = criteriaService.seasons.get();
 
+          $scope.seasonNameToDisplay = buildSeasonNameToDisplay($scope.season.seasonName);
+
         });
 
         $scope.$on(broadcastService.events().seasonTypeSet, function () {
@@ -61,6 +97,8 @@ angular.module('lo30NgApp')
         $scope.pageTitle = $state.current.data.pageTitle;
 
         $scope.season = criteriaService.seasons.get();
+
+        $scope.seasonNameToDisplay = buildSeasonNameToDisplay($scope.season.seasonName);
 
         $scope.seasonType = criteriaService.seasonTypes.get();
 

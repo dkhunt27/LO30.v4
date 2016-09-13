@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using LO30.Web.Models;
-using LO30.Web.Models.Objects;
+using LO30.Data;
 using LO30.Web.Services;
 using LO30.Web.ViewModels.Api;
-using Microsoft.AspNet.Mvc;
-using Microsoft.Data.Entity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

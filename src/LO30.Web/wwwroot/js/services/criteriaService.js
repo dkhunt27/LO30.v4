@@ -1,11 +1,12 @@
 ﻿'use strict';
 
 angular.module('lo30NgApp')
-  .factory("criteriaService", function ($log, $q, externalLibService, broadcastService) {
+  .factory("criteriaService", function ($log, $q, $state, externalLibService, broadcastService) {
 
     var _ = externalLibService._;
 
     var seasons = [
+        { "seasonId": 57, "seasonName": "2016 - 2017" },
         { "seasonId": 56, "seasonName": "2015 - 2016" },
         { "seasonId": 54, "seasonName": "2014 - 2015" },
         { "seasonId": 53, "seasonName": "2013 - 2014" },
@@ -25,7 +26,7 @@ angular.module('lo30NgApp')
     ];
 
     var decades = [
-      { "decadeId": 4, "decadeName": "2010-2019", "seasons": [56, 54, 53, 52, 51, 50] },
+      { "decadeId": 4, "decadeName": "2010-2019", "seasons": [57, 56, 54, 53, 52, 51, 50] },
       { "decadeId": 3, "decadeName": "2000-2009", "seasons": [49, 48, 47, 46, 45, 44, 43, 42, 41, 40] }
       //{ "decadeId": 2, "decadeName": "1990-1999", "seasons": [] },
       //{ "decadeId": 1, "decadeName": "1980-1989", "seasons": [] },
@@ -38,7 +39,7 @@ angular.module('lo30NgApp')
     ];
 
     // set the defaults
-    var selectedSeasonId = 56;
+    var selectedSeasonId = 57;
     var selectedSeasonTypeId = 0;
 
     var fetchSeasons = function () {
@@ -207,7 +208,11 @@ angular.module('lo30NgApp')
     service.seasons = {
       get: function () {
 
-        return _.findWhere(seasons, { seasonId: selectedSeasonId });;
+        if ($state.params.seasonId) {
+          selectedSeasonId = parseInt($state.params.seasonId,10);
+        }
+
+        return _.findWhere(seasons, { seasonId: selectedSeasonId });
 
       },
       set: function (season) {
@@ -235,7 +240,10 @@ angular.module('lo30NgApp')
     service.seasonTypes = {
       get: function () {
 
-        return _.findWhere(seasonTypes, { seasonTypeId: selectedSeasonTypeId });;
+        if ($state.params.seasonTypeId) {
+          selectedSeasonTypeId = parseInt($state.params.seasonTypeId, 10);
+        }
+        return _.findWhere(seasonTypes, { seasonTypeId: selectedSeasonTypeId });
 
       },
       set: function (seasonType) {
@@ -263,7 +271,7 @@ angular.module('lo30NgApp')
     service.games = {
       get: function () {
 
-        return _.findWhere(games, { gameId: selectedGameId });;
+        return _.findWhere(games, { gameId: selectedGameId });
 
       },
       set: function (game) {

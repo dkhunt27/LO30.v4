@@ -2,18 +2,18 @@
   <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
     <span minimaliza-sidebar></span>
     <span ng-click="toggleSeasonCriteriaPanel()">
-      <span class="navbar-title">{{season.seasonName}}</span>
+      <span ng-class="determineNgClass()">{{season.seasonNameToDisplay}}</span>
       <small>
         <i style="padding-top:10px; vertical-align:top;" class="fa fa-gear"></i>
       </small>
     </span>
     <span ng-click="toggleGameCriteriaPanel()">
-      <span class="navbar-title">{{game.gameId}}</span>
+      <span ng-class="determineNgClass()">{{game.gameId}}</span>
       <small>
         <i style="padding-top:10px; vertical-align:top;" class="fa fa-gear"></i>
       </small>
     </span>
-    <span class="navbar-title">{{pageTitle}}</span>
+    <span ng-class="determineNgClass()">{{pageTitle}}</span>
   </nav>
 
   <div pageslide ps-open="seasonCriteriaPanelOpen">

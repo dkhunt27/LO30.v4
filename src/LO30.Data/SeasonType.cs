@@ -1,0 +1,14 @@
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace LO30.Data
+{
+  public class SeasonType
+  {
+    [Required]
+    public int SeasonTypeId { get; set; }
+
+    [Required, MaxLength(15)]
+    public string SeasonTypeName { get; set; }
+  }
+}

@@ -1,67 +1,54 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Data.Entity;
+using LO30.Data;
+using LO30.Data.Services;
+using LO30.Web.Services;
+using LO30.Web.ViewModels.Api;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using LO30.Web.Models;
-using LO30.Web.Services;
 using Newtonsoft.Json.Serialization;
-using LO30.Web.Models.Objects;
-using LO30.Web.ViewModels.Api;
+using System.Linq;
 
 namespace LO30.Web
 {
   public class Startup
   {
-
     public IConfigurationRoot Configuration { get; set; }
-
-    private string _lo30DbConnString;
 
     public Startup(IHostingEnvironment env)
     {
-      // Set up configuration sources.
-
       var builder = new ConfigurationBuilder()
-          .AddJsonFile("appsettings.json")
-          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+          .SetBasePath(env.ContentRootPath)
+          .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+          .AddEnvironmentVariables();
 
       if (env.IsDevelopment())
       {
-        // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-        builder.AddUserSecrets();
-
         // This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
         builder.AddApplicationInsightsSettings(developerMode: true);
       }
-
-      builder.AddEnvironmentVariables();
       Configuration = builder.Build();
     }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      _lo30DbConnString = Configuration["Data:ConnectionString:LO30Db"];
+      string lo30DbConnString = Configuration["Data:ConnectionString:LO30Db"];
 
       // Add framework services.
       services.AddApplicationInsightsTelemetry(Configuration);
 
-      // https://neelbhatt40.wordpress.com/2015/09/07/implement-sessions-in-asp-net-5vnext-and-mvc-6/
-      // Adds a default in-memory implementation of IDistributedCache
-      services.AddCaching();
+      // http://andrewlock.net/an-introduction-to-session-storage-in-asp-net-core/
+      services.AddDistributedMemoryCache();
       services.AddSession();
 
-      services.AddEntityFramework()
-          .AddSqlServer()
-          .AddDbContext<LO30DbContext>(opt => opt.UseSqlServer(_lo30DbConnString));
+      services.AddDbContext<LO30DbContext>(opt => opt.UseSqlServer(lo30DbConnString));
 
       services.AddIdentity<ApplicationUser, IdentityRole>()
           .AddEntityFrameworkStores<LO30DbContext>()
@@ -89,6 +76,7 @@ namespace LO30.Web
       services.AddTransient<IEmailSender, AuthMessageSender>();
       services.AddTransient<ISmsSender, AuthMessageSender>();
       services.AddTransient<PlayerNameService, PlayerNameService>();
+      services.AddTransient<IPlayersService, PlayersService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -101,8 +89,8 @@ namespace LO30.Web
 
       if (env.IsDevelopment())
       {
-        app.UseBrowserLink();
         app.UseDeveloperExceptionPage();
+        app.UseBrowserLink();
         app.UseDatabaseErrorPage();
       }
       else
@@ -121,8 +109,6 @@ namespace LO30.Web
         }
         catch { }
       }
-
-      app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
 
       app.UseApplicationInsightsExceptionTelemetry();
 
@@ -341,8 +327,6 @@ namespace LO30.Web
 
       });
 
-      // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
-
       app.UseMvc(routes =>
       {
         routes.MapRoute(
@@ -362,8 +346,5 @@ namespace LO30.Web
                   template: "{controller=Ng}/{action=Index}/{id?}");
       });
     }
-
-    // Entry point for the application.
-    public static void Main(string[] args) => WebApplication.Run<Startup>(args);
   }
 }

@@ -124,6 +124,14 @@
         data: { pageTitle: 'About' }
       })
 
+          .state('root.crudPlayers', {
+            url: "/crud/players",
+            templateUrl: "js/crud/players/crud.players.html",
+            controller: "crudPlayersController",
+            controllerAs: "vm",
+            data: { pageTitle: 'Players CRUD' }
+          })
+
     $urlRouterProvider.otherwise('/r/news');
 
 

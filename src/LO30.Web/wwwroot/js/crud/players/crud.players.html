@@ -1,0 +1,70 @@
+<div>
+  <lo30-page-header></lo30-page-header>
+
+  <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="m-t-lg">
+
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>Players CRUD </h5>
+              <div class="ibox-tools">
+              </div>
+            </div>
+            <div class="ibox-content">
+              <div class="row">
+                <div class="col-lg-12">
+
+                  <div crud-grid
+                       column-button-click='vm.gridOnButtonClick'
+                       initialized='vm.gridOnInitialized'
+                       server-url='{{vm.serverUrl}}'
+                       columns-definition='[
+                        {
+                          "binding"       :"playerId",
+                          "type"          :"integer",
+                          "required"      :"true",
+                          "hidden"        :"false"
+                        },
+                        {
+                          "binding"       :"firstName",
+                          "header"        :"First Name",
+                          "type"          :"text",
+                          "required"      :"true"
+                        },
+                        {
+                          "binding"       :"lastName",
+                          "header"        :"Last Name",
+                          "type"          :"text",
+                          "required"      :"true"
+                        },
+                        {
+                          "binding"       :"suffix",
+                          "header"        :"Suffix",
+                          "type"          :"text",
+                          "required"      :"false"
+                        },
+                        {
+                            "type"         :"button",
+                            "icon"         :"btn glyphicon glyphicon-plus",
+                            "buttonid"     :"plus",
+                            "class"        :"column-width-auto"
+                        },
+                        {
+                            "type"         :"button",
+                            "icon"         :"btn glyphicon glyphicon-minus",
+                            "buttonid"     :"minus",
+                            "class"        :"column-width-auto"
+                        }
+                        ]'>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

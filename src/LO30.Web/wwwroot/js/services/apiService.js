@@ -9,18 +9,26 @@ angular.module('lo30NgApp')
       var service = {
         dataProcessing: {},
         games: {},
+        gameRosters: {},
+        gameTeams: {},
         goalieStatCareers: {},
         goalieStatGames: {},
         goalieStatSeasons: {},
         goalieStatTeams: {},
+        players: {},
         playerStatCareers: {},
         playerStatGames: {},
         playerStatSeasons: {},
         playerStatTeams: {},
+        scoreSheetEntryGoals: {},
+        scoreSheetEntryPenalties: {},
+        scoreSheetEntrySubs: {},
         scoreSheetEntryProcessedGoals: {},
         scoreSheetEntryProcessedPenalties: {},
+        scoreSheetEntryProcessedSubs: {},
         seasons: {},
         teams: {},
+        teamRosters: {},
         teamStandings: {}
       };
 
@@ -58,6 +66,26 @@ angular.module('lo30NgApp')
         var inputs = {
           apiDataType: "games.listForSeasonId",
           urlPartial: "games/seasons/" + seasonId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.gameRosters.listForGameId = function (gameId) {
+        var inputs = {
+          apiDataType: "gameRosters.listForGameId",
+          urlPartial: "gamerosters/games/" + gameId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.gameTeams.listForGameId = function (gameId) {
+        var inputs = {
+          apiDataType: "gameTeams.listForGameId",
+          urlPartial: "gameteams/games/" + gameId,
           method: "GET",
           params: null
         }
@@ -144,6 +172,16 @@ angular.module('lo30NgApp')
         return apiBaseService.execute(inputs);
       }
 
+      service.players.list = function () {
+        var inputs = {
+          apiDataType: "games.list",
+          urlPartial: "players",
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
       service.playerStatCareers.list = function () {
         var inputs = {
           apiDataType: "playerStatCareers.list",
@@ -224,6 +262,36 @@ angular.module('lo30NgApp')
         return apiBaseService.execute(inputs);
       }
 
+      service.scoreSheetEntryGoals.listForGameId = function (gameId) {
+        var inputs = {
+          apiDataType: "scoreSheetEntryGoals.listForGameId",
+          urlPartial: "scoresheetentries/goals/games/" + gameId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.scoreSheetEntryPenalties.listForGameId = function (gameId) {
+        var inputs = {
+          apiDataType: "scoreSheetEntryPenalties.listForGameId",
+          urlPartial: "scoresheetentries/penalties/games/" + gameId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.scoreSheetEntrySubs.listForGameId = function (gameId) {
+        var inputs = {
+          apiDataType: "scoreSheetEntrySubs.listForGameId",
+          urlPartial: "scoresheetentries/subs/games/" + gameId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
       service.scoreSheetEntryProcessedGoals.listForGameId = function (gameId) {
         var inputs = {
           apiDataType: "scoreSheetEntryProcessedGoals.listForGameId",
@@ -238,6 +306,16 @@ angular.module('lo30NgApp')
         var inputs = {
           apiDataType: "scoreSheetEntryProcessedPenalties.listForGameId",
           urlPartial: "scoresheetentries/processed/penalties/games/" + gameId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.scoreSheetEntryProcessedSubs.listForGameId = function (gameId) {
+        var inputs = {
+          apiDataType: "scoreSheetEntryProcessedSubs.listForGameId",
+          urlPartial: "scoresheetentries/processed/subs/games/" + gameId,
           method: "GET",
           params: null
         }
@@ -272,6 +350,16 @@ angular.module('lo30NgApp')
         var inputs = {
           apiDataType: "teams.listForSeasonId",
           urlPartial: "teams/seasons/" + seasonId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.teamRosters.listForTeamId = function (teamId) {
+        var inputs = {
+          apiDataType: "teamRosters.listForTeamId",
+          urlPartial: "teamrosters/teams/" + teamId,
           method: "GET",
           params: null
         }

@@ -1,0 +1,48 @@
+﻿<div>
+  <div class="row">
+    <div class="col-xs-1">Line</div>
+    <div class="col-xs-1">In</div>
+    <div class="col-xs-1">Sub</div>
+    <div class="col-xs-1">Num</div>
+    <div class="col-xs-1">Pos</div>
+    <div class="col-xs-5">Player Name</div>
+    <div class="col-xs-1">Rating</div>
+    <div class="col-xs-1">Pid</div>
+  </div>
+  <div class="well well-sm">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="row" ng-repeat="item in data.goalies">
+          <lo30-team-game-roster-player team-game-roster-item="item" subs="subs" locked="locked" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="well well-sm">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="row" ng-repeat="item in data.line1 | orderBy:['-position','ratingPrimary','ratingSecondary']">
+          <lo30-team-game-roster-player team-game-roster-item="item" subs="subs" locked="locked" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="well well-sm">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="row" ng-repeat="item in data.line2 | orderBy:['-position','ratingPrimary','ratingSecondary']">
+          <lo30-team-game-roster-player team-game-roster-item="item" subs="subs" locked="locked" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="well well-sm">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="row" ng-repeat="item in data.line3 | orderBy:['-position','ratingPrimary','ratingSecondary']">
+          <lo30-team-game-roster-player team-game-roster-item="item" subs="subs" locked="locked" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

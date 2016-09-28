@@ -98,8 +98,10 @@ namespace LO30.Web.Controllers.Mvc
         var sec = gameTeam.Game.GameDateTime.Second;
         icalEvent.Start = new iCalDateTime(gameTeam.Game.GameDateTime);
         icalEvent.Duration = TimeSpan.FromHours(1.25);
-        //icalEvent.Location = "Eddie Edgar " + gameTeam.Game.Location;  // TODO set the Rink location
-        icalEvent.Location = "Eddie Edgar";
+        //icalEvent.Location = gameTeam.Game.Location;
+        //icalEvent.Location = "https://www.google.com/maps/place/Eddie+Edgar+Ice+Arena/@42.389168,-83.3795064,17z/data=!3m1!4b1!4m5!3m4!1s0x8824b31d35e8d599:0x7393b3c5db983c12!8m2!3d42.389168!4d-83.3773177";
+        icalEvent.Location = "33841 Lyndon, Livonia, MI 48154";
+        //icalEvent.Url = new Uri("https://www.google.com/maps/place/Eddie+Edgar+Ice+Arena/@42.389168,-83.3795064,17z/data=!3m1!4b1!4m5!3m4!1s0x8824b31d35e8d599:0x7393b3c5db983c12!8m2!3d42.389168!4d-83.3773177");
       }
 
       ISerializationContext ctx = new SerializationContext();

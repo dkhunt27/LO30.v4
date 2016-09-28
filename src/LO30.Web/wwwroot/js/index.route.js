@@ -124,13 +124,28 @@
         data: { pageTitle: 'About' }
       })
 
-          .state('root.crudPlayers', {
-            url: "/crud/players",
-            templateUrl: "js/crud/players/crud.players.html",
-            controller: "crudPlayersController",
-            controllerAs: "vm",
-            data: { pageTitle: 'Players CRUD' }
-          })
+      .state('root.crudPlayers', {
+        url: "/crud/players",
+        templateUrl: "js/crud/players/crud.players.html",
+        controller: "crudPlayersController",
+        controllerAs: "vm",
+        data: { pageTitle: 'Players CRUD' }
+      })
+      .state('root.crudScoreSheetEntrySubs', {
+        url: "/crud/scoreSheetEntrySubs",
+        templateUrl: "js/crud/scoreSheetEntrySubs/crud.scoreSheetEntrySubs.html",
+        controller: "crudScoreSheetEntrySubsController",
+        controllerAs: "vm",
+        data: { pageTitle: 'Score Sheet Entry Subs CRUD' }
+      })
+
+      .state('root.adminScoreSheetEntry', {
+        url: "/admin/scoreSheetEntry",
+        templateUrl: "js/scoreSheetEntry/scoreSheetEntry.html",
+        controller: "scoreSheetEntryController",
+        controllerAs: "vm",
+        data: { pageTitle: 'Score Sheet Entry' }
+      })
 
     $urlRouterProvider.otherwise('/r/news');
 

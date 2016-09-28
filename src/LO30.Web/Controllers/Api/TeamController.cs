@@ -9,11 +9,11 @@ using System.Linq;
 namespace LO30.Web.Controllers.Api
 {
   [Route("api/teams")]
-  public class TeamsController : Controller
+  public class TeamController : Controller
   {
     private LO30DbContext _context;
 
-    public TeamsController(LO30DbContext context)
+    public TeamController(LO30DbContext context)
     {
       _context = context;
     }

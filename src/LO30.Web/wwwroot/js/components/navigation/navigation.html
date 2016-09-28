@@ -16,7 +16,7 @@
         </li>
 
         <li ng-class="{active: $ctrl.isActive('news')}">
-          <a ui-sref="root.news()" ng-click="$ctrl.setActive('news')"><i class="fa fa-newspaper-o"></i> <span class="nav-label">News <span class="badge">2</span></span></a>
+          <a ui-sref="root.news()" ng-click="$ctrl.setActive('news')"><i class="fa fa-newspaper-o"></i> <span class="nav-label">News</span></a>
         </li>
         <li ng-class="{active: $ctrl.isActive('standings')}">
           <a ui-sref="root.standings({seasonId: $ctrl.season.seasonId, seasonTypeId: $ctrl.seasonType.seasonTypeId})" ng-click="$ctrl.setActive('standings')"><i class="fa fa-group"></i> <span class="nav-label">Standings</span></a>

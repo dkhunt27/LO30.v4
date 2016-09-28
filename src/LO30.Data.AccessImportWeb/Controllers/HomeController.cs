@@ -42,10 +42,10 @@ namespace LO30.Data.AccessImportWeb.Controllers
         // now comment/uncomment the tables to process
 
         // load new season
-        int startingSeasonIdToProcess = 57;
-        int endingSeasonIdToProcess = 57;
-        int startingGameIdToProcess = 3616;
-        int endingGameIdToProcess = 3735;
+        //int startingSeasonIdToProcess = 57;
+        //int endingSeasonIdToProcess = 57;
+        //int startingGameIdToProcess = 3616;
+        //int endingGameIdToProcess = 3735;
         //aImporter.ImportSeasons(startingSeasonIdToProcess, endingSeasonIdToProcess);
         //aImporter.ImportPlayers();
         //aImporter.ImportPlayerStatuses();
@@ -72,6 +72,8 @@ namespace LO30.Data.AccessImportWeb.Controllers
         //aImporter.ImportGameTeams(startingGameIdToProcess, endingGameIdToProcess);
 
         // load scoresheets
+        int startingGameIdToProcess = 3633;
+        int endingGameIdToProcess = 3633;
         aImporter.ImportScoreSheetEntries(startingGameIdToProcess, endingGameIdToProcess);
         aImporter.ImportScoreSheetEntryPenalties(startingGameIdToProcess, endingGameIdToProcess);
         aImporter.ImportScoreSheetEntrySubs(startingGameIdToProcess, endingGameIdToProcess);

@@ -46,13 +46,24 @@ namespace LO30.Data.AccessImport.Importers
 
               var gameDateTime = gameDate.Add(timeSpan);
 
+              // determine the location
+              string location = "Eddie Edgar Rink B";
+
+              if (
+                   (gameTime.Hour == 8 && gameTime.Minute == 30) ||
+                   (gameTime.Hour == 9 && gameTime.Minute == 45)
+                 )
+              {
+                location = "Eddie Edgar Rink A";
+              }
+
               var game = new Game()
               {
                 SeasonId = seasonId,
                 GameId = gameId,
                 GameDateTime = gameDateTime,
                 GameYYYYMMDD = _timeService.ConvertDateTimeIntoYYYYMMDD(gameDateTime, false),
-                Location = "not set",
+                Location = location,
                 Playoffs = playoffGame
               };
 

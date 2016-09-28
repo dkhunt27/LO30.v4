@@ -21,7 +21,7 @@ namespace LO30.Data
     [Required]
     public int GameYYYYMMDD { get; set; }
 
-    [Required, MaxLength(15)]
+    [Required, MaxLength(25)]
     public string Location { get; set; }
 
     #region foreign keys

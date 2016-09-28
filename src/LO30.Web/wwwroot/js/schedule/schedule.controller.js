@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('lo30NgApp')
-  .controller('scheduleController', function ($log, $scope, $state, $timeout, $q, $compile, criteriaService, apiService, screenSize, externalLibService, broadcastService, constScheduleTeamFeedBaseUrl) {
+  .controller('scheduleController', function ($log, $scope, $state, $timeout, $q, $compile, $location, criteriaService, apiService, screenSize, externalLibService, broadcastService, constScheduleTeamFeedBaseUrl) {
 
     var _ = externalLibService._;
     var sjv = externalLibService.sjv;
@@ -30,12 +30,19 @@ angular.module('lo30NgApp')
         var scheduleTeamName = item.teamNameLong.replace(" ", "").replace("/", "").replace("-", "").replace(".", "").replace("&", "").replace("'", "");
         var scheduleSeasonName = item.seasonName.replace(" ", "");
 
+        var host = $location.host();
+        var port = $location.port();
+
+        if (port != 80 || port != 443) {
+          host = host + ":" + port
+        }
+
         var teamFeed = {
           "teamNameToDisplay": item.teamNameToDisplay,
           "teamCode": item.teamCode,
           "teamNameLong": item.teamNameLong,
           "teamNameShort": item.teamNameShort,
-          "teamFeedUrl": constScheduleTeamFeedBaseUrl + "/Schedule/TeamFeed/Seasons/" + vm.seasonId + "/Teams/" + teamId + "/LO30Schedule-" + scheduleTeamName + "-" + scheduleSeasonName
+          "teamFeedUrl": host + "/Schedule/TeamFeed/Seasons/" + vm.seasonId + "/Teams/" + teamId + "/LO30Schedule-" + scheduleTeamName + "-" + scheduleSeasonName
         };
 
         return teamFeed;

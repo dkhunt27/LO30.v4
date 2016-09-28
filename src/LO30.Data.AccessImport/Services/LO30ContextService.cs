@@ -1099,6 +1099,15 @@ namespace LO30.Data.AccessImport.Services
       }
       else
       {
+        found.BirthDate = toSave.BirthDate;
+        found.FirstName = toSave.FirstName;
+        found.LastName = toSave.LastName;
+        found.PreferredPosition = toSave.PreferredPosition;
+        found.Profession = toSave.Profession;
+        found.Shoots = toSave.Shoots;
+        found.Suffix = toSave.Suffix;
+        found.WifesName = toSave.WifesName;
+
         _context.Update(found);
       }
 
@@ -1427,10 +1436,17 @@ namespace LO30.Data.AccessImport.Services
       }
       else
       {
-        var entry = _context.Entry(found);
-        throw new NotImplementedException();
-        //entry.OriginalValues.SetValues(found);
-        //entry.CurrentValues.SetValues(toSave);
+        found.Assist1 = toSave.Assist1;
+        found.Assist2 = toSave.Assist2;
+        found.Assist3 = toSave.Assist3;
+        found.GameId = toSave.GameId;
+        found.Goal = toSave.Goal;
+        found.HomeTeam = toSave.HomeTeam;
+        found.Period = toSave.Period;
+        found.ShortHandedPowerPlay = toSave.ShortHandedPowerPlay;
+        found.TimeRemaining = toSave.TimeRemaining;
+
+        _context.Update(found);
       }
 
       return ContextSaveChanges();
@@ -1494,10 +1510,15 @@ namespace LO30.Data.AccessImport.Services
       }
       else
       {
-        var entry = _context.Entry(found);
-        throw new NotImplementedException();
-        //entry.OriginalValues.SetValues(found);
-        //entry.CurrentValues.SetValues(toSave);
+        found.GameId = toSave.GameId;
+        found.HomeTeam = toSave.HomeTeam;
+        found.PenaltyCode = toSave.PenaltyCode;
+        found.PenaltyMinutes = toSave.PenaltyMinutes;
+        found.Period = toSave.Period;
+        found.Player = toSave.Player;
+        found.TimeRemaining = toSave.TimeRemaining;
+
+        _context.Update(found);
       }
 
       return ContextSaveChanges();
@@ -1568,10 +1589,22 @@ namespace LO30.Data.AccessImport.Services
       }
       else
       {
-        var entry = _context.Entry(found);
-        throw new NotImplementedException();
-        //entry.OriginalValues.SetValues(found);
-        //entry.CurrentValues.SetValues(toSave);
+        found.Assist1PlayerId = toSave.Assist1PlayerId;
+        found.Assist2PlayerId = toSave.Assist2PlayerId;
+        found.Assist3PlayerId = toSave.Assist3PlayerId;
+        found.GameId = toSave.GameId;
+        found.GameWinningGoal = toSave.GameWinningGoal;
+        found.GoalPlayerId = toSave.GoalPlayerId;
+        found.HomeTeam = toSave.HomeTeam;
+        found.Period = toSave.Period;
+        found.PowerPlayGoal = toSave.PowerPlayGoal;
+        found.SeasonId = toSave.SeasonId;
+        found.ShortHandedGoal = toSave.ShortHandedGoal;
+        found.TeamId = toSave.TeamId;
+        found.TimeElapsed = toSave.TimeElapsed;
+        found.TimeRemaining = toSave.TimeRemaining;
+
+        _context.Update(found);
       }
 
       return ContextSaveChanges();
@@ -1640,10 +1673,18 @@ namespace LO30.Data.AccessImport.Services
       }
       else
       {
-        var entry = _context.Entry(found);
-        throw new NotImplementedException();
-        //entry.OriginalValues.SetValues(found);
-        //entry.CurrentValues.SetValues(toSave);
+        found.GameId = toSave.GameId;
+        found.HomeTeam = toSave.HomeTeam;
+        found.PenaltyId = toSave.PenaltyId;
+        found.PenaltyMinutes = toSave.PenaltyMinutes;
+        found.Period = toSave.Period;
+        found.PlayerId = toSave.PlayerId;
+        found.SeasonId = toSave.SeasonId;
+        found.TeamId = toSave.TeamId;
+        found.TimeElapsed = toSave.TimeElapsed;
+        found.TimeRemaining = toSave.TimeRemaining;
+
+        _context.Update(found);
       }
 
       return ContextSaveChanges();
@@ -1707,10 +1748,13 @@ namespace LO30.Data.AccessImport.Services
       }
       else
       {
-        var entry = _context.Entry(found);
-        throw new NotImplementedException();
-        //entry.OriginalValues.SetValues(found);
-        //entry.CurrentValues.SetValues(toSave);
+        found.GameId = toSave.GameId;
+        found.HomeTeam = toSave.HomeTeam;
+        found.JerseyNumber = toSave.JerseyNumber;
+        found.SubbingForPlayerId = toSave.SubbingForPlayerId;
+        found.SubPlayerId = toSave.SubPlayerId;
+
+        _context.Update(found);
       }
 
       return ContextSaveChanges();
@@ -1779,10 +1823,15 @@ namespace LO30.Data.AccessImport.Services
       }
       else
       {
-        var entry = _context.Entry(found);
-        throw new NotImplementedException();
-        //entry.OriginalValues.SetValues(found);
-        //entry.CurrentValues.SetValues(toSave);
+        found.GameId = toSave.GameId;
+        found.HomeTeam = toSave.HomeTeam;
+        found.JerseyNumber = toSave.JerseyNumber;
+        found.SeasonId = toSave.SeasonId;
+        found.SubbingForPlayerId = toSave.SubbingForPlayerId;
+        found.SubPlayerId = toSave.SubPlayerId;
+        found.TeamId = toSave.TeamId;
+
+        _context.Update(found);
       }
 
       return ContextSaveChanges();

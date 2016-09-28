@@ -1,0 +1,96 @@
+<div>
+  <lo30-page-header-seasons></lo30-page-header-seasons>
+
+  <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="m-t-lg">
+
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>Score Sheet Entry (GameId: {{vm.selectedGameId}})</h5>
+              <div class="ibox-tools">
+              </div>
+            </div>
+            <div class="ibox-content">
+              <div class="row">
+                <div>
+                  <h3>
+                    <div ng-hide="events.gamesLoaded">Loading games...</div>
+                    <div ng-show="events.gamesLoaded">Please select a game</div>
+                  </h3>
+                  <h3 ng-show="user.selectedGameId">
+                    <div>Game</div>
+                    <div>Id: {{data.gameSelected.gameId}}</div>
+                    <div>Date: {{data.gameSelected.gameDateTime}}</div>
+                    <div>Type: {{data.gameSelected.season.seasonName}} {{data.gameSelected.playoff == true ? "Playoff Game" : "Regular Season Game"}}</div>
+                  </h3>
+                  <div>
+                    <accordion close-others="true">
+                      <accordion-group ng-hide="events.teamGameRosterHomeLoaded" heading="Select a game to load the Home Team Roster">
+                      </accordion-group>
+                      <accordion-group ng-hide="events.teamGameRosterAwayLoaded" heading="Select a game to load the Away Team Roster">
+                      </accordion-group>
+                      <accordion-group ng-show="events.teamGameRosterHomeLoaded">
+                        <accordion-heading>
+                          Home Team Roster: <b>{{data.homeTeamName}}</b>
+                        </accordion-heading>
+                        <lo30-team-game-roster team-game-roster-items="data.teamGameRosterHome" home-team=true locked="isTeamGameRosterLocked()" />
+                      </accordion-group>
+                      <accordion-group ng-show="events.teamGameRosterAwayLoaded">
+                        <accordion-heading>
+                          Away Team Roster: <b>{{data.awayTeamName}}</b>
+                        </accordion-heading>
+                        <lo30-team-game-roster team-game-roster-items="data.teamGameRosterAway" home-team=false locked="isTeamGameRosterLocked()" />
+                      </accordion-group>
+                      <accordion-group>
+                        <accordion-heading>
+                          Scoring Detail: <b>{{data.homeTeamName}}:{{data.homeTeamScore}}</b> <b>{{data.awayTeamName}}:{{data.awayTeamScore}}</b>
+                        </accordion-heading>
+                        <lo30-scoring-detail game-id="data.gameIdSelected" />
+                      </accordion-group>
+                      <accordion-group>
+                        <accordion-heading>
+                          Penalty Detail: <b>{{data.homeTeamName}}:{{data.homeTeamPims}} mins</b> <b>{{data.awayTeamName}}:{{data.awayTeamPims}} mins</b>
+                        </accordion-heading>
+                      </accordion-group>
+                    </accordion>
+                  </div>
+                  <pre>
+                    <table>
+                      <thead>
+                        <tr>
+                          <td>Data</td>
+                          <td>Loaded</td>
+                          <td>Length</td>
+                        </tr>
+                      </thead>
+                                  <tbody>
+                                  <tr>
+                                  <td>Games</td>
+                                  <td>{{events.gamesLoaded}}</td>
+                                  <td>{{data.games.length}}</td>
+                        </tr>
+                                  <tr>
+                                  <td>teamGameRosterHome</td>
+                                  <td>{{events.teamGameRosterHomeLoaded}}</td>
+                                  <td>{{data.teamGameRosterHome.length}}</td>
+                        </tr>
+                                  <tr>
+                                  <td>teamGameRosterAway</td>
+                                  <td>{{events.teamGameRosterAwayLoaded}}</td>
+                                  <td>{{data.teamGameRosterAway.length}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </pre>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

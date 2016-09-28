@@ -39,8 +39,25 @@ angular.module('lo30NgApp')
     var a5 = "<h3>New Site</h3>";
     a5 = a5 + "Updated the site.  Will be rolling out more functionality over the coming months.";
 
+    var a6 = "<h3>Stats</h3>";
+    a6 = a6 + "Stats updated thru 9/15.";
+
+    var a7 = "<h3>Stats</h3>";
+    a7 = a7 + "Stats updated thru 9/25.";
 
     vm.news = [{
+      "class": "chat-message left",
+      "image": "img/board/dan.png",
+      "author": "Dan Hunt",
+      "date": "Tue Sept 27 2016",
+      "content": $sce.trustAsHtml(a7)
+    }, {
+      "class": "chat-message right",
+      "image": "img/board/dan.png",
+      "author": "Dan Hunt",
+      "date": "Fri Sept 16 2016",
+      "content": $sce.trustAsHtml(a6)
+    }, {
       "class": "chat-message left",
       "image": "img/board/dan.png",
       "author": "Dan Hunt",

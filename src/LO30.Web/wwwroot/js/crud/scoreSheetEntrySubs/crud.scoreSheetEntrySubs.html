@@ -1,0 +1,65 @@
+<div>
+  <lo30-page-header></lo30-page-header>
+
+  <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="m-t-lg">
+
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>ScoreSheetEntrySubs CRUD </h5>
+              <div class="ibox-tools">
+              </div>
+            </div>
+            <div class="ibox-content">
+              <div class="row">
+                <div class="col-lg-12">
+
+                  <div crud-grid
+                       column-button-click='vm.gridOnButtonClick'
+                       initialized='vm.gridOnInitialized'
+                       server-url='{{vm.serverUrl}}'
+                       columns-definition='[
+                        {
+                          "binding"       :"gameId",
+                          "header"        :"Game Id"
+                          "type"          :"integer",
+                          "required"      :"true",
+                          "hidden"        :"false"
+                        },
+                        {
+                          "binding"       :"homeTeam",
+                          "header"        :"Home Team?",
+                          "type"          :"boolean",
+                          "required"      :"true"
+                        },
+                        {
+                          "binding"       :"subbingForPlayerId",
+                          "header"        :"Sub For Player Id",
+                          "type"          :"int",
+                          "required"      :"true"
+                        },
+                        {
+                          "binding"       :"jerseyNumber",
+                          "header"        :"Jersey",
+                          "type"          :"text",
+                          "required"      :"true"
+                        },
+                        {
+                          "binding"       :"subPlayerId",
+                          "header"        :"Sub Player Id",
+                          "type"          :"int",
+                          "required"      :"true"
+                        }
+                        ]'>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

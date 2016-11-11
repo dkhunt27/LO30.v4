@@ -62,6 +62,12 @@ namespace LO30.Web.ViewModels.Api
     [Required]
     public int Subs { get; set; }
 
+    [MaxLength(6)]
+    public string LastX { get; set; }
+
+    [MaxLength(3)]
+    public string Streak { get; set; }
+
     [Required, MaxLength(5)]
     public string TeamCode { get; set; }
 

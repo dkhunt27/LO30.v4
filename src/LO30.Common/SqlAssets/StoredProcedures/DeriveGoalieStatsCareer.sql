@@ -107,7 +107,14 @@ BEGIN TRY
 		PRINT 'DRY RUN. NOT UPDATING REAL TABLES'
 
 		-- NEED TO DELETE ANY RECORDS THAT MIGHT HAVE ALREADY PROCESSED, BUT ARE NO LONGER VALID
-		-- TODO FIGURE OUT HOW TO DO CORRECTLY
+		delete from #goalieStatCareersCopy
+		from
+			#goalieStatCareersCopy c left join
+			#goalieStatCareersNew n on (c.PlayerId = n.PlayerId)
+		where
+			n.PlayerId is null
+		
+		update #results set ExistingRecordsDeleted = @@ROWCOUNT
 
 		update #goalieStatCareersCopy
 		set
@@ -141,7 +148,14 @@ BEGIN TRY
 		PRINT 'NOT A DRY RUN. UPDATING REAL TABLES'
 
 		-- NEED TO DELETE ANY RECORDS THAT MIGHT HAVE ALREADY PROCESSED, BUT ARE NO LONGER VALID
-		-- TODO FIGURE OUT HOW TO DO CORRECTLY
+		delete from GoalieStatCareers
+		from
+			GoalieStatCareers c left join
+			#goalieStatCareersNew n on (c.PlayerId = n.PlayerId)
+		where
+			n.PlayerId is null
+		
+		update #results set ExistingRecordsDeleted = @@ROWCOUNT
 
 		update GoalieStatCareers
 		set

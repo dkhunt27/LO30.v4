@@ -2,23 +2,20 @@
 --DROP PROCEDURE [dbo].[DeriveTeamStandings]
 
 CREATE PROCEDURE dbo.DeriveTeamStandings
-	@StartingGameId int = 0, 
-	@EndingGameId int = 0,
+	@StartingSeasonId int = 0, 
+	@EndingSeasonId int = 0,
 	@DryRun int = 0
 AS
 BEGIN TRY
 	SET NOCOUNT ON
 /*
 -- START comment this out when saving as stored proc
-	DECLARE @StartingGameId int;
-	DECLARE @EndingGameId int;
+	DECLARE @StartingSeasonId int;
+	DECLARE @EndingSeasonId int;
 	DECLARE @DryRun int;
 
-	SET @StartingGameId = 3200;
-	--SET @EndingGameId = 3319;
-
-	--SET @StartingGameId = 3324;
-	SET @EndingGameId = 3372;
+	SET @StartingSeasonId = 57;
+	SET @EndingSeasonId = 57;
 
 	SET @DryRun = 0;
 -- STOP comment this out when saving as stored proc
@@ -26,9 +23,12 @@ BEGIN TRY
 
 	IF OBJECT_ID('tempdb..#results') IS NOT NULL DROP TABLE #results
 	IF OBJECT_ID('tempdb..#teamStandingsDetail') IS NOT NULL DROP TABLE #teamStandingsDetail
+	IF OBJECT_ID('tempdb..#teamStandingsLast') IS NOT NULL DROP TABLE #teamStandingsLast
 	IF OBJECT_ID('tempdb..#teamStandingsCopy') IS NOT NULL DROP TABLE #teamStandingsCopy
 	IF OBJECT_ID('tempdb..#teamStandingsNew') IS NOT NULL DROP TABLE #teamStandingsNew
 	IF OBJECT_ID('tempdb..#teamStandingsRank') IS NOT NULL DROP TABLE #teamStandingsRank
+	IF OBJECT_ID('tempdb..#teamStandingsStreakDetail') IS NOT NULL DROP TABLE #teamStandingsStreakDetail
+	IF OBJECT_ID('tempdb..#teamStandingsStreak') IS NOT NULL DROP TABLE #teamStandingsStreak
 
 	CREATE TABLE #results (
 		TableName nvarchar(35) NOT NULL,
@@ -38,12 +38,32 @@ BEGIN TRY
 		ProcessedRecordsMatchExistingRecords int NOT NULL
 	)
 
+
+	CREATE TABLE #teamStandingsStreakDetail (
+		TeamId int NOT NULL,
+		Playoffs bit NOT NULL,
+		Outcome nvarchar(1) NOT NULL,
+		StartGame int NOT NULL,
+		EndGame int NOT NULL,
+		Games int NOT NULL
+	)
+
+	CREATE UNIQUE INDEX PK ON #teamStandingsStreakDetail(TeamId, Playoffs, EndGame)
+
+	CREATE TABLE #teamStandingsStreak (
+		TeamId int NOT NULL,
+		Playoffs bit NOT NULL,
+		Streak nvarchar(3) NOT NULL
+	)
+	CREATE UNIQUE INDEX PK ON #teamStandingsStreak(TeamId, Playoffs)
+
 	CREATE TABLE #teamStandingsDetail (
 		GameId int NOT NULL,
 		TeamId int NOT NULL,
 		Playoffs bit NOT NULL,
 		SeasonId int NOT NULL,
 		DivisionId int NOT NULL,
+		Outcome nvarchar(1) NOT NULL,
 		Games int NOT NULL,
 		Wins int NOT NULL,
 		Losses int NOT NULL,
@@ -54,6 +74,15 @@ BEGIN TRY
 		Subs int NOT NULL
 	)
 	CREATE UNIQUE INDEX PK ON #teamStandingsDetail(GameId, TeamId)
+
+	CREATE TABLE #teamStandingsLast (
+		TeamId int NOT NULL,
+		Playoffs bit NOT NULL,
+		Wins int NOT NULL,
+		Losses int NOT NULL,
+		Ties int NOT NULL
+	)
+	CREATE UNIQUE INDEX PK ON #teamStandingsLast(TeamId, Playoffs)
 
 	CREATE TABLE #teamStandingsRank (
 		TeamId int NOT NULL,
@@ -83,6 +112,8 @@ BEGIN TRY
 		GoalsAgainst int NOT NULL,
 		PenaltyMinutes int NOT NULL,
 		Subs int NOT NULL,
+		LastX varchar(6) NULL,
+		Streak varchar(3) NULL,
 		BCS int NULL
 	)
 	CREATE UNIQUE INDEX PK ON #teamStandingsNew(TeamId, Playoffs)
@@ -102,6 +133,8 @@ BEGIN TRY
 		GoalsAgainst int NOT NULL,
 		PenaltyMinutes int NOT NULL,
 		Subs int NOT NULL,
+		LastX varchar(6) NULL,
+		Streak varchar(3) NULL,
 		BCS int NULL
 	)
 	CREATE UNIQUE INDEX PK ON #teamStandingsCopy(TeamId, Playoffs)
@@ -122,6 +155,7 @@ BEGIN TRY
 		g.Playoffs,
 		gt.SeasonId,
 		t.DivisionId,
+		goc.Outcome,
 		case when goc.Outcome is null then 0 else 1 end as Games,
 		case when goc.Outcome = 'W' then 1 else 0 end as Wins,
 		case when goc.Outcome = 'L' then 1 else 0 end as Losses,
@@ -136,7 +170,7 @@ BEGIN TRY
 		Games g on (gt.GameId = g.GameId) inner join
 		Teams t on (gt.TeamId = t.TeamId)
 	where
-		gt.GameId between @StartingGameId and @EndingGameId
+		gt.SeasonId between @StartingSeasonId and @EndingSeasonId
 
 	-- 'Count TeamStandings (count of teams 8 or 16 if with playoffs)'
 	insert into #teamStandingsNew
@@ -155,6 +189,8 @@ BEGIN TRY
 		sum(tsd.GoalsAgainst) as GoalsAgainst,
 		sum(tsd.PenaltyMinutes) as PenaltyMinutes,
 		sum(tsd.Subs) as Subs,
+		null as LastX,
+		null as Streak,
 		null as BCS
 	from
 		#teamStandingsDetail tsd
@@ -181,7 +217,7 @@ BEGIN TRY
 	WHERE
 		Playoffs = 0
 
-	-- 'Count Determine Ranking (count of teams 8 or 16 if with playoffs)'
+	-- 'Determine Ranking (count of teams 8 or 16 if with playoffs)'
 	INSERT INTO #teamStandingsRank
 	SELECT
 		n.TeamId,
@@ -196,7 +232,7 @@ BEGIN TRY
 	FROM
 		#teamStandingsNew n
 
-	-- 'Count Set Rank (count of teams 8 or 16 if with playoffs)'
+	-- 'Set Rank (count of teams 8 or 16 if with playoffs)'
 	UPDATE #teamStandingsNew
 	SET
 		Ranking = r.Ranking
@@ -204,6 +240,94 @@ BEGIN TRY
 		#teamStandingsNew n inner join
 		#teamStandingsRank r on (n.TeamId = r.TeamId and n.Playoffs = r.Playoffs)
 
+	-- 'Determine Last X '
+	INSERT INTO #teamStandingsLast
+    SELECT 
+        lastX.TeamId, 
+        lastX.Playoffs, 
+        sum(case when lastX.Outcome = 'W' then 1 else 0 end) as Wins, 
+        sum(case when lastX.Outcome = 'L' then 1 else 0 end) as Losses, 
+        sum(case when lastX.Outcome = 'T' then 1 else 0 end) as Ties
+    FROM (
+        SELECT 
+            TeamId, 
+			Playoffs,
+            GameId,
+            Outcome,
+            ROW_NUMBER() OVER (Partition BY TeamId, Playoffs ORDER BY GameId DESC ) AS rn
+        FROM
+            #teamStandingsDetail
+    ) lastX 
+    WHERE lastX.rn <= 5 
+    GROUP BY
+        lastX.TeamId,
+		lastX.Playoffs
+
+	-- 'Set LastX'
+	UPDATE #teamStandingsNew
+	SET
+		LastX = convert(varchar, l.Wins) + '-' + convert(varchar, l.Losses) + '-' + convert(varchar, l.Ties) 
+	FROM
+		#teamStandingsNew n inner join
+		#teamStandingsLast l on (n.TeamId = l.TeamId and n.Playoffs = l.Playoffs)
+
+	-- 'Determine Streak '
+	-- http://www.sqlteam.com/article/detecting-runs-or-streaks-in-your-data
+
+	INSERT INTO #teamStandingsStreakDetail
+	SELECT 
+		TeamId,
+		Playoffs,
+		Outcome, 
+		MIN(GameId) as StartGame, 
+		MAX(GameId) as EndGame, 
+		COUNT(*) as Games
+	FROM (
+		SELECT 
+			TeamId,
+			Playoffs,
+			GameId, 
+			Outcome, 
+		  (SELECT COUNT(*) 
+		   FROM #teamStandingsDetail y 
+		   WHERE x.TeamId = y.TeamId AND x.Playoffs = y.Playoffs AND x.Outcome <> y.Outcome 
+		   AND y.GameId <= x.GameId) as RunGroup 
+		FROM 
+			#teamStandingsDetail x
+	) streak1
+	GROUP BY 
+		TeamId,
+		Playoffs,
+		Outcome, 
+		RunGroup
+	ORDER BY 
+		Min(GameId)
+
+	INSERT INTO #teamStandingsStreak
+	SELECT 
+		m.TeamId,
+		m.Playoffs,
+		Outcome + convert(varchar,Games) as Streak
+	FROM
+    ( SELECT	
+		TeamId,
+		Playoffs,
+		Max(GameId) as LastGameId
+	FROM
+		#teamStandingsDetail
+	GROUP BY
+		TeamId,
+		Playoffs
+	) m INNER JOIN
+	#teamStandingsStreakDetail d ON (m.TeamId = d.TeamId AND m.Playoffs = d.Playoffs AND m.LastGameId = d.EndGame)
+
+	-- 'Set Streak'
+	UPDATE #teamStandingsNew
+	SET
+		Streak = l.Streak
+	FROM
+		#teamStandingsNew n inner join
+		#teamStandingsStreak l on (n.TeamId = l.TeamId and n.Playoffs = l.Playoffs)
 
 	update #teamStandingsNew
 	set
@@ -220,7 +344,9 @@ BEGIN TRY
 								GoalsFor,
 								GoalsAgainst,
 								PenaltyMinutes,
-								Subs)
+								Subs,
+								LastX,
+								Streak)
 
 	-- 'Count Copying TeamStandings'
 	INSERT INTO #teamStandingsCopy
@@ -239,6 +365,8 @@ BEGIN TRY
 		GoalsAgainst,
 		PenaltyMinutes,
 		Subs,
+		LastX,
+		Streak,
 		BINARY_CHECKSUM(TeamId,
 								Playoffs,
 								SeasonId,
@@ -252,7 +380,9 @@ BEGIN TRY
 								GoalsFor,
 								GoalsAgainst,
 								PenaltyMinutes,
-								Subs) as BCS
+								Subs,
+								LastX,
+								Streak) as BCS
 	FROM 
 		TeamStandings
 
@@ -263,7 +393,7 @@ BEGIN TRY
 
 		-- NEED TO DELETE ANY RECORDS THAT MIGHT HAVE ALREADY PROCESSED, BUT ARE NO LONGER VALID
 		-- TODO FIGURE OUT HOW TO DO CORRECTLY
-
+		/*
 		update #teamStandingsCopy
 		set
 			SeasonId = n.SeasonId,
@@ -277,7 +407,10 @@ BEGIN TRY
 			GoalsFor = n.GoalsFor,
 			GoalsAgainst = n.GoalsAgainst,
 			PenaltyMinutes = n.PenaltyMinutes,
-			Subs = n.Subs
+			Subs = n.Subs,
+			LastX = n.LastX,
+			Streak = n.Streak*/
+			select *
 		from
 			#teamStandingsCopy c INNER JOIN
 			#teamStandingsNew n ON (c.TeamId = n.TeamId AND c.Playoffs = n.Playoffs)
@@ -318,7 +451,9 @@ BEGIN TRY
 			GoalsFor = n.GoalsFor,
 			GoalsAgainst = n.GoalsAgainst,
 			PenaltyMinutes = n.PenaltyMinutes,
-			Subs = n.Subs
+			Subs = n.Subs,
+			LastX = n.LastX,
+			Streak = n.Streak
 		from
 			TeamStandings r INNER JOIN
 			#teamStandingsCopy c ON (r.TeamId = c.TeamId AND r.Playoffs = c.Playoffs) INNER JOIN
@@ -341,7 +476,9 @@ BEGIN TRY
 			GoalsFor,
 			GoalsAgainst,
 			PenaltyMinutes,
-			Subs)
+			Subs,
+			LastX,
+			Streak)
 		select
 			n.TeamId,
 			n.Playoffs,
@@ -356,7 +493,9 @@ BEGIN TRY
 			n.GoalsFor,
 			n.GoalsAgainst,
 			n.PenaltyMinutes,
-			n.Subs
+			n.Subs,
+			n.LastX,
+			n.Streak
 		from
 			#teamStandingsNew n left join
 			TeamStandings c on (c.TeamId = n.TeamId AND c.Playoffs = n.Playoffs)

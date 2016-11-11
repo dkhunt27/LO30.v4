@@ -14,12 +14,13 @@ BEGIN TRY
 	DECLARE @EndingSeasonId int;
 	DECLARE @DryRun int;
 
-	SET @StartingSeasonId = 54;
-	SET @EndingSeasonId = 54;
+	SET @StartingSeasonId = 57;
+	SET @EndingSeasonId = 57;
 
 	SET @DryRun = 0;
 -- STOP comment this out when saving as stored proc
 */
+
 
 	IF OBJECT_ID('tempdb..#results') IS NOT NULL DROP TABLE #results
 	IF OBJECT_ID('tempdb..#playerStatSeasonsCopy') IS NOT NULL DROP TABLE #playerStatSeasonsCopy
@@ -91,7 +92,7 @@ BEGIN TRY
 		PlayerStatTeams s
 	where
 		s.SeasonId between @StartingSeasonId and @EndingSeasonId AND
-		s.PlayerId <> 0
+		s.PlayerId > 0
 	group by
 		s.PlayerId,
 		s.SeasonId,
@@ -147,7 +148,15 @@ BEGIN TRY
 		PRINT 'DRY RUN. NOT UPDATING REAL TABLES'
 
 		-- NEED TO DELETE ANY RECORDS THAT MIGHT HAVE ALREADY PROCESSED, BUT ARE NO LONGER VALID
-		-- TODO FIGURE OUT HOW TO DO CORRECTLY
+		delete from #playerStatSeasonsCopy
+		from
+			#playerStatSeasonsCopy c left join
+			#playerStatSeasonsNew n on (c.PlayerId = n.PlayerId AND c.SeasonId = n.SeasonId AND c.Playoffs = n.Playoffs)
+		where
+			n.PlayerId is null AND
+			c.SeasonId between @StartingSeasonId and @EndingSeasonId
+		
+		update #results set ExistingRecordsDeleted = @@ROWCOUNT
 
 		update #playerStatSeasonsCopy
 		set
@@ -184,7 +193,15 @@ BEGIN TRY
 		PRINT 'NOT A DRY RUN. UPDATING REAL TABLES'
 
 		-- NEED TO DELETE ANY RECORDS THAT MIGHT HAVE ALREADY PROCESSED, BUT ARE NO LONGER VALID
-		-- TODO FIGURE OUT HOW TO DO CORRECTLY
+		delete from PlayerStatSeasons
+		from
+			PlayerStatSeasons c left join
+			#playerStatSeasonsNew n on (c.PlayerId = n.PlayerId AND c.SeasonId = n.SeasonId AND c.Playoffs = n.Playoffs)
+		where
+			n.PlayerId is null AND
+			c.SeasonId between @StartingSeasonId and @EndingSeasonId
+
+		update #results set ExistingRecordsDeleted = @@ROWCOUNT
 
 		update PlayerStatSeasons
 		set

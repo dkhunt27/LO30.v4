@@ -23,7 +23,7 @@
                 <div class="row">
                   <div class="col-xs-12">
 
-                    <uib-tabset active="local.tabActiveIndex">
+                    <uib-tabset active="tabActiveIndex">
 
                       <uib-tab heading="Completed">
                         <br />
@@ -73,6 +73,13 @@
                             </tr>
                           </table>
                         </div>
+                      </uib-tab>
+                      <uib-tab heading="Lines">
+                        <br />
+                        <h5>Overall</h5>
+                        <table ng-if="vm.linesSummaryDataLoaded" datatable="lines" dt-options="vm.dtOptions.linesSummary" dt-columns="vm.dtColumns.linesSummary" dt-instance="vm.dtInstance.linesSummary" class="table table-striped table-bordered table-hover" style="width: 100%;"></table>
+                        <h5>Team Breakdown</h5>
+                        <table ng-if="vm.linesDetailDataLoaded" datatable="lines" dt-options="vm.dtOptions.linesDetail" dt-columns="vm.dtColumns.linesDetail" dt-instance="vm.dtInstance.linesDetail" class="table table-striped table-bordered table-hover" style="width: 100%;"></table>
                       </uib-tab>
                     </uib-tabset>
                   </div>

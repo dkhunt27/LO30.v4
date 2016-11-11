@@ -316,6 +316,87 @@ namespace LO30.Data
       });
       #endregion
 
+      #region LineStatGame (PK, FK[1-N], column type)
+      modelBuilder.Entity<LineStatGame>(entity =>
+      {
+        entity.ToTable("LineStatGames");
+
+        entity.HasKey(k => new { k.GameId, k.TeamId, k.Line });
+
+        entity.HasOne(o => o.Season)
+              .WithMany(m => m.LineStatGames)
+              .HasForeignKey(fk => fk.SeasonId)
+              .HasConstraintName("FK_LineStatGames_Seasons_SeasonId")
+              .OnDelete(DeleteBehavior.Restrict);
+
+        entity.HasOne(o => o.Team)
+              .WithMany(m => m.LineStatGames)
+              .HasForeignKey(fk => fk.TeamId)
+              .HasConstraintName("FK_LineStatGames_Teams_TeamId")
+              .OnDelete(DeleteBehavior.Restrict);
+
+        entity.HasOne(o => o.OpponentTeam)
+              .WithMany(m => m.LineStatGamesOpponentTeams)
+              .HasForeignKey(fk => fk.OpponentTeamId)
+              .HasConstraintName("FK_LineStatGames_Teams_OpponentTeamId")
+              .OnDelete(DeleteBehavior.Restrict);
+
+        entity.HasOne(o => o.Game)
+              .WithMany(m => m.LineStatGames)
+              .HasForeignKey(fk => fk.GameId)
+              .HasConstraintName("FK_LineStatGames_Games_GameId")
+              .OnDelete(DeleteBehavior.Restrict);
+      });
+      #endregion
+
+      #region LineStatSeason (PK, FK[1-N], column type)
+      modelBuilder.Entity<LineStatSeason>(entity =>
+      {
+        entity.ToTable("LineStatSeasons");
+
+        entity.HasKey(k => new { k.TeamId, k.Line, k.SeasonId, k.Playoffs });
+
+        entity.HasOne(o => o.Season)
+              .WithMany(m => m.LineStatSeasons)
+              .HasForeignKey(fk => fk.SeasonId)
+              .HasConstraintName("FK_LineStatSeasons_Seasons_SeasonId")
+              .OnDelete(DeleteBehavior.Restrict);
+
+        entity.HasOne(o => o.Team)
+              .WithMany(m => m.LineStatSeasons)
+              .HasForeignKey(fk => fk.TeamId)
+              .HasConstraintName("FK_LineStatSeasons_Teams_TeamId")
+              .OnDelete(DeleteBehavior.Restrict);
+      });
+      #endregion
+
+      #region LineStatTeam (PK, FK[1-N], column type)
+      modelBuilder.Entity<LineStatTeam>(entity =>
+      {
+        entity.ToTable("LineStatTeams");
+
+        entity.HasKey(k => new { k.TeamId, k.Line, k.OpponentTeamId, k.Playoffs });
+
+        entity.HasOne(o => o.Season)
+              .WithMany(m => m.LineStatTeams)
+              .HasForeignKey(fk => fk.SeasonId)
+              .HasConstraintName("FK_LineStatTeams_Seasons_SeasonId")
+              .OnDelete(DeleteBehavior.Restrict);
+
+        entity.HasOne(o => o.Team)
+              .WithMany(m => m.LineStatTeams)
+              .HasForeignKey(fk => fk.TeamId)
+              .HasConstraintName("FK_LineStatTeams_Teams_TeamId")
+              .OnDelete(DeleteBehavior.Restrict);
+
+        entity.HasOne(o => o.OpponentTeam)
+              .WithMany(m => m.LineStatTeamsOpponentTeams)
+              .HasForeignKey(fk => fk.OpponentTeamId)
+              .HasConstraintName("FK_LineStatTeams_Teams_OpponentTeamId")
+              .OnDelete(DeleteBehavior.Restrict);
+      });
+      #endregion
+
       #region Penalty (PK, AKs)
       modelBuilder.Entity<Penalty>(entity =>
       {
@@ -605,6 +686,33 @@ namespace LO30.Data
       });
       #endregion
 
+      #region ScoreSheetEntryProcessedLinePlusMinus (PK, FK[1-N], column type)
+      modelBuilder.Entity<ScoreSheetEntryProcessedLinePlusMinus>(entity =>
+      {
+        entity.ToTable("ScoreSheetEntryProcessedLinePlusMinuses");
+
+        entity.HasKey(k => new { k.ScoreSheetEntryGoalId });
+
+        entity.HasOne(o => o.Season)
+              .WithMany(m => m.ScoreSheetEntryProcessedLinePlusMinuses)
+              .HasForeignKey(fk => fk.SeasonId)
+              .HasConstraintName("FK_ScoreSheetEntryProcessedLinePlusMinuses_Seasons_SeasonId")
+              .OnDelete(DeleteBehavior.Restrict);
+
+        entity.HasOne(o => o.Team)
+              .WithMany(m => m.ScoreSheetEntryProcessedLinePlusMinuses)
+              .HasForeignKey(fk => fk.TeamId)
+              .HasConstraintName("FK_ScoreSheetEntryProcessedLinePlusMinuses_Teams_TeamId")
+              .OnDelete(DeleteBehavior.Restrict);
+
+        entity.HasOne(o => o.Game)
+              .WithMany(m => m.ScoreSheetEntryProcessedLinePlusMinuses)
+              .HasForeignKey(fk => fk.GameId)
+              .HasConstraintName("FK_ScoreSheetEntryProcessedLinePlusMinuses_Games_GameId")
+              .OnDelete(DeleteBehavior.Restrict);
+      });
+      #endregion
+
       #region ScoreSheetEntryProcessedPenalty (PK, FK[1-N], column type)
       modelBuilder.Entity<ScoreSheetEntryProcessedPenalty>(entity =>
       {
@@ -824,6 +932,9 @@ namespace LO30.Data
     public DbSet<GoalieStatGame> GoalieStatGames { get; set; }
     public DbSet<GoalieStatSeason> GoalieStatSeasons { get; set; }
     public DbSet<GoalieStatTeam> GoalieStatTeams { get; set; }
+    public DbSet<LineStatGame> LineStatGames { get; set; }
+    public DbSet<LineStatSeason> LineStatSeasons { get; set; }
+    public DbSet<LineStatTeam> LineStatTeams { get; set; }
     public DbSet<Penalty> Penalties { get; set; }
     public DbSet<Player> Players { get; set; }
     public DbSet<PlayerDraft> PlayerDrafts { get; set; }
@@ -838,6 +949,7 @@ namespace LO30.Data
     public DbSet<ScoreSheetEntryPenalty> ScoreSheetEntryPenalties { get; set; }
     public DbSet<ScoreSheetEntryProcessedGame> ScoreSheetEntryProcessedGames { get; set; }
     public DbSet<ScoreSheetEntryProcessedGoal> ScoreSheetEntryProcessedGoals { get; set; }
+    public DbSet<ScoreSheetEntryProcessedLinePlusMinus> ScoreSheetEntryProcessedLinePlusMinuses { get; set; }
     public DbSet<ScoreSheetEntryProcessedPenalty> ScoreSheetEntryProcessedPenalties { get; set; }
     public DbSet<ScoreSheetEntryProcessedSub> ScoreSheetEntryProcessedSubs { get; set; }
     public DbSet<ScoreSheetEntrySub> ScoreSheetEntrySubs { get; set; }

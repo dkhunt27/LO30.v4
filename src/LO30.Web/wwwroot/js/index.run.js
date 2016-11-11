@@ -15,7 +15,14 @@
     ])
 
     .run(['$rootScope', '$urlRouter', '$location', '$state', function ($rootScope, $urlRouter, $location, $state) {
-      $rootScope.$on('$locationChangeSuccess', function(e, newUrl, oldUrl) {
+      $rootScope.$on('$locationChangeSuccess', function (e, newUrl, oldUrl) {
+
+        if ($state.current.data && $state.current.data.pageTitle) {
+          document.title = $state.current.data.pageTitle + "-LO30";
+        } else {
+          document.title = "LO30";
+        }
+
         // Prevent $urlRouter's default handler from firing
         e.preventDefault();
 
@@ -37,4 +44,5 @@
       // Configures $urlRouter's listener *after* your custom listener
       $urlRouter.listen();
     }])
+
 })();

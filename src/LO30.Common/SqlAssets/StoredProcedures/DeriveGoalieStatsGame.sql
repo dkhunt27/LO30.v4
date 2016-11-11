@@ -105,7 +105,7 @@ BEGIN TRY
 	where
 		gr.GameId between @StartingGameId and @EndingGameId AND
 		gr.Goalie = 1 AND
-		gr.PlayerId <> 0
+		gr.PlayerId > 0
 
 	update #goalieStatGamesNew
 	set

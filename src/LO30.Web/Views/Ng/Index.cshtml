@@ -3,7 +3,6 @@
 }
 
 @section Styles {
-
   <link rel="stylesheet" href="~/lib/slider-revolution/src/css/settings.css" />
   <link rel="stylesheet" href="~/lib/owl-carousel/owl-carousel/owl.carousel.css" />
   <link rel="stylesheet" href="~/lib/owl-carousel/owl-carousel/owl.theme.css" />
@@ -28,6 +27,7 @@
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.overrides.css" asp-append-version="true" />
   </environment>
+
 }
 
 <div ng-app="lo30NgApp">
@@ -35,136 +35,135 @@
 </div>
 
 @section Scripts {
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+@*<script src="~/lib/jquery-ui/jquery-ui.min.js"></script>*@
 
-  <script src="~/lib/jquery/dist/jquery.min.js"></script>
-  <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-  @*<script src="~/lib/jquery-ui/jquery-ui.min.js"></script>*@
-
-  <script src="~/lib/angular/angular.min.js"></script>
-  <script src="~/lib/angular-animate/angular-animate.min.js"></script>
-  <script src="~/lib/angular-cookies/angular-cookies.min.js"></script>
-  <script src="~/lib/angular-touch/angular-touch.min.js"></script>
-  <script src="~/lib/angular-sanitize/angular-sanitize.min.js"></script>
-  <script src="~/lib/angular-messages/angular-messages.min.js"></script>
-  <script src="~/lib/angular-aria/angular-aria.min.js"></script>
-  <script src="~/lib/angular-resource/angular-resource.min.js"></script>
-  <script src="~/lib/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="~/lib/angular/angular.min.js"></script>
+<script src="~/lib/angular-animate/angular-animate.min.js"></script>
+<script src="~/lib/angular-cookies/angular-cookies.min.js"></script>
+<script src="~/lib/angular-touch/angular-touch.min.js"></script>
+<script src="~/lib/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="~/lib/angular-messages/angular-messages.min.js"></script>
+<script src="~/lib/angular-aria/angular-aria.min.js"></script>
+<script src="~/lib/angular-resource/angular-resource.min.js"></script>
+<script src="~/lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 
 
-  <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
-  <script src="~/lib/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-  <script src="~/lib/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-  <script src="~/lib/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-  <script src="~/lib/pdfmake/build/pdfmake.min.js"></script>
-  <script src="~/lib/pdfmake/build/vfs_fonts.js"></script> <!--TODO MIN-->
-  <script src="~/lib/jszip/dist/jszip.min.js"></script>
-  <script src="~/lib/datatables.net-buttons/js/buttons.html5.min.js"></script>
-  <script src="~/lib/datatables.net-buttons/js/buttons.colVis.min.js"></script>
-  <script src="~/lib/jquery-datatables-columnfilter/jquery.dataTables.columnFilter.js"></script>
-  <script src="~/lib/angular-datatables/dist/angular-datatables.js"></script>
-  <script src="~/lib/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
-  <script src="~/lib/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.min.js"></script>
-  <script src="~/lib/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.min.js"></script>
-  <script src="~/lib/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.min.js"></script>
-  <script src="~/lib/angular-datatables/dist/plugins/fixedheader/angular-datatables.fixedheader.min.js"></script>
+<script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/lib/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="~/lib/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/lib/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="~/lib/pdfmake/build/pdfmake.min.js"></script>
+<script src="~/lib/pdfmake/build/vfs_fonts.js"></script> <!--TODO MIN-->
+<script src="~/lib/jszip/dist/jszip.min.js"></script>
+<script src="~/lib/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="~/lib/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+<script src="~/lib/jquery-datatables-columnfilter/jquery.dataTables.columnFilter.js"></script>
+<script src="~/lib/angular-datatables/dist/angular-datatables.js"></script>
+<script src="~/lib/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
+<script src="~/lib/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.min.js"></script>
+<script src="~/lib/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.min.js"></script>
+<script src="~/lib/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.min.js"></script>
+<script src="~/lib/angular-datatables/dist/plugins/fixedheader/angular-datatables.fixedheader.min.js"></script>
 
-  <script src="~/lib/angular-pageslide-directive/dist/angular-pageslide-directive.min.js"></script>
+<script src="~/lib/angular-pageslide-directive/dist/angular-pageslide-directive.min.js"></script>
 
-  <script src="~/lib/bootstrap-switch/dist/js/bootstrap-switch.min.js"></script>
-  <script src="~/lib/angular-bootstrap-switch/dist/angular-bootstrap-switch.min.js"></script>
+<script src="~/lib/bootstrap-switch/dist/js/bootstrap-switch.min.js"></script>
+<script src="~/lib/angular-bootstrap-switch/dist/angular-bootstrap-switch.min.js"></script>
 
-  <script src="~/lib/angular-media-queries/match-media.js"></script>  <!--TODO MIN-->
-  <script src="~/lib/showdown/dist/showdown.min.js"></script>
-  <script src="~/lib/angular-markdown-directive/markdown.js"></script>  <!--TODO MIN-->
+<script src="~/lib/angular-media-queries/match-media.js"></script>  <!--TODO MIN-->
+<script src="~/lib/showdown/dist/showdown.min.js"></script>
+<script src="~/lib/angular-markdown-directive/markdown.js"></script>  <!--TODO MIN-->
 
-  <script src="~/lib/metisMenu/dist/metisMenu.min.js"></script>
-  <script src="~/lib/slimScroll/jquery.slimscroll.min.js"></script>
-  <script src="~/lib/pace/pace.min.js"></script>
-  <script src="~/lib/moment/min/moment.min.js"></script>
-  <script src="~/lib/underscore/underscore-min.js"></script>
-  <script src="~/lib/simple-js-validator/lib/simple.js.validator.min.js"></script>
-  <script src="~/lib/owl-carousel/owl-carousel/owl.carousel.min.js"></script>
-  <script src="~/lib/slider-revolution/src/js/jquery.themepunch.plugins.min.js"></script>
-  <script src="~/lib/slider-revolution/src/js/jquery.themepunch.revolution.min.js"></script>
-  <script src="~/libManual/toastr/toastr.min.js"></script>
+<script src="~/lib/metisMenu/dist/metisMenu.min.js"></script>
+<script src="~/lib/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="~/lib/pace/pace.min.js"></script>
+<script src="~/lib/moment/min/moment.min.js"></script>
+<script src="~/lib/underscore/underscore-min.js"></script>
+<script src="~/lib/simple-js-validator/lib/simple.js.validator.min.js"></script>
+<script src="~/lib/owl-carousel/owl-carousel/owl.carousel.min.js"></script>
+<script src="~/lib/slider-revolution/src/js/jquery.themepunch.plugins.min.js"></script>
+<script src="~/lib/slider-revolution/src/js/jquery.themepunch.revolution.min.js"></script>
+<script src="~/libManual/toastr/toastr.min.js"></script>
 
-  @*<environment names="Development">*@
-    <script src="~/js/script.js"></script>
-  @*</environment>
+@*<environment names="Development">*@
+<script src="~/js/script.js"></script>
+@*</environment>
   <environment names="Staging,Production">
     <script src="~/js/script.min.js" asp-append-version="true"></script>
   </environment>*@
 
 
-  <!--TODO MIN-->  
+<!--TODO MIN-->
 
-  <script src="~/js/index.modules.js"></script>
-  <script src="~/js/index.route.js"></script>
-  <script src="~/js/index.run.js"></script>
+<script src="~/js/index.modules.js"></script>
+<script src="~/js/index.route.js"></script>
+<script src="~/js/index.run.js"></script>
 
-  <script src="~/js/about/about.controller.js"></script>
-  <script src="~/js/careers/careers.controller.js"></script>
-  <script src="~/js/crud/players/crud.players.controller.js"></script>
-  <script src="~/js/crud/players/crud.players.factory.js"></script>
-  <script src="~/js/crud/scoreSheetEntrySubs/crud.scoreSheetEntrySubs.controller.js"></script>
-  <script src="~/js/crud/scoreSheetEntrySubs/crud.scoreSheetEntrySubs.factory.js"></script>
-  <script src="~/js/gameBoxScore/gameBoxScore.controller.js"></script>
-  <script src="~/js/modalWindow/modal-window.factory.js"></script>
-  <script src="~/js/notifications/notifications.factory.js"></script>
-  <script src="~/js/news/news.controller.js"></script>
-  <script src="~/js/profilesPlayers/profilesPlayers.controller.js"></script>
-  <script src="~/js/profilesTeams/profilesTeam.controller.js"></script>
-  <script src="~/js/reactive/reactive.factory.js"></script>
-  <script src="~/js/schedule/schedule.controller.js"></script>
-  <script src="~/js/scoreSheetEntry/scoreSheetEntry.controller.js"></script>
-  <script src="~/js/standings/standings.controller.js"></script>
-  <script src="~/js/statsPlayers/statsPlayers.controller.js"></script>
+<script src="~/js/about/about.controller.js"></script>
+<script src="~/js/careers/careers.controller.js"></script>
+<script src="~/js/crud/players/crud.players.controller.js"></script>
+<script src="~/js/crud/players/crud.players.factory.js"></script>
+<script src="~/js/crud/scoreSheetEntrySubs/crud.scoreSheetEntrySubs.controller.js"></script>
+<script src="~/js/crud/scoreSheetEntrySubs/crud.scoreSheetEntrySubs.factory.js"></script>
+<script src="~/js/gameBoxScore/gameBoxScore.controller.js"></script>
+<script src="~/js/modalWindow/modal-window.factory.js"></script>
+<script src="~/js/notifications/notifications.factory.js"></script>
+<script src="~/js/news/news.controller.js"></script>
+<script src="~/js/profilesPlayers/profilesPlayers.controller.js"></script>
+<script src="~/js/profilesTeams/profilesTeam.controller.js"></script>
+<script src="~/js/reactive/reactive.factory.js"></script>
+<script src="~/js/schedule/schedule.controller.js"></script>
+<script src="~/js/scoreSheetEntry/scoreSheetEntry.controller.js"></script>
+<script src="~/js/standings/standings.controller.js"></script>
+<script src="~/js/statsLines/statsLines.controller.js"></script>
+<script src="~/js/statsPlayers/statsPlayers.controller.js"></script>
 
-  <script src="~/js/components/content/content.component.js"></script>
-  <script src="~/js/components/navigation/navigation.component.js"></script>
-  <script src="~/js/components/topnavbar/topnavbar.component.js"></script>
-  <script src="~/js/components/footer/footer.component.js"></script>
+<script src="~/js/components/content/content.component.js"></script>
+<script src="~/js/components/navigation/navigation.component.js"></script>
+<script src="~/js/components/topnavbar/topnavbar.component.js"></script>
+<script src="~/js/components/footer/footer.component.js"></script>
 
-  <script src="~/js/directives.js"></script>
-  <script src="~/js/directives/crud.grid/crud.grid.controller.js"></script>
-  <script src="~/js/directives/crud.grid/crud.grid.directive.js"></script>
-  <script src="~/js/directives/crud.grid/crud.grid.factory.js"></script>
-  <script src="~/js/directives/crud.grid/cell.editor/cell.editor.controller.js"></script>
-  <script src="~/js/directives/crud.grid/cell.editor/cell.editor.directive.js"></script>
-  <script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetail.controller.js"></script>
-  <script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetail.js"></script>
-  <script src="~/js/directives/gameScoreByPeriodDetailGoalies/gameScoreByPeriodDetailGoalies.js"></script>
-  <script src="~/js/directives/gameScoreByPeriodDetailPenalties/gameScoreByPeriodDetailPenalties.js"></script>
-  <script src="~/js/directives/gameScoreByPeriodDetailScoring/gameScoreByPeriodDetailScoring.js"></script>
-  <script src="~/js/directives/gameScoreByPeriodSummary/gameScoreByPeriodSummary.controller.js"></script>
-  <script src="~/js/directives/gameScoreByPeriodSummary/gameScoreByPeriodSummary.js"></script>
-  <script src="~/js/directives/pageHeader/pageHeader.js"></script>
-  <script src="~/js/directives/pageHeader/pageHeader.controller.js"></script>
-  <script src="~/js/directives/pageHeaderGames/pageHeaderGames.controller.js"></script>
-  <script src="~/js/directives/pageHeaderGames/pageHeaderGames.js"></script>
-  <script src="~/js/directives/pageHeaderSeasons/pageHeaderSeasons.controller.js"></script>
-  <script src="~/js/directives/pageHeaderSeasons/pageHeaderSeasons.js"></script>
-  <script src="~/js/directives/pageHeaderSeasonsOnly/pageHeaderSeasonsOnly.controller.js"></script>
-  <script src="~/js/directives/pageHeaderSeasonsOnly/pageHeaderSeasonsOnly.js"></script>
-  <script src="~/js/directives/teamGameRoster/teamGameRoster.controller.js"></script>
-  <script src="~/js/directives/teamGameRoster/teamGameRoster.js"></script>
-  <script src="~/js/directives/teamGameRosterPlayer/teamGameRosterPlayer.controller.js"></script>
-  <script src="~/js/directives/teamGameRosterPlayer/teamGameRosterPlayer.js"></script>
+<script src="~/js/directives.js"></script>
+<script src="~/js/directives/crud.grid/crud.grid.controller.js"></script>
+<script src="~/js/directives/crud.grid/crud.grid.directive.js"></script>
+<script src="~/js/directives/crud.grid/crud.grid.factory.js"></script>
+<script src="~/js/directives/crud.grid/cell.editor/cell.editor.controller.js"></script>
+<script src="~/js/directives/crud.grid/cell.editor/cell.editor.directive.js"></script>
+<script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetail.controller.js"></script>
+<script src="~/js/directives/gameScoreByPeriodDetail/gameScoreByPeriodDetail.js"></script>
+<script src="~/js/directives/gameScoreByPeriodDetailGoalies/gameScoreByPeriodDetailGoalies.js"></script>
+<script src="~/js/directives/gameScoreByPeriodDetailPenalties/gameScoreByPeriodDetailPenalties.js"></script>
+<script src="~/js/directives/gameScoreByPeriodDetailScoring/gameScoreByPeriodDetailScoring.js"></script>
+<script src="~/js/directives/gameScoreByPeriodSummary/gameScoreByPeriodSummary.controller.js"></script>
+<script src="~/js/directives/gameScoreByPeriodSummary/gameScoreByPeriodSummary.js"></script>
+<script src="~/js/directives/pageHeader/pageHeader.js"></script>
+<script src="~/js/directives/pageHeader/pageHeader.controller.js"></script>
+<script src="~/js/directives/pageHeaderGames/pageHeaderGames.controller.js"></script>
+<script src="~/js/directives/pageHeaderGames/pageHeaderGames.js"></script>
+<script src="~/js/directives/pageHeaderSeasons/pageHeaderSeasons.controller.js"></script>
+<script src="~/js/directives/pageHeaderSeasons/pageHeaderSeasons.js"></script>
+<script src="~/js/directives/pageHeaderSeasonsOnly/pageHeaderSeasonsOnly.controller.js"></script>
+<script src="~/js/directives/pageHeaderSeasonsOnly/pageHeaderSeasonsOnly.js"></script>
+<script src="~/js/directives/teamGameRoster/teamGameRoster.controller.js"></script>
+<script src="~/js/directives/teamGameRoster/teamGameRoster.js"></script>
+<script src="~/js/directives/teamGameRosterPlayer/teamGameRosterPlayer.controller.js"></script>
+<script src="~/js/directives/teamGameRosterPlayer/teamGameRosterPlayer.js"></script>
 
-  <script src="~/js/directives/seasonSelector/seasonSelector.js"></script>
-  <script src="~/js/directives/seasonSelector/seasonSelector.controller.js"></script>
-  <script src="~/js/directives/seasonTypeSelector/seasonTypeSelector.js"></script>
-  <script src="~/js/directives/seasonTypeSelector/seasonTypeSelector.controller.js"></script>
+<script src="~/js/directives/seasonSelector/seasonSelector.js"></script>
+<script src="~/js/directives/seasonSelector/seasonSelector.controller.js"></script>
+<script src="~/js/directives/seasonTypeSelector/seasonTypeSelector.js"></script>
+<script src="~/js/directives/seasonTypeSelector/seasonTypeSelector.controller.js"></script>
 
-  <script src="~/js/filters/filterizeFilter.js"></script>
-  <script src="~/js/filters/percentageFilter.js"></script>
+<script src="~/js/filters/filterizeFilter.js"></script>
+<script src="~/js/filters/percentageFilter.js"></script>
 
-  <script src="~/js/services/apiBaseService.js"></script>
-  <script src="~/js/services/apiService.js"></script>
-  <script src="~/js/services/criteriaService.js"></script>
-  <script src="~/js/services/broadcastService.js"></script>
-  <script src="~/js/services/externalLibService.js"></script>
-
+<script src="~/js/services/apiBaseService.js"></script>
+<script src="~/js/services/apiService.js"></script>
+<script src="~/js/services/criteriaService.js"></script>
+<script src="~/js/services/broadcastService.js"></script>
+<script src="~/js/services/externalLibService.js"></script>
 }
 

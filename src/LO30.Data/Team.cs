@@ -60,11 +60,23 @@ namespace LO30.Data
 
     public virtual List<GoalieStatGame> GoalieStatGames { get; set; }
 
+    public virtual List<LineStatSeason> LineStatSeasons { get; set; }
+
+    public virtual List<LineStatTeam> LineStatTeams { get; set; }
+
+    public virtual List<LineStatTeam> LineStatTeamsOpponentTeams { get; set; }
+
+    public virtual List<LineStatGame> LineStatGames { get; set; }
+
+    public virtual List<LineStatGame> LineStatGamesOpponentTeams { get; set; }
+
     public virtual List<PlayerStatTeam> PlayerStatTeams { get; set; }
 
     public virtual List<PlayerStatGame> PlayerStatGames { get; set; }
 
     public virtual List<ScoreSheetEntryProcessedGoal> ScoreSheetEntryProcessedGoals { get; set; }
+
+    public virtual List<ScoreSheetEntryProcessedLinePlusMinus> ScoreSheetEntryProcessedLinePlusMinuses { get; set; }
 
     public virtual List<ScoreSheetEntryProcessedPenalty> ScoreSheetEntryProcessedPenalties { get; set; }
 

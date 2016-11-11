@@ -60,6 +60,12 @@ namespace LO30.Data.AccessImportWeb.Controllers
         //aImporter.ImportPlayers();
         //aImporter.ImportPlayerStatuses();
 
+
+        // load team roster updates
+        //int startingSeasonIdToProcess = 57;
+        //int endingSeasonIdToProcess = 57;
+        //aImporter.ImportTeamRosters(startingSeasonIdToProcess, endingSeasonIdToProcess);
+
         // load playoff updates
         //int startingSeasonIdToProcess = 56;
         //int endingSeasonIdToProcess = 56;
@@ -72,8 +78,8 @@ namespace LO30.Data.AccessImportWeb.Controllers
         //aImporter.ImportGameTeams(startingGameIdToProcess, endingGameIdToProcess);
 
         // load scoresheets
-        int startingGameIdToProcess = 3633;
-        int endingGameIdToProcess = 3633;
+        int startingGameIdToProcess = 3668;
+        int endingGameIdToProcess = 3674;
         aImporter.ImportScoreSheetEntries(startingGameIdToProcess, endingGameIdToProcess);
         aImporter.ImportScoreSheetEntryPenalties(startingGameIdToProcess, endingGameIdToProcess);
         aImporter.ImportScoreSheetEntrySubs(startingGameIdToProcess, endingGameIdToProcess);

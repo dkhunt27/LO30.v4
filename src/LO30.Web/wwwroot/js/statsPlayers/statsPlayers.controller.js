@@ -82,7 +82,7 @@ angular.module('lo30NgApp')
       vm.dtInstance = {};
     }
 
-    var renderDatatable = function () {
+    var renderDatatable = function (playerType) {
 
       var dom = "<'row'<'col-sm-4'l><'col-sm-4 text-center'i><'col-sm-4'<'html5buttons'B>>><'row'<'col-sm-12'rt>><'row'<'col-sm-12'p>>";
 
@@ -90,6 +90,14 @@ angular.module('lo30NgApp')
 
         dom = "<'row'<'col-xs-6'l><'col-xs-6'<'html5buttons'B>>><'row'<'col-xs-12 text-center'i>><'row'<'col-sm-12'rt>><'row'<'col-sm-12'p>>";
 
+      }
+
+      var sortIndex = 6;
+      var sortDir = "asc";
+
+      if (playerType === "skater") {
+        sortIndex = 5;
+        sortDir = "desc";
       }
 
       //re define option
@@ -104,7 +112,7 @@ angular.module('lo30NgApp')
         .withOption('page-length', 10)
         .withOption('responsive', true)
         .withOption('searching', true)
-        .withOption('order', [[5, "desc"]])
+        .withOption('order', [[sortIndex, sortDir]])
         .withOption('scrollX', true)
         .withPaginationType('full_numbers')
         .withDisplayLength(10)

@@ -19,7 +19,10 @@
           <a ui-sref="root.news()" ng-click="$ctrl.setActive('news')"><i class="fa fa-newspaper-o"></i> <span class="nav-label">News</span></a>
         </li>
         <li ng-class="{active: $ctrl.isActive('standings')}">
-          <a ui-sref="root.standings({seasonId: $ctrl.season.seasonId, seasonTypeId: $ctrl.seasonType.seasonTypeId})" ng-click="$ctrl.setActive('standings')"><i class="fa fa-group"></i> <span class="nav-label">Standings</span></a>
+          <a ui-sref="root.standings({seasonId: $ctrl.season.seasonId, seasonTypeId: $ctrl.seasonType.seasonTypeId})" ng-click="$ctrl.setActive('standings')"><i class="fa fa-signal"></i> <span class="nav-label">Standings</span></a>
+        </li>
+        <li ng-class="{active: $ctrl.isActive('statsLine')}">
+          <a ui-sref="root.statsLine({seasonId: $ctrl.season.seasonId, seasonTypeId: $ctrl.seasonType.seasonTypeId})" ng-click="$ctrl.setActive('statsLine')"><i class="fa fa-group"></i> <span class="nav-label">Lines</span></a>
         </li>
         <li ng-class="{active: $ctrl.isActive('stats')}">
           <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Stats</span><span class="fa arrow"></span></a>

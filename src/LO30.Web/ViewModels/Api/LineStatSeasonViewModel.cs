@@ -3,31 +3,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LO30.Web.ViewModels.Api
 {
-  public class PlayerStatGameViewModel
+  public class LineStatSeasonViewModel
   {
-    [Required]
-    public int PlayerId { get; set; }
-
-    [Required]
-    public int SeasonId { get; set; }
-
     [Required]
     public int TeamId { get; set; }
 
     [Required]
-    public int GameId { get; set; }
+    public int Line { get; set; }
 
     [Required]
     public bool Playoffs { get; set; }
 
     [Required]
-    public bool Sub { get; set; }
+    public int SeasonId { get; set; }
 
     [Required]
-    public int Line { get; set; }
-
-    [Required, MaxLength(1)]
-    public string Position { get; set; }
+    public int Games { get; set; }
 
     [Required]
     public int Goals { get; set; }
@@ -50,14 +41,8 @@ namespace LO30.Web.ViewModels.Api
     [Required]
     public int GameWinningGoals { get; set; }
 
-    [Required, MaxLength(35)]
-    public string PlayerFirstName { get; set; }
-
-    [Required, MaxLength(35)]
-    public string PlayerLastName { get; set; }
-
-    [MaxLength(5)]
-    public string PlayerSuffix { get; set; }
+    [Required]
+    public int GoalsAgainst { get; set; }
 
     [Required, MaxLength(5)]
     public string TeamCode { get; set; }
@@ -68,16 +53,7 @@ namespace LO30.Web.ViewModels.Api
     [Required, MaxLength(35)]
     public string TeamNameLong { get; set; }
 
-    [Required, MaxLength(5)]
-    public string TeamCodeOpponent { get; set; }
-
-    [Required, MaxLength(15)]
-    public string TeamNameShortOpponent { get; set; }
-
-    [Required, MaxLength(35)]
-    public string TeamNameLongOpponent { get; set; }
-
-    [Required]
-    public DateTime GameDateTime { get; set; }
+    [Required, MaxLength(12)]
+    public string SeasonName { get; set; }
   }
 }

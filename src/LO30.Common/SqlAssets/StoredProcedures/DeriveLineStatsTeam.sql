@@ -1,7 +1,7 @@
 ﻿
---DROP PROCEDURE [dbo].[DerivePlayerStatsTeam]
+--DROP PROCEDURE [dbo].[DeriveLineStatsTeam]
 
-CREATE PROCEDURE dbo.DerivePlayerStatsTeam
+CREATE PROCEDURE [dbo].[DeriveLineStatsTeam]
 	@StartingSeasonId int = 0, 
 	@EndingSeasonId int = 0,
 	@DryRun int = 0
@@ -22,8 +22,8 @@ BEGIN TRY
 */
 
 	IF OBJECT_ID('tempdb..#results') IS NOT NULL DROP TABLE #results
-	IF OBJECT_ID('tempdb..#playerStatTeamsCopy') IS NOT NULL DROP TABLE #playerStatTeamsCopy
-	IF OBJECT_ID('tempdb..#playerStatTeamsNew') IS NOT NULL DROP TABLE #playerStatTeamsNew
+	IF OBJECT_ID('tempdb..#lineStatTeamsCopy') IS NOT NULL DROP TABLE #lineStatTeamsCopy
+	IF OBJECT_ID('tempdb..#lineStatTeamsNew') IS NOT NULL DROP TABLE #lineStatTeamsNew
 
 	CREATE TABLE #results (
 		TableName nvarchar(35) NOT NULL,
@@ -33,14 +33,12 @@ BEGIN TRY
 		ProcessedRecordsMatchExistingRecords int NOT NULL
 	)
 
-	CREATE TABLE #playerStatTeamsNew (
-		PlayerId int NOT NULL,
+	CREATE TABLE #lineStatTeamsNew (
 		TeamId int NOT NULL,
-		Playoffs bit NOT NULL,
-		Sub bit NOT NULL,
-		SeasonId int NOT NULL,
 		Line int NOT NULL,
-		Position nvarchar(1) NOT NULL,
+		OpponentTeamId int NOT NULL,
+		Playoffs bit NOT NULL,
+		SeasonId int NOT NULL,
 		Games int NOT NULL,
 		Goals int NOT NULL,
 		Assists int NOT NULL,
@@ -49,18 +47,17 @@ BEGIN TRY
 		PowerPlayGoals int NOT NULL,
 		ShortHandedGoals int NOT NULL,
 		GameWinningGoals int NOT NULL,
+		GoalsAgainst int NOT NULL,
 		BCS int NULL
 	)
-	CREATE UNIQUE INDEX PK ON #playerStatTeamsNew(PlayerId, TeamId, Playoffs, Sub)
+	CREATE UNIQUE INDEX PK ON #lineStatTeamsNew(TeamId, Line, OpponentTeamId, Playoffs)
 
-	CREATE TABLE #playerStatTeamsCopy (
-		PlayerId int NOT NULL,
+	CREATE TABLE #lineStatTeamsCopy (
 		TeamId int NOT NULL,
-		Playoffs bit NOT NULL,
-		Sub bit NOT NULL,
-		SeasonId int NOT NULL,
 		Line int NOT NULL,
-		Position nvarchar(1) NOT NULL,
+		OpponentTeamId int NOT NULL,
+		Playoffs bit NOT NULL,
+		SeasonId int NOT NULL,
 		Games int NOT NULL,
 		Goals int NOT NULL,
 		Assists int NOT NULL,
@@ -69,28 +66,27 @@ BEGIN TRY
 		PowerPlayGoals int NOT NULL,
 		ShortHandedGoals int NOT NULL,
 		GameWinningGoals int NOT NULL,
+		GoalsAgainst int NOT NULL,
 		BCS int NULL
 	)
-	CREATE UNIQUE INDEX PK ON #playerStatTeamsCopy(PlayerId, TeamId, Playoffs, Sub)
+	CREATE UNIQUE INDEX PK ON #lineStatTeamsCopy(TeamId, Line, OpponentTeamId, Playoffs)
 
 	INSERT INTO #results
 	SELECT
-		'PlayerStatTeams' as TableName,
+		'LineStatTeams' as TableName,
 		0 as NewRecordsInserted,
 		0 as ExistingRecordsUpdated,
 		0 as ExistingRecordsDeleted,
 		0 as ProcessedRecordsMatchExistingRecords
 
 
-	insert into #playerStatTeamsNew
+	insert into #lineStatTeamsNew
 	select
-		s.PlayerId,
 		s.TeamId,
-		s.Playoffs,
-		s.Sub,
-		s.SeasonId,
 		s.Line,
-		s.Position,
+		s.OpponentTeamId,
+		s.Playoffs,
+		s.SeasonId,
 		count(s.GameId) as Games,
 		sum(s.Goals) as Goals,
 		sum(s.Assists) as Assists,
@@ -99,31 +95,27 @@ BEGIN TRY
 		sum(s.PowerPlayGoals) as PowerPlayGoals,
 		sum(s.ShortHandedGoals) as ShortHandedGoals,
 		sum(s.GameWinningGoals) as GameWinningGoals,
+		sum(s.GoalsAgainst) as GoalsAgainst,
 		NULL as BCS
 	from
-		PlayerStatGames s
+		LineStatGames s
 	where
-		s.SeasonId between @StartingSeasonId and @EndingSeasonId AND
-		s.PlayerId > 0
+		s.SeasonId between @StartingSeasonId and @EndingSeasonId
 	group by
-		s.PlayerId,
 		s.TeamId,
-		s.Playoffs,
-		s.SeasonId,
-		s.Sub,
 		s.Line,
-		s.Position
+		s.OpponentTeamId,
+		s.Playoffs,
+		s.SeasonId
 
 
-	update #playerStatTeamsNew
+	update #lineStatTeamsNew
 	set
-		BCS = BINARY_CHECKSUM(PlayerId,
-								TeamId,
-								Playoffs,
-								Sub,
-								SeasonId,
+		BCS = BINARY_CHECKSUM(TeamId,
 								Line,
-								Position,
+								OpponentTeamId,
+								Playoffs,
+								SeasonId,
 								Games,
 								Goals,
 								Assists,
@@ -131,17 +123,16 @@ BEGIN TRY
 								PenaltyMinutes,
 								PowerPlayGoals,
 								ShortHandedGoals,
-								GameWinningGoals)
+								GameWinningGoals,
+								GoalsAgainst)
 
-	INSERT INTO #playerStatTeamsCopy
+	INSERT INTO #lineStatTeamsCopy
 	SELECT 
-		PlayerId,
 		TeamId,
-		Playoffs,
-		Sub,
-		SeasonId,
 		Line,
-		Position,
+		OpponentTeamId,
+		Playoffs,
+		SeasonId,
 		Games,
 		Goals,
 		Assists,
@@ -150,13 +141,12 @@ BEGIN TRY
 		PowerPlayGoals,
 		ShortHandedGoals,
 		GameWinningGoals,
-		BINARY_CHECKSUM(PlayerId,
-								TeamId,
-								Playoffs,
-								Sub,
-								SeasonId,
+		GoalsAgainst,
+		BINARY_CHECKSUM(TeamId,
 								Line,
-								Position,
+								OpponentTeamId,
+								Playoffs,
+								SeasonId,
 								Games,
 								Goals,
 								Assists,
@@ -164,9 +154,10 @@ BEGIN TRY
 								PenaltyMinutes,
 								PowerPlayGoals,
 								ShortHandedGoals,
-								GameWinningGoals) as BCS
+								GameWinningGoals,
+								GoalsAgainst) as BCS
 	FROM 
-		PlayerStatTeams
+		LineStatTeams
 
 
 	IF (@dryrun = 1) 
@@ -175,21 +166,19 @@ BEGIN TRY
 		PRINT 'DRY RUN. NOT UPDATING REAL TABLES'
 
 		-- NEED TO DELETE ANY RECORDS THAT MIGHT HAVE ALREADY PROCESSED, BUT ARE NO LONGER VALID
-		delete from #playerStatTeamsCopy
+		delete from #lineStatTeamsCopy
 		from
-			#playerStatTeamsCopy c left join
-			#playerStatTeamsNew n on (c.PlayerId = n.PlayerId AND c.TeamId = n.TeamId AND c.Playoffs = n.Playoffs AND c.Sub = n.Sub)
+			#lineStatTeamsCopy c left join
+			#lineStatTeamsNew n on (c.TeamId = n.TeamId AND c.Line = n.Line AND c.OpponentTeamId = n.OpponentTeamId AND c.Playoffs = n.Playoffs)
 		where
-			n.PlayerId is null AND
+			n.TeamId is null AND
 			c.SeasonId between @StartingSeasonId and @EndingSeasonId
 
 		update #results set ExistingRecordsDeleted = @@ROWCOUNT
 
-		update #playerStatTeamsCopy
+		update #lineStatTeamsCopy
 		set
 			SeasonId = n.SeasonId,
-			Line = n.Line,
-			Position = n.Position,
 			Games = n.Games,
 			Goals = n.Goals,
 			Assists = n.Assists,
@@ -197,23 +186,24 @@ BEGIN TRY
 			PenaltyMinutes = n.PenaltyMinutes,
 			PowerPlayGoals = n.PowerPlayGoals,
 			ShortHandedGoals = n.ShortHandedGoals,
-			GameWinningGoals = n.GameWinningGoals
+			GameWinningGoals = n.GameWinningGoals,
+			GoalsAgainst = n.GoalsAgainst
 		from
-			#playerStatTeamsCopy c INNER JOIN
-			#playerStatTeamsNew n ON (c.PlayerId = n.PlayerId AND c.TeamId = n.TeamId AND c.Playoffs = n.Playoffs AND c.Sub = n.Sub)
+			#lineStatTeamsCopy c INNER JOIN
+			#lineStatTeamsNew n ON (c.TeamId = n.TeamId AND c.Line = n.Line AND c.OpponentTeamId = n.OpponentTeamId AND c.Playoffs = n.Playoffs)
 		where
 			c.BCS <> n.BCS
 
 		update #results set ExistingRecordsUpdated = @@ROWCOUNT
 
-		insert into #playerStatTeamsCopy
+		insert into #lineStatTeamsCopy
 		select
 			n.*
 		from
-			#playerStatTeamsNew n left join
-			#playerStatTeamsCopy c on (c.PlayerId = n.PlayerId AND c.TeamId = n.TeamId AND c.Playoffs = n.Playoffs AND c.Sub = n.Sub)
+			#lineStatTeamsNew n left join
+			#lineStatTeamsCopy c on (c.TeamId = n.TeamId AND c.Line = n.Line AND c.OpponentTeamId = n.OpponentTeamId AND c.Playoffs = n.Playoffs)
 		where
-			c.PlayerId is null
+			c.TeamId is null
 
 		update #results set NewRecordsInserted = @@ROWCOUNT
 	END
@@ -223,21 +213,19 @@ BEGIN TRY
 		PRINT 'NOT A DRY RUN. UPDATING REAL TABLES'
 
 		-- NEED TO DELETE ANY RECORDS THAT MIGHT HAVE ALREADY PROCESSED, BUT ARE NO LONGER VALID
-		delete from PlayerStatTeams
+		delete from LineStatTeams
 		from
-			PlayerStatTeams c left join
-			#playerStatTeamsNew n on (c.PlayerId = n.PlayerId AND c.TeamId = n.TeamId AND c.Playoffs = n.Playoffs AND c.Sub = n.Sub)
+			LineStatTeams c left join
+			#lineStatTeamsNew n on (c.TeamId = n.TeamId AND c.Line = n.Line AND c.OpponentTeamId = n.OpponentTeamId AND c.Playoffs = n.Playoffs)
 		where
-			n.PlayerId is null AND
+			n.TeamId is null AND
 			c.SeasonId between @StartingSeasonId and @EndingSeasonId
 
 		update #results set ExistingRecordsDeleted = @@ROWCOUNT
 
-		update PlayerStatTeams
+		update LineStatTeams
 		set
 			SeasonId = n.SeasonId,
-			Line = n.Line,
-			Position = n.Position,
 			Games = n.Games,
 			Goals = n.Goals,
 			Assists = n.Assists,
@@ -245,23 +233,22 @@ BEGIN TRY
 			PenaltyMinutes = n.PenaltyMinutes,
 			PowerPlayGoals = n.PowerPlayGoals,
 			ShortHandedGoals = n.ShortHandedGoals,
-			GameWinningGoals = n.GameWinningGoals
+			GameWinningGoals = n.GameWinningGoals,
+			GoalsAgainst = n.GoalsAgainst
 		from
-			PlayerStatTeams r INNER JOIN
-			#playerStatTeamsCopy c ON (r.PlayerId = c.PlayerId AND r.TeamId = c.TeamId AND r.Playoffs = c.Playoffs AND r.Sub = c.Sub) INNER JOIN
-			#playerStatTeamsNew n ON (c.PlayerId = n.PlayerId AND c.TeamId = n.TeamId AND c.Playoffs = n.Playoffs AND c.Sub = n.Sub)
+			LineStatTeams r INNER JOIN
+			#lineStatTeamsCopy c ON (r.TeamId = c.TeamId AND r.Line = c.Line AND r.OpponentTeamId = c.OpponentTeamId AND r.Playoffs = c.Playoffs) INNER JOIN
+			#lineStatTeamsNew n ON (c.TeamId = n.TeamId AND c.Line = n.Line AND c.OpponentTeamId = n.OpponentTeamId AND c.Playoffs = n.Playoffs)
 		where
 			c.BCS <> n.BCS
 
 		update #results set ExistingRecordsUpdated = @@ROWCOUNT
 
-		insert into PlayerStatTeams(PlayerId,
-			TeamId,
-			Playoffs,
-			Sub,
-			SeasonId,
+		insert into LineStatTeams(TeamId,
 			Line,
-			Position,
+			OpponentTeamId,
+			Playoffs,
+			SeasonId,
 			Games,
 			Goals,
 			Assists,
@@ -269,15 +256,14 @@ BEGIN TRY
 			PenaltyMinutes,
 			PowerPlayGoals,
 			ShortHandedGoals,
-			GameWinningGoals)
+			GameWinningGoals,
+			GoalsAgainst)
 		select
-			n.PlayerId,
 			n.TeamId,
-			n.Playoffs,
-			n.Sub,
-			n.SeasonId,
 			n.Line,
-			n.Position,
+			n.OpponentTeamId,
+			n.Playoffs,
+			n.SeasonId,
 			n.Games,
 			n.Goals,
 			n.Assists,
@@ -285,18 +271,19 @@ BEGIN TRY
 			n.PenaltyMinutes,
 			n.PowerPlayGoals,
 			n.ShortHandedGoals,
-			n.GameWinningGoals
+			n.GameWinningGoals,
+			n.GoalsAgainst
 		from
-			#playerStatTeamsNew n left join
-			PlayerStatTeams c on (c.PlayerId = n.PlayerId AND c.TeamId = n.TeamId AND c.Playoffs = n.Playoffs AND c.Sub = n.Sub)
+			#lineStatTeamsNew n left join
+			LineStatTeams c on (c.TeamId = n.TeamId AND c.Line = n.Line AND c.OpponentTeamId = n.OpponentTeamId AND c.Playoffs = n.Playoffs)
 		where
-			c.PlayerId is null
+			c.TeamId is null
 
 		update #results set NewRecordsInserted = @@ROWCOUNT
 
 	END
 
-	update #results set ProcessedRecordsMatchExistingRecords = (select count(*) from #playerStatTeamsNew) - NewRecordsInserted - ExistingRecordsUpdated
+	update #results set ProcessedRecordsMatchExistingRecords = (select count(*) from #lineStatTeamsNew) - NewRecordsInserted - ExistingRecordsUpdated
 
 	select * from #results
 END TRY

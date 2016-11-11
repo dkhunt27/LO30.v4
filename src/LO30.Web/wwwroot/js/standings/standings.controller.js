@@ -43,6 +43,8 @@ angular.module('lo30NgApp')
         { "data": "losses", "title": "Losses", "className": "text-center" },
         { "data": "ties", "title": "Ties", "className": "text-center" },
         { "data": "points", "title": "Points", "className": "text-center" },
+        { "data": "lastX", "title": "Last 5", "className": "text-center" },
+        { "data": "streak", "title": "Streak", "className": "text-center" },
         { "data": "goalsFor", "title": "GF", "className": "text-center" },
         { "data": "goalsAgainst", "title": "GA", "className": "text-center" },
         { "data": "penaltyMinutes", "title": "PIM", "className": "text-center" },

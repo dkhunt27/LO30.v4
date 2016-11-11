@@ -42,6 +42,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SqlAssets\StoredProcedures\DeriveLineStatsSeason.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DeriveLineStatsTeam.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DeriveLineStatsGame.sql" />
+    <Content Include="SqlAssets\StoredProcedures\DeriveScoreSheetEntryProcessedPlusMinuses.sql" />
     <Content Include="SqlAssets\StoredProcedures\old\DeriveForWebTeamStandings.sql" />
     <Content Include="SqlAssets\StoredProcedures\old\DeriveForWebGoalieStats.sql" />
     <Content Include="SqlAssets\StoredProcedures\DeriveGoalieStatsCareer.sql" />

@@ -46,6 +46,12 @@ namespace LO30.Data
     [Required]
     public int Subs { get; set; }
 
+    //[Required]
+    public string LastX { get; set; }
+
+    //[Required]
+    public string Streak { get; set; }
+
     #region foreign keys
     // items in the classes below must exist before an item in this class
 

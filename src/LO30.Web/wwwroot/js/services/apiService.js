@@ -15,6 +15,9 @@ angular.module('lo30NgApp')
         goalieStatGames: {},
         goalieStatSeasons: {},
         goalieStatTeams: {},
+        lineStatGames: {},
+        lineStatSeasons: {},
+        lineStatTeams: {},
         players: {},
         playerStatCareers: {},
         playerStatGames: {},
@@ -166,6 +169,66 @@ angular.module('lo30NgApp')
         var inputs = {
           apiDataType: "goalieStatGames.listForSeasonIdPlayerId",
           urlPartial: "goaliestatgames/goalies/" + playerId + "/seasons/" + seasonId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.lineStatSeasons.listForSeasonIdSeasonTypeId = function (seasonId, seasonTypeId) {
+        var inputs = {
+          apiDataType: "lineStatSeasons.listForSeasonIdSeasonTypeId",
+          urlPartial: "linestatseasons/seasons/" + seasonId + "/seasonTypes/" + seasonTypeId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.lineStatSeasons.ListForTeamIdSeasonId = function (teamId, seasonId) {
+        var inputs = {
+          apiDataType: "lineStatSeasons.ListForTeamIdSeasonId",
+          urlPartial: "linestatseasons/teams/" + teamId + "/seasons/" + seasonId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.lineStatTeams.listForSeasonIdSeasonTypeId = function (seasonId, seasonTypeId) {
+        var inputs = {
+          apiDataType: "lineStatTeams.listForSeasonIdSeasonTypeId",
+          urlPartial: "linestatteams/seasons/" + seasonId + "/seasonTypes/" + seasonTypeId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.lineStatTeams.ListForTeamIdSeasonId = function (teamId, seasonId) {
+        var inputs = {
+          apiDataType: "lineStatTeams.ListForTeamIdSeasonId",
+          urlPartial: "linestatteams/teams/" + teamId + "/seasons/" + seasonId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.lineStatGames.listForGameId = function (gameId) {
+        var inputs = {
+          apiDataType: "lineStatGames.listForGameId",
+          urlPartial: "linestatgames/games/" + gameId,
+          method: "GET",
+          params: null
+        }
+        return apiBaseService.execute(inputs);
+      }
+
+      service.lineStatGames.ListForTeamIdLineSeasonId = function (teamId, line, seasonId) {
+        var inputs = {
+          apiDataType: "lineStatGames.ListForTeamIdLineSeasonId",
+          urlPartial: "linestatgames/teams/" + teamId + "/lines/" + line + "/seasonTypes/" + seasonId,
           method: "GET",
           params: null
         }

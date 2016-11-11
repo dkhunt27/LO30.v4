@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module('lo30NgApp')
-  .controller('profilesTeamsController', function ($log, $scope, $state, $timeout, $q, $compile, constScheduleTeamFeedBaseUrl, criteriaService, apiService, screenSize, externalLibService, broadcastService, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
+  .controller('profilesLinesController', function ($log, $scope, $state, $timeout, $q, $compile, constScheduleTeamFeedBaseUrl, criteriaService, apiService, screenSize, externalLibService, broadcastService, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
     var _ = externalLibService._;
     var sjv = externalLibService.sjv;
@@ -11,8 +11,7 @@ angular.module('lo30NgApp')
     var tabStates = {
       completed: 0,
       upcoming: 1,
-      schedule: 2,
-      lines: 3
+      schedule: 2
     };
 
     var tabLoaded = [false, false, false] // must match tabStates length
@@ -37,9 +36,7 @@ angular.module('lo30NgApp')
       vm.dtOptions = {
         teamStandings: DTOptionsBuilder.newOptions(),
         gamesCompleted: DTOptionsBuilder.newOptions(),
-        gamesUpcoming: DTOptionsBuilder.newOptions(),
-        linesSummary: DTOptionsBuilder.newOptions(),
-        linesDetail: DTOptionsBuilder.newOptions()
+        gamesUpcoming: DTOptionsBuilder.newOptions()
       }
 
       vm.dtColumns = {
@@ -134,35 +131,13 @@ angular.module('lo30NgApp')
                       return data;
                     }
                   })
-        ],
-        linesSummary: [
-          DTColumnBuilder.newColumn('teamNameToDisplay').withTitle('Team'),
-          DTColumnBuilder.newColumn('line').withTitle('Line'),
-          DTColumnBuilder.newColumn('plusMinus').withTitle('+/-')
-            .renderWith(function (data, type, row, meta) {
-              return row.goals - row.goalsAgainst;
-            }),
-          DTColumnBuilder.newColumn('goals').withTitle('Goals For'),
-          DTColumnBuilder.newColumn('goalsAgainst').withTitle('Goals Against')
-        ],
-        linesDetail: [
-          DTColumnBuilder.newColumn('line').withTitle('Line'),
-          DTColumnBuilder.newColumn('teamNameToDisplayOpponent').withTitle('Opponent'),
-          DTColumnBuilder.newColumn('plusMinus').withTitle('+/-')
-            .renderWith(function (data, type, row, meta) {
-              return row.goals - row.goalsAgainst;
-            }),
-          DTColumnBuilder.newColumn('goals').withTitle('Goals For'),
-          DTColumnBuilder.newColumn('goalsAgainst').withTitle('Goals Against')
         ]
       };
 
       vm.dtInstance = {
         teamStandings: {},
         gamesCompleted: {},
-        gamesUpcoming: {},
-        linesSummary: {},
-        linesDetail: {}
+        gamesUpcoming: {}
       };
     }
 
@@ -250,113 +225,13 @@ angular.module('lo30NgApp')
       //.withButtons(["colvis", "copyHtml5", "excelHtml5", { extend: 'pdfHtml5', orientation: 'landscape', pageSize: 'letter' }])
       // .withDOM("<'row'<'col-sm-4'li><'col-sm-4'f><'col-sm-4'<'html5buttons'B>><'clearfix'>><'row'<'col-sm-12'rt>><'row'<'col-sm-3 text-left'i><'col-sm-9'<'pull-right'p>>>");
 
-      var linesSummary = DTOptionsBuilder
-          .fromFnPromise(function () {
-            return deferred.linesSummary.promise;
-          })
-          .withOption('processing', false)
-          .withOption('paging', false)
-          .withOption('bFilter', false)
-          .withOption('bInfo', false)
-          .withOption('searching', false)
-          .withOption('scrollX', true)
-          .withOption('order', [[1, "asc"]])
-          .withBootstrap();
-
-      var linesDetail = DTOptionsBuilder
-        .fromFnPromise(function () {
-          return deferred.linesDetail.promise;
-        })
-        .withOption('processing', false)
-        .withOption('paging', false)
-        .withOption('bFilter', false)
-        .withOption('bInfo', false)
-        .withOption('searching', false)
-        .withOption('scrollX', true)
-        .withOption('order', [[1, "asc"], [0, "asc"]])
-        .withBootstrap();
-
       //re define option
       vm.dtOptions = {
         teamStandings: teamStandings,
         gamesCompleted: gamesCompleted,
-        gamesUpcoming: gamesUpcoming,
-        linesSummary: linesSummary,
-        linesDetail: linesDetail
+        gamesUpcoming: gamesUpcoming
       };
     }
-
-    var buildLineStatsToDisplay = function (lineStats) {
-
-      var lineStatsToDisplay = lineStats.map(function (item, index) {
-
-        item.rank = index + 1;
-
-        if (screenSize.is('xs, sm')) {
-
-          item.teamNameToDisplay = item.teamCode;
-          item.teamNameToDisplayOpponent = item.teamCodeOpponent;
-
-        } else if (screenSize.is('md')) {
-
-          item.teamNameToDisplay = item.teamNameShort;
-          item.teamNameToDisplayOpponent = item.teamNameShortOpponent;
-
-        } else {
-
-          item.teamNameToDisplay = item.teamNameShort;
-          item.teamNameToDisplayOpponent = item.teamNameShortOpponent;
-
-        }
-
-        return item;
-      });
-
-      return lineStatsToDisplay;
-    };
-
-    var fetchLineStats = function (seasonId, teamId) {
-      
-      vm.linesSummaryDataLoaded = false;
-      vm.linesDetailDataLoaded = false;
-
-      var lineStats = {
-        season: [],
-        seasonPlayoffs: [],
-        team: [],
-        teamPlayoffs: []
-      };
-
-      var lineStatsSeason = [];
-      var lineStatsTeam = [];
-
-      apiService.lineStatSeasons.ListForTeamIdSeasonId(teamId, seasonId).then(function (fulfilled) {
-
-        lineStatsSeason = buildLineStatsToDisplay(fulfilled);
-
-        return apiService.lineStatTeams.ListForTeamIdSeasonId(teamId, seasonId);
-
-      }).then(function (fulfilled) {
-
-        lineStatsTeam = buildLineStatsToDisplay(fulfilled);
-
-      }).finally(function () {
-
-        lineStats.season = lineStatsSeason;
-
-        lineStats.team = lineStatsTeam;
-
-        deferred.linesSummary.resolve(lineStatsSeason);
-
-        vm.linesSummaryDataLoaded = true;
-
-        deferred.linesDetail.resolve(lineStatsTeam);
-
-        vm.linesDetailDataLoaded = true;
-
-        $log.debug("lineStats", lineStats);
-      });
-    };
 
     var buildTeamStandingsToDisplay = function (teamStandings) {
 
@@ -504,62 +379,9 @@ angular.module('lo30NgApp')
 
     var fetchData = function (seasonId, teamId) {
 
-      switch ($scope.tabActiveIndex) {
-        case tabStates.completed:
-          
-          if (!vm.teamStandingsDataLoaded) {
-            fetchTeamStandings(seasonId, teamId);
-          }
+      fetchTeamStandings(seasonId, teamId);
 
-          if (!vm.gamesDataLoaded) {
-            fetchGames(seasonId, teamId);
-          }
-
-          $state.params.tab = "completed";
-
-          break;
-        case tabStates.upcoming:
-          
-          if (!vm.teamStandingsDataLoaded) {
-            fetchTeamStandings(seasonId, teamId);
-          }
-
-          if (!vm.gamesDataLoaded) {
-            fetchGames(seasonId, teamId);
-          }
-
-          $state.params.tab = "upcoming";
-
-          break;
-        case tabStates.schedule:
-          
-          if (!vm.teamStandingsDataLoaded) {
-            fetchTeamStandings(seasonId, teamId);
-          }
-
-          if (!vm.gamesDataLoaded) {
-            fetchGames(seasonId, teamId);
-          }
-
-          $state.params.tab = "schedule";
-
-          break;
-        case tabStates.lines:
-
-          if (!vm.teamStandingsDataLoaded) {
-            fetchTeamStandings(seasonId, teamId);
-          }
-
-          if (!vm.linesDataLoaded) {
-            fetchLineStats(seasonId, teamId);
-          }
-
-          $state.params.tab = "lines";
-
-          break;
-        default:
-          $log.debug("tabActiveIndex not mapped for: ", $scope.tabActiveIndex);
-      }
+      fetchGames(seasonId, teamId);
     };
 
     var setWatches = function () {
@@ -595,8 +417,6 @@ angular.module('lo30NgApp')
 
       vm.teamStandingsDataLoaded = false;
       vm.gamesDataLoaded = false;
-      vm.linesSummaryDataLoaded = false;
-      vm.linesDetailDataLoaded = false;
 
       $scope.tabActiveIndex = -1;
 
@@ -604,9 +424,7 @@ angular.module('lo30NgApp')
         teamStandings: $q.defer(),
         gamesCompleted: $q.defer(),
         gamesUpcoming: $q.defer(),
-        teamFeed: $q.defer(),
-        linesSummary: $q.defer(),
-        linesDetail: $q.defer()
+        teamFeed: $q.defer()
       }
 
       var season = criteriaService.seasons.get();
@@ -615,23 +433,17 @@ angular.module('lo30NgApp')
 
       vm.teamId = parseInt($state.params.teamId, 10);
 
-      if ($state.params.tab) {
+      // use timeout to let the uib-tab initial the active states
+      $timeout(function () {
+        // map to active tab index
 
-        // use timeout to let the uib-tab initial the active states
-        $timeout(function () {
-          // map to active tab index
+        if ($state.params.tab) {
           $scope.tabActiveIndex = tabStates[$state.params.tab];
-        }, 200);
-
-      } else {
-
-        // set default tab, after watches so correct data events fire
-        // use timeout to let the uib-tab initial the active states
-        $timeout(function () {
-          $scope.tabActiveIndex = tabStates.upcoming;  // set season as default tab
-        }, 200);
-
-      }
+        } else {
+          // set default tab, after watches so correct data events fire
+          $scope.tabActiveIndex = tabStates.upcoming;  // set default tab
+        }
+      }, 200);
 
       initDatatable();
 

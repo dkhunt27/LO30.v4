@@ -1,28 +1,26 @@
 ﻿
 --DROP PROCEDURE [dbo].[DeriveGoalieStatsTeam]
 
-CREATE PROCEDURE dbo.DeriveGoalieStatsTeam
-	@StartingGameId int = 0, 
-	@EndingGameId int = 0,
+CREATE PROCEDURE [dbo].[DeriveGoalieStatsTeam]
+	@StartingSeasonId int = 0, 
+	@EndingSeasonId int = 0,
 	@DryRun int = 0
 AS
 BEGIN TRY
 	SET NOCOUNT ON
 /*
 -- START comment this out when saving as stored proc
-	DECLARE @StartingGameId int;
-	DECLARE @EndingGameId int;
+	DECLARE @StartingSeasonId int;
+	DECLARE @EndingSeasonId int;
 	DECLARE @DryRun int;
 
-	SET @StartingGameId = 3200;
-	--SET @EndingGameId = 3319;
-
-	--SET @StartingGameId = 3324;
-	SET @EndingGameId = 3372;
+	SET @StartingSeasonId = 57;
+	SET @EndingSeasonId = 57;
 
 	SET @DryRun = 0;
 -- STOP comment this out when saving as stored proc
 */
+
 
 	IF OBJECT_ID('tempdb..#results') IS NOT NULL DROP TABLE #results
 	IF OBJECT_ID('tempdb..#goalieStatTeamsCopy') IS NOT NULL DROP TABLE #goalieStatTeamsCopy
@@ -88,15 +86,14 @@ BEGIN TRY
 	from
 		GoalieStatGames s
 	where
-		s.GameId between @StartingGameId and @EndingGameId AND
-		s.PlayerId <> 0
+		s.SeasonId between @StartingSeasonId and @EndingSeasonId AND
+		s.PlayerId > 0
 	group by
 		s.PlayerId,
 		s.TeamId,
 		s.Playoffs,
 		s.SeasonId,
 		s.Sub
-
 
 	update #goalieStatTeamsNew
 	set
@@ -140,7 +137,15 @@ BEGIN TRY
 		PRINT 'DRY RUN. NOT UPDATING REAL TABLES'
 
 		-- NEED TO DELETE ANY RECORDS THAT MIGHT HAVE ALREADY PROCESSED, BUT ARE NO LONGER VALID
-		-- TODO FIGURE OUT HOW TO DO CORRECTLY
+		delete from #goalieStatTeamsCopy
+		from
+			#goalieStatTeamsCopy c left join
+			#goalieStatTeamsNew n on (c.PlayerId = n.PlayerId AND c.TeamId = n.TeamId AND c.Playoffs = n.Playoffs AND c.Sub = n.Sub)
+		where
+			n.PlayerId is null AND
+			c.SeasonId between @StartingSeasonId and @EndingSeasonId
+
+		update #results set ExistingRecordsDeleted = @@ROWCOUNT
 
 		update #goalieStatTeamsCopy
 		set
@@ -174,7 +179,15 @@ BEGIN TRY
 		PRINT 'NOT A DRY RUN. UPDATING REAL TABLES'
 
 		-- NEED TO DELETE ANY RECORDS THAT MIGHT HAVE ALREADY PROCESSED, BUT ARE NO LONGER VALID
-		-- TODO FIGURE OUT HOW TO DO CORRECTLY
+		delete from GoalieStatTeams
+		from
+			GoalieStatTeams c left join
+			#goalieStatTeamsNew n on (c.PlayerId = n.PlayerId AND c.TeamId = n.TeamId AND c.Playoffs = n.Playoffs AND c.Sub = n.Sub)
+		where
+			n.PlayerId is null AND
+			c.SeasonId between @StartingSeasonId and @EndingSeasonId
+
+		update #results set ExistingRecordsDeleted = @@ROWCOUNT
 
 		update GoalieStatTeams
 		set

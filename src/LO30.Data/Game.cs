@@ -45,6 +45,8 @@ namespace LO30.Data
 
     public virtual List<GoalieStatGame> GoalieStatGames { get; set; }
 
+    public virtual List<LineStatGame> LineStatGames { get; set; }
+
     public virtual List<PlayerStatGame> PlayerStatGames { get; set; }
 
     public virtual List<ScoreSheetEntryGoal> ScoreSheetEntryGoals { get; set; }
@@ -54,6 +56,8 @@ namespace LO30.Data
     public virtual List<ScoreSheetEntryProcessedGame> ScoreSheetEntryProcessedGames { get; set; }
 
     public virtual List<ScoreSheetEntryProcessedGoal> ScoreSheetEntryProcessedGoals { get; set; }
+
+    public virtual List<ScoreSheetEntryProcessedLinePlusMinus> ScoreSheetEntryProcessedLinePlusMinuses { get; set; }
 
     public virtual List<ScoreSheetEntryProcessedPenalty> ScoreSheetEntryProcessedPenalties { get; set; }
 

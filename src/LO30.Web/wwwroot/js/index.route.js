@@ -52,6 +52,15 @@
         data: { pageTitle: 'Stats' }
       })
 
+      .state('root.statsLine', {
+        url: "/statsline/seasons/:seasonId/seasontypes/:seasonTypeId",
+        templateUrl: "js/statsLines/statsLines.html",
+        controller: "statsLinesController",
+        controllerAs: "vm",
+        data: { pageTitle: 'Stats Lines' }
+      })
+
+
       .state('root.profilesPlayers', {
         url: "/profiles/players/:playerId/playertypes/:playerType/seasons/:seasonId/seasontypes/:seasonTypeId?tab",
         templateUrl: "js/profilesPlayers/profilesPlayers.html",

@@ -5,6 +5,9 @@ angular.module('lo30NgApp')
 
     var vm = this;
 
+    var a0 = "<h3>Stats</h3>";
+    a0 = a0 + "Stats updated thru 11/6.";
+
     var a1 = "<h3>2016-2017 Registration</h3>";
     a1 = a1 + "It's that time of year to begin the registration process for this fall<br/>";
     a1 = a1 + "Please read the Registration Cover Letter, complete the Registration Form, and mail it with your check to league (address info on the form) by July 1st, 2016.<br/>";
@@ -39,23 +42,29 @@ angular.module('lo30NgApp')
     var a5 = "<h3>New Site</h3>";
     a5 = a5 + "Updated the site.  Will be rolling out more functionality over the coming months.";
 
-    var a6 = "<h3>Stats</h3>";
-    a6 = a6 + "Stats updated thru 9/15.";
+    var a6 = "<h3>Site Updated</h3>";
+    a6 = a6 + "Added Last 5 and Streak to Standings. Updated GWG calculation.";
 
-    var a7 = "<h3>Stats</h3>";
-    a7 = a7 + "Stats updated thru 9/25.";
+    var a7 = "<h3>Site Updated</h3>";
+    a7 = a7 + "Added line statistics.";
 
     vm.news = [{
+      "class": "chat-message right",
+      "image": "img/board/dan.png",
+      "author": "Dan Hunt",
+      "date": "Wed Nov 9 2016",
+      "content": $sce.trustAsHtml(a0)
+    }, {
       "class": "chat-message left",
       "image": "img/board/dan.png",
       "author": "Dan Hunt",
-      "date": "Tue Sept 27 2016",
+      "date": "Fri Nov 11 2016",
       "content": $sce.trustAsHtml(a7)
     }, {
       "class": "chat-message right",
       "image": "img/board/dan.png",
       "author": "Dan Hunt",
-      "date": "Fri Sept 16 2016",
+      "date": "Wed Nov 2 2016",
       "content": $sce.trustAsHtml(a6)
     }, {
       "class": "chat-message left",

@@ -1,5 +1,6 @@
 ﻿using LO30.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace LO30.Web.Controllers.Mvc
 {

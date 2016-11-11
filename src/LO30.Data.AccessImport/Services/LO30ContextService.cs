@@ -1369,10 +1369,12 @@ namespace LO30.Data.AccessImport.Services
       }
       else
       {
-        var entry = _context.Entry(found);
-        throw new NotImplementedException();
-        //entry.OriginalValues.SetValues(found);
-        //entry.CurrentValues.SetValues(toSave);
+        found.CurrentStatus = toSave.CurrentStatus;
+        found.EventYYYYMMDD = toSave.EventYYYYMMDD;
+        found.PlayerId = toSave.PlayerId;
+        found.PlayerStatusTypeId = toSave.PlayerStatusTypeId;
+
+        _context.Update(found);
       }
 
       return ContextSaveChanges();

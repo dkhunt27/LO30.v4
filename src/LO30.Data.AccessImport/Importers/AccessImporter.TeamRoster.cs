@@ -130,6 +130,11 @@ namespace LO30.Data.AccessImport.Importers
                 // HACK FIX for Kyle Krupsky rostered sub
                 playerDraft = CreatePlayerDraft(sid: team.SeasonId, pid: playerId, rnd: -1, ord: -1, pos: "F", line: 2, spcl: false);
               }
+              else if (team.SeasonId == 57 && playoff == false && playerId == 803)
+              {
+                // HACK FIX for Bob Moody rostered sub
+                playerDraft = CreatePlayerDraft(sid: team.SeasonId, pid: playerId, rnd: -1, ord: -1, pos: "F", line: 2, spcl: false);
+              }
               else
               {
                 playerDraft = _lo30ContextService.FindPlayerDraft(team.SeasonId, playerId);
@@ -164,6 +169,20 @@ namespace LO30.Data.AccessImport.Importers
                   Position = "X"
                 };
               }
+              else if (team.SeasonId == 57 && playoff == false && playerId == 803)
+              {
+                // HACK FIX for Bob Moody rostered sub
+                playerRating = new PlayerRating()
+                {
+                  SeasonId = team.SeasonId,
+                  PlayerId = playerId,
+                  StartYYYYMMDD = 20160908,
+                  EndYYYYMMDD = 20170326,
+                  RatingPrimary = "6",
+                  RatingSecondary = 0,
+                  Position = "F"
+                };
+              }
               else
               {
                 playerRating = _lo30ContextService.FindPlayerRatingWithYYYYMMDD(playerId, playerDraft.Position, team.SeasonId, season.StartYYYYMMDD);
@@ -192,6 +211,17 @@ namespace LO30.Data.AccessImport.Importers
 
                 // add vince
                 teamRoster = CreateTeamRoster(sid: team.SeasonId, tid: team.TeamId, pid: playerId, symd: 20141101, eymd: 20150118, pos: playerDraft.Position, rp: playerRating.RatingPrimary, rs: playerRating.RatingSecondary, line: playerDraft.Line, pn: playerNumber);
+                countSaveOrUpdated = countSaveOrUpdated + _lo30ContextService.SaveOrUpdateTeamRoster(teamRoster);
+              }
+              else if (team.SeasonId == 57 && playoff == false && playerId == 803)
+              {
+                // HACK FIX for Mark Felker rostered sub (Bob Moody)
+                // add Mark Felker
+                teamRoster = CreateTeamRoster(sid: team.SeasonId, tid: team.TeamId, pid: 678, symd: 20160908, eymd: 20161031, pos: "F", rp: "J", rs: 0, line: 2, pn: 14);
+                countSaveOrUpdated = countSaveOrUpdated + _lo30ContextService.SaveOrUpdateTeamRoster(teamRoster);
+
+                // add Bob Moody
+                teamRoster = CreateTeamRoster(sid: team.SeasonId, tid: team.TeamId, pid: playerId, symd: 20161101, eymd: 20170326, pos: playerDraft.Position, rp: playerRating.RatingPrimary, rs: playerRating.RatingSecondary, line: playerDraft.Line, pn: playerNumber);
                 countSaveOrUpdated = countSaveOrUpdated + _lo30ContextService.SaveOrUpdateTeamRoster(teamRoster);
               }
               else

@@ -157,11 +157,22 @@ body.skin-lo30 {
   -webkit-filter: none;
   filter: none;
   border: 1px solid #0c75d2; 
+  color: #fff;
 }
 
 .skin-lo30 .nav.nav-tabs > li.active > a {
-  color: #555;
+  background-image: -webkit-linear-gradient(#208ff2, #09589d 50%, #0c6dc4);
+  background-image: -o-linear-gradient(#208ff2, #09589d 50%, #0c6dc4);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#208ff2), color-stop(50%, #09589d), to(#0c6dc4));
+  background-image: linear-gradient(#208ff2, #09589d 50%, #0c6dc4);
+  background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff09589d', endColorstr='#ff0c6dc4', GradientType=0);
+  -webkit-filter: none;
+  filter: none;
+  border: 1px solid #09589d; 
+  color: #fff;
 }
+
 .skin-lo30 .nav.nav-tabs > li.active {
   background: transparent;
 }
@@ -583,6 +594,3 @@ zoom: 1;
 
 .tp-leftarrow:hover,
 .tp-rightarrow:hover 									{	background-position:bottom left; }
-
-
-

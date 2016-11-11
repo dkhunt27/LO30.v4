@@ -260,6 +260,32 @@ namespace LO30.Web
               .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
               .ReverseMap();
 
+        config.CreateMap<LineStatGame, LineStatGameViewModel>()
+              .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
+              .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
+              .ForMember(vm => vm.TeamCodeOpponent, opt => opt.MapFrom(m => m.OpponentTeam.TeamCode))
+              .ForMember(vm => vm.TeamNameLongOpponent, opt => opt.MapFrom(m => m.OpponentTeam.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShortOpponent, opt => opt.MapFrom(m => m.OpponentTeam.TeamNameShort))
+              .ForMember(vm => vm.GameDateTime, opt => opt.MapFrom(m => m.Game.GameDateTime))
+              .ReverseMap();
+
+        config.CreateMap<LineStatSeason, LineStatSeasonViewModel>()
+              .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
+              .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
+              .ForMember(vm => vm.SeasonName, opt => opt.MapFrom(m => m.Season.SeasonName))
+              .ReverseMap();
+
+        config.CreateMap<LineStatTeam, LineStatTeamViewModel>()
+              .ForMember(vm => vm.TeamCode, opt => opt.MapFrom(m => m.Team.TeamCode))
+              .ForMember(vm => vm.TeamNameLong, opt => opt.MapFrom(m => m.Team.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShort, opt => opt.MapFrom(m => m.Team.TeamNameShort))
+              .ForMember(vm => vm.TeamCodeOpponent, opt => opt.MapFrom(m => m.OpponentTeam.TeamCode))
+              .ForMember(vm => vm.TeamNameLongOpponent, opt => opt.MapFrom(m => m.OpponentTeam.TeamNameLong))
+              .ForMember(vm => vm.TeamNameShortOpponent, opt => opt.MapFrom(m => m.OpponentTeam.TeamNameShort))
+              .ReverseMap();
+
         config.CreateMap<Player, PlayerViewModel>()
               .ReverseMap();
 

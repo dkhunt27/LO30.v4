@@ -237,7 +237,7 @@ angular.module('lo30NgApp')
 
       service.players.list = function () {
         var inputs = {
-          apiDataType: "games.list",
+          apiDataType: "players.list",
           urlPartial: "players",
           method: "GET",
           params: null

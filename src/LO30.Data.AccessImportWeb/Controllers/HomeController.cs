@@ -78,8 +78,8 @@ namespace LO30.Data.AccessImportWeb.Controllers
         //aImporter.ImportGameTeams(startingGameIdToProcess, endingGameIdToProcess);
 
         // load scoresheets
-        int startingGameIdToProcess = 3668;
-        int endingGameIdToProcess = 3674;
+        int startingGameIdToProcess = 3730;
+        int endingGameIdToProcess = 3735;
         aImporter.ImportScoreSheetEntries(startingGameIdToProcess, endingGameIdToProcess);
         aImporter.ImportScoreSheetEntryPenalties(startingGameIdToProcess, endingGameIdToProcess);
         aImporter.ImportScoreSheetEntrySubs(startingGameIdToProcess, endingGameIdToProcess);

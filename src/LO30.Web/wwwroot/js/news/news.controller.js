@@ -6,7 +6,7 @@ angular.module('lo30NgApp')
     var vm = this;
 
     var a0 = "<h3>Stats</h3>";
-    a0 = a0 + "Stats updated thru 11/6.";
+    a0 = a0 + "Stats updated thru 1/15.";
 
     var a1 = "<h3>2016-2017 Registration</h3>";
     a1 = a1 + "It's that time of year to begin the registration process for this fall<br/>";
@@ -30,7 +30,7 @@ angular.module('lo30NgApp')
     a2 = a2 + "<h5>Dan Hunt (Volunteer Secretary/Web Admin)</h5>";
 
     var a3 = "<h3>Season Opener 9/8 </h3>";
-    a2 = a2 + "<br/>";
+    a3 = a3 + "<br/>";
     a3 = a3 + "<h4>Rink A 8:30	Hunt's Ace vs Villanova</h4>";
     a3 = a3 + "<h4>Rink B 9:00	DPKZ vs LAB/PSI</h4>";
     a3 = a3 + "<h4>Rink A 9:30	Bill Brown vs Glover</h4>";
@@ -43,22 +43,35 @@ angular.module('lo30NgApp')
     a5 = a5 + "Updated the site.  Will be rolling out more functionality over the coming months.";
 
     var a6 = "<h3>Site Updated</h3>";
-    a6 = a6 + "Added Last 5 and Streak to Standings. Updated GWG calculation.";
+    a6 = a6 + "Added Last 5 and Streak to Standings. Updated GWG calculation. Added line statistics.";
 
-    var a7 = "<h3>Site Updated</h3>";
-    a7 = a7 + "Added line statistics.";
+    var a7 = "<h3>Family Night, Thursday, Dec. 29</h3>";
+    a7 = a7 + "<br/>";
+    a7 = a7 + "<h4>7:30 - 8:00 Skating for adults, beginners, and kids under 8</h4>";
+    a7 = a7 + "<h4>8:00 - 9:20 Open skate</h4>";
+    a7 = a7 + "<h4>Pizza at 8:15</h4>";
+
+    var a8 = "<h3>UPDATE! Picture Day, Sunday, Jan. 15</h3>";
+    a8 = a8 + "<br/>";
+    a8 = a8 + "Team pictures this Sunday.";
 
     vm.news = [{
-      "class": "chat-message right",
-      "image": "img/board/dan.png",
-      "author": "Dan Hunt",
-      "date": "Wed Nov 9 2016",
-      "content": $sce.trustAsHtml(a0)
-    }, {
       "class": "chat-message left",
       "image": "img/board/dan.png",
       "author": "Dan Hunt",
-      "date": "Fri Nov 11 2016",
+      "date": "Mon Jan 16 2017",
+      "content": $sce.trustAsHtml(a0)
+    }, {
+      "class": "chat-message right",
+      "image": "img/board/steve.png",
+      "author": "Steve Crandall",
+      "date": "Wed Jan 4 2017",
+      "content": $sce.trustAsHtml(a8)
+    }, {
+      "class": "chat-message left",
+      "image": "img/board/steve.png",
+      "author": "Steve Crandall",
+      "date": "Tues Dec 20 2016",
       "content": $sce.trustAsHtml(a7)
     }, {
       "class": "chat-message right",

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('lo30NgApp')
-  .controller('scoreSheetEntryController', function ($scope, $state, criteriaService, apiService, screenSize, externalLibService, broadcastService) {
+  .controller('scoreSheetEntryController', function ($log, $scope, $state, criteriaService, apiService, screenSize, externalLibService, broadcastService) {
 
     var _ = externalLibService._;
     var sjv = externalLibService.sjv;
@@ -50,6 +50,7 @@ angular.module('lo30NgApp')
 
         vm.games = _.sortBy(fulfilled, function (item) { return item.gameId * -1; });
 
+        vm.selectedGame = _.findWhere(vm.games, {gameId: vm.gameId});
         //vm.games = buildGamesToDisplay(vm.games);
 
       }).finally(function () {
@@ -111,6 +112,7 @@ angular.module('lo30NgApp')
       fetchDataByGameIdViaApiService(gameId, "scoreSheetEntryProcessedPenalties");
       fetchDataByGameIdViaApiService(gameId, "scoreSheetEntryProcessedSubs");
 
+
     };
 
     var setWatches = function () {
@@ -146,6 +148,12 @@ angular.module('lo30NgApp')
         }
       });
 
+
+      $scope.$watch(function () { return vm.teamRostersHomeLoaded; }, function (value) {
+        if (value) {
+          $log.debug("teamRostersHome", vm.teamRostersHome);
+        }
+      });
     };
 
     vm.$onInit = function () {
